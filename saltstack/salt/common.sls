@@ -9,3 +9,5 @@ common:
       - curl
       - htop
       - vim-nox
+      - fish
+

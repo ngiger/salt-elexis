@@ -11,5 +11,5 @@ unattended-upgrades-on: # State ID
 /etc/apt/apt.conf.d/20auto-upgrades:
   file.managed:
   # - name: /etc/apt/apt.conf.d/20auto-upgrades
-    - source: salt://server/unattended_upgrades.txt
+    - source: salt://server/file/unattended_upgrades.txt
 

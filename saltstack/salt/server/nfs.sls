@@ -27,7 +27,7 @@ update_exports:
 server_nfs_kernel_server:
   file.managed:
     - name: /etc/default/nfs-kernel-server
-    - source: salt://server/nfs-kernel-server
+    - source: salt://server/file/nfs-kernel-server
     - user: root
     - group: root
     - mode: 644
@@ -37,7 +37,7 @@ server_nfs_common:
     - name: nfs-common
   file.managed:
     - name: /etc/default/nfs-common
-    - source: salt://server/nfs-common
+    - source: salt://server/file/nfs-common
     - user: root
     - group: root
     - mode: 644
@@ -45,13 +45,13 @@ server_nfs_common:
 server_exports:
   file.managed:
     - name: /etc/exports
-    - source: salt://server/exports
+    - source: salt://server/file/exports
     - template: jinja
 
 idmapd_conf:
   file.managed:
     - name: /etc/idmapd.conf
-    - source: salt://server/idmapd.conf
+    - source: salt://server/file/idmapd.conf
     - user: root
     - group: root
     - mode: 644

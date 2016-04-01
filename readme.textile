@@ -1,8 +1,8 @@
-.h1 Setup of an Elexis IT infrastructure using salt
+h1. Setup of an Elexis IT infrastructure using salt
 
-.h2 Installation and initil setup
+h2. Installation and initil setup
 
-.h3 Using virtual machines, eg. for testing
+h3. Using virtual machines, eg. for testing
 
 There is Vagrantfile which defines to VM, one called prxserver and another labor. The prxserver
 
@@ -10,7 +10,7 @@ There is Vagrantfile which defines to VM, one called prxserver and another labor
 
 The call @vagrant ssh prxserver@ and @vagrant ssh labor@ respectively to ssh into the VM and continue with the setup for real machines.
 
-.h3 Using real machines
+h3. Using real machines
 
 * Client (Either Debian wheezy or Ubuntu precise)
 ** copy scripts/install_client.sh and execute it to install salt-minion
@@ -19,37 +19,38 @@ The call @vagrant ssh prxserver@ and @vagrant ssh labor@ respectively to ssh int
 ** Call git clone URL /srv/salt
 ** execute /srv/salt/scripts/install_master.sh it to install salt-master
 
-.h3 Adding and verifying minion keys on the master
+h3. Adding and verifying minion keys on the master
 
 * In the output @sudo salt-key -L@ you should  see a line like @Unaccepted Keys:@ followed @labor.local@
 * Run @sudo salt-key -A@ and accept the keys
 * Run @ sudo salt '*' test.ping@ to verify that you can
 
+h3. Unresolved problems
+
+* Running @locale-gen de_CH.UTF-8@ in locales.sls freezes the whole system. Must call this command by hand. Why?
+
+h3. Interesting readings/links/snippet
 
 https://docs.saltstack.com/en/latest/topics/tutorials/walkthrough.html
 salt '*' cmd.run 'ls -l /etc'
+
+See "Managing your computers with a Salt Master and Git":http://talks.caktusgroup.com/lightning-talks/2013/salt-master/
 
 Targeting https://docs.saltstack.com/en/develop/topics/targeting/index.html
 
 Salt allows for minions to be targeted based on a wide range of criteria. The default targeting system uses globular expressions to match minions, hence if there are minions named larry1, larry2, curly1, and curly2, a glob of larry* will match larry1 and larry2, and a glob of *1 will match larry1 and curly1.
 
 Many other targeting systems can be used other than globs, these systems include:
-
-Regular Expressions
-    Target using PCRE-compliant regular expressions
 Grains
-    Target based on grains data: Targeting with Grains
 Pillar
-    Target based on pillar data: Targeting with Pillar
-IP
-    Target based on IP address/subnet/range
+IP Target based on IP address/subnet/range
 
-# sudo salt * saltutil.refresh_pillar
-# sudo salt '*' pillar.items
-# sudo salt labor* state.apply users Test=true -l debug
+bc. sudo salt * saltutil.refresh_pillar
+sudo salt '*' pillar.items
+sudo salt labor* state.apply users Test=true -l debug
 
 
 # working with environments see https://developer.rackspace.com/blog/marconi-and-salt-part-2/
-sudo salt prxserver.local grains.setval environment prod
+bc. sudo salt prxserver.local grains.setval environment prod
 sudo /etc/init.d/salt-master restart
 sudo salt prxserver.local grains.items
