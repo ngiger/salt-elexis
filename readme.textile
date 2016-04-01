@@ -1,0 +1,55 @@
+.h1 Setup of an Elexis IT infrastructure using salt
+
+.h2 Installation and initil setup
+
+.h3 Using virtual machines, eg. for testing
+
+There is Vagrantfile which defines to VM, one called prxserver and another labor. The prxserver
+
+* @vagrant init@
+
+The call @vagrant ssh prxserver@ and @vagrant ssh labor@ respectively to ssh into the VM and continue with the setup for real machines.
+
+.h3 Using real machines
+
+* Client (Either Debian wheezy or Ubuntu precise)
+** copy scripts/install_client.sh and execute it to install salt-minion
+
+* Server (We assume debian jessie). Here we install salt-master and salt-minion to be able to configure the server, too.
+** Call git clone URL /srv/salt
+** execute /srv/salt/scripts/install_master.sh it to install salt-master
+
+.h3 Adding and verifying minion keys on the master
+
+* In the output @sudo salt-key -L@ you should  see a line like @Unaccepted Keys:@ followed @labor.local@
+* Run @sudo salt-key -A@ and accept the keys
+* Run @ sudo salt '*' test.ping@ to verify that you can
+
+
+https://docs.saltstack.com/en/latest/topics/tutorials/walkthrough.html
+salt '*' cmd.run 'ls -l /etc'
+
+Targeting https://docs.saltstack.com/en/develop/topics/targeting/index.html
+
+Salt allows for minions to be targeted based on a wide range of criteria. The default targeting system uses globular expressions to match minions, hence if there are minions named larry1, larry2, curly1, and curly2, a glob of larry* will match larry1 and larry2, and a glob of *1 will match larry1 and curly1.
+
+Many other targeting systems can be used other than globs, these systems include:
+
+Regular Expressions
+    Target using PCRE-compliant regular expressions
+Grains
+    Target based on grains data: Targeting with Grains
+Pillar
+    Target based on pillar data: Targeting with Pillar
+IP
+    Target based on IP address/subnet/range
+
+# sudo salt * saltutil.refresh_pillar
+# sudo salt '*' pillar.items
+# sudo salt labor* state.apply users Test=true -l debug
+
+
+# working with environments see https://developer.rackspace.com/blog/marconi-and-salt-part-2/
+sudo salt prxserver.local grains.setval environment prod
+sudo /etc/init.d/salt-master restart
+sudo salt prxserver.local grains.items

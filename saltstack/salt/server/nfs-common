@@ -1,0 +1,6 @@
+# from the salt server
+# Do you want to start the idmapd daemon? It is only needed for NFSv4.
+NEED_IDMAPD=YES
+NEED_STATD=
+STATDOPTS=
+NEED_GSSD=

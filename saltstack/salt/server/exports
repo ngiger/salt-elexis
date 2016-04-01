@@ -1,0 +1,9 @@
+# From salt master: exports for {{ grains['fqdn'] }}
+# OS: {{ grains['osfullname'] }}
+# Kernel: {{ grains['kernelrelease'] }}
+# Memory: {{ grains['mem_total'] }} MB
+/exports   192.168.0.0/255.255.0.0(rw,insecure,no_root_squash,no_subtree_check,crossmnt,fsid=0)
+# next lines would be for NFS3
+# {% for item in salt['pillar.get']('server.config') %}
+# {{ item.name }} {{ item.opts }}{% endfor %}
+
