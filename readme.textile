@@ -13,23 +13,57 @@ The call @vagrant ssh prxserver@ and @vagrant ssh labor@ respectively to ssh int
 h3. Using real machines
 
 * Client (Either Debian wheezy or Ubuntu precise)
-** copy scripts/install_client.sh and execute it to install salt-minion
+** get @install_client.sh@, eg. by calling @wget https://raw.githubusercontent.com/ngiger/salt-elexis/master/scripts/bootstrap_client.sh@ and execute it to install salt-minion.
+
+Set the /etc/salt/minion to something like
+
+bc. master: 192.168.1.222 # IP address or name, default is salt
+state_output: mixed
+
 
 * Server (We assume debian jessie). Here we install salt-master and salt-minion to be able to configure the server, too.
-** Call git clone URL /srv/salt
-** execute /srv/salt/scripts/install_master.sh it to install salt-master
+** Call @git clone URL /srv/salt@
+** execute @/srv/salt/scripts/install_master.sh@ it to install salt-master and salt-minion
+
+We want to be able to configure the salt server, too, therefore the /etc/salt/minion to something 
+
+bc. master: localhost
+state_output: mixed
+
+** @sudo salt-call state.highstate@ # will take a long time to download/install all stuff. It must be called first on the master to prepare all the needed stuff like NFS4-server for the clients
+** @sudo salt '*' state.highstate@ # will take a long time to download/install all stuff
+
+and the /etc/salt/master
+
 
 h3. Adding and verifying minion keys on the master
 
 * In the output @sudo salt-key -L@ you should  see a line like @Unaccepted Keys:@ followed @labor.local@
 * Run @sudo salt-key -A@ and accept the keys
-* Run @ sudo salt '*' test.ping@ to verify that you can
+* Run @sudo salt '*' test.ping@ to verify that you can
+
+h3. NFSv4 setup
+
+This was a little bit tricky. Solved by:
+* Installing rpcbind
+* Add /etc/idmapd.conf
+* Server must be configured via salt before the client minions
+
 
 h3. Unresolved problems
 
 * Running @locale-gen de_CH.UTF-8@ in locales.sls freezes the whole system. Must call this command by hand. Why?
+* Don't know how to tell salt that installing the package unattended-upgrades creates 50unattended-upgrade
+
+h3. TODO
+
+* Set default keyboard to Swiss German
+* Don't ask for upgrade of Ubuntu from 12.04 -> 14.04
+* Don't show users like vagrant; Ubuntu when
 
 h3. Interesting readings/links/snippet
+
+To develop/debug use (on the minion) @salt-call -l debug state.apply@
 
 https://docs.saltstack.com/en/latest/topics/tutorials/walkthrough.html
 salt '*' cmd.run 'ls -l /etc'
@@ -50,7 +84,9 @@ sudo salt '*' pillar.items
 sudo salt labor* state.apply users Test=true -l debug
 
 
-# working with environments see https://developer.rackspace.com/blog/marconi-and-salt-part-2/
+h4. working with "environments":https://developer.rackspace.com/blog/marconi-and-salt-part-2/
+
 bc. sudo salt prxserver.local grains.setval environment prod
 sudo /etc/init.d/salt-master restart
 sudo salt prxserver.local grains.items
+

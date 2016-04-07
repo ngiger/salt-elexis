@@ -1,28 +1,18 @@
+# Not sure whether we shoud enable idmapping or not
+# see https://www.novell.com/support/kb/doc.php?id=7014266
+include:
+  -   server.idmap
+
 nfs:
   pkg.installed:
     - pkgs:
       - nfs-kernel-server:
+      - rpcbind:
   service.running:
     - name: nfs-kernel-server
     - watch:
-      - file: server_nfs_kernel_server
+#      - file: server_nfs_kernel_server
       - file: server_nfs_common
-      - file: idmapd_conf
-
-nfs_common:
-  service.running:
-    - name: nfs-common
-    - require:
-      - pkg: nfs-common
-    - watch:
-      - file: server_nfs_common
-      - file: idmapd_conf
-
-update_exports:
-  cmd.run:
-    - name: exportfs -ra
-    - watch:
-      - file: server_exports
 
 server_nfs_kernel_server:
   file.managed:
@@ -31,6 +21,21 @@ server_nfs_kernel_server:
     - user: root
     - group: root
     - mode: 644
+
+nfs_common:
+  service.running:
+    - name: nfs-common
+    - require:
+      - pkg: nfs-common
+    - watch:
+      - file: server_nfs_common
+      - file: /etc/idmapd.conf
+
+update_exports:
+  cmd.run:
+    - name: exportfs -ra
+    - watch:
+      - file: server_exports
 
 server_nfs_common:
   pkg.installed:
@@ -48,13 +53,6 @@ server_exports:
     - source: salt://server/file/exports
     - template: jinja
 
-idmapd_conf:
-  file.managed:
-    - name: /etc/idmapd.conf
-    - source: salt://server/file/idmapd.conf
-    - user: root
-    - group: root
-    - mode: 644
 /exports:
   file.directory:
     - user:  root
@@ -63,16 +61,19 @@ idmapd_conf:
     - mode:  755
 
 {% for item in salt['pillar.get']('server.config') %}
-{{item.name}}:
+{{item.server_name}}:
   file.directory:
-    - name: {{item.name}}
-/exports/{{ salt['file.basename'](item.name) }}:
+    - name: {{item.server_name}}
+    - require:
+        - file: /exports
+/exports/{{ salt['file.basename'](item.server_name) }}:
   file.directory:
-    - name: /exports/{{ salt['file.basename'](item.name) }}
+    - name: /exports/{{ salt['file.basename'](item.server_name) }}
     - mode: 777
   cmd.run:
-    - name: /bin/mount --bind {{ item.name }} /exports/{{ salt['file.basename'](item.name) }}
-#    - creates: /exports/{{ salt['file.basename'](item.name) }}
+    - name: /bin/mount --bind {{ item.server_name }} /exports/{{ salt['file.basename'](item.server_name) }}
+    - unless: grep -c {{salt['file.basename'](item.server_name) }} /etc/mtab
+#    - creates: /exports/{{salt['file.basename'](item.server_name) }}
 {% endfor %}
 
 

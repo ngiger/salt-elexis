@@ -1,2 +1,4 @@
 saltstack/pillar/prod
 .vagrant
+ch.medelexis.application.product.Medelexis*
+license.xml

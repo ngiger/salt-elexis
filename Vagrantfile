@@ -5,6 +5,11 @@
 VAGRANTFILE_API_VERSION = "2"
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
+  config.vm.provider "virtualbox" do |v|
+    v.memory = 1024
+    v.cpus = 2
+    v.gui = true
+  end
   config.vm.define :prxserver do |prxserver_config|
     # prxserver_config.vm.box = "ubuntu/trusty64"
     prxserver_config.vm.box   =  'deb/jessie-amd64'

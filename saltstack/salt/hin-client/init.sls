@@ -1,0 +1,2 @@
+include:
+  - hin-client.install

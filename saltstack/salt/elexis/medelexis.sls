@@ -1,24 +1,58 @@
-accept-java-license:
-  debconf.set:
-    - name: oracle-java8-installer
-    - data:
-        shared/accepted-oracle-license-v1-1: {'type': boolean, 'value': true}
+# You have to download manually the Medelexis zip and license file to
+# and specifiy the content of the license file in the pillar data
 
-get_key:
+{% if salt.file.file_exists(pillar['medelexis']['linux_x86_64']) %}
+
+medelexis-requires:
+  pkg.installed:
+    - name: unzip
+libnotify-bin:
+  pkg.installed:
+    - name: libnotify-bin
+
+/usr/share/icons/medelexis-logo.png:
+  file.managed:
+    - source: salt://elexis/file/medelexis-logo.png
+
+{% for app in pillar['medelexis_apps'] %}
+{{app.exe}}:
+  file.managed:
+    - mode: 755
+    - source: salt://elexis/file/medelexis.sh
+    - template: jinja
+    - defaults:
+        app: {{app}}
+        elexis: {{ pillar.get('elexis') }} # db_parameters
+        medelexis: {{ pillar.get('medelexis') }} # license
+{%- set filename = salt['file.basename'](app.exe) %}
+/usr/share/applications/{{filename}}.desktop:
+  file.managed:
+    - source: salt://elexis/file/medelexis.desktop
+    - template: jinja
+    - defaults:
+        app: {{app}}
+        icon: /usr/share/icons/hicolor/scalable/medelexis-logo.svg
+
+  {% for user in pillar['users'] %}
+
+{{user.home}}/{{filename}}:
   cmd.run:
-    - name: sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys C2518248EEA14886
+    - name: xdg-desktop-icon install /usr/share/applications/{{filename}}.desktop
+    - user:  {{user.name}}
+    - unless: ls {{user.home}}/*/{{filename}}.desktop
+  {% endfor %}
 
-ppa-java:
-  pkgrepo.managed:
-    - keyid: C2518248EEA14886
-    - keyserver: keyserver.ubuntu.com
-    - humanname: webupd8team
-    - name: deb http://ppa.launchpad.net/webupd8team/java/ubuntu precise main
-    - require_in:
-      - pkg: java
+{% endfor %}
 
-java:
-  pkg.latest:
-    - name: oracle-java8-installer
-    - require:
-      - debconf: accept-java-license
+{% for user in pillar['users'] %}
+{{user.home}}/elexis:
+  file.directory:
+    - name: {{user.home}}/elexis
+
+{{user.home}}/elexis/license.xml:
+  file.copy:
+    - source: {{ pillar['medelexis']['license_xml'] }}
+
+{% endfor %}
+
+{% endif %}

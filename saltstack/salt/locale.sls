@@ -14,9 +14,10 @@
       - LANG=de_CH.UTF-8
       - LANGUAGE=de_CH
 
-{% if false %}
-# Here salt hangs if I try to run this command. Why?
+{% if true  %}
+
 generate_locale:
   cmd.run:
+    # TODO: Here salt hangs if I try to run this command. Why?
     - name: locale-gen de_CH.UTF-8
 {% endif %}

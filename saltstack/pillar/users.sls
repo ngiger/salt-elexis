@@ -1,7 +1,15 @@
+users_absent:
+  - name: niklaus
+    purge: True
+
+# keep the UID far away from the normally generated ones
+# /mnt/homes must be in sync the the pillar/users.sls file
 users:
   - name: arzt
-    uid: 1100
-    gid: 1100
+    uid: 2000
+    gid: 2000
+    home: /mnt/homes/arzt
   - name: mpa
-    uid: 1101
-    gid: 1101
+    uid: 2001
+    gid: 2001
+    home: /mnt/homes/mpa
