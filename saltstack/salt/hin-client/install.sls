@@ -35,7 +35,7 @@ g_{{client.hin_login}}:
     - source_hash: sha512=c5315ca068efbd03977f2b113e894b39463cc1fc91d199f81c51b8143b642377c21e3613fe1cbf7b07591cbe2d7f3b0fade80f946e3cabc6329a69b0cd91776c
     - archive_format: tar
     - tar_options: vz
-    - if_missing: /home/{{client.hin_login}}/HIN Client/hinclient'
+    - if_missing: /home/{{client.hin_login}}/HIN Client/hinclient
     - require:
         - user:  {{client.hin_login}}
 

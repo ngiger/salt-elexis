@@ -41,7 +41,7 @@ libnotify-bin:
     - user:  {{user.name}}
     - require:
         - user:  {{user.name}}
-    # - only_if: diff /usr/share/applications/{{filename}}.desktop {{user.home}}/*/{{filename}}.desktop
+    - unless: diff /usr/share/applications/{{filename}}.desktop {{user.home}}/*/{{filename}}.desktop
   {% endfor %}
 
 {% endfor %}
