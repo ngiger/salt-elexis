@@ -53,6 +53,7 @@ h3. Aufsetzen des HIN-Clients
 
 Vorgängig muss aus einem Windows oder Mac der Zugang zum HIN konfiguriert werden, da HIN leider Linux nur halbwegs unterstützt.
 
+Im Moment muss der HIN-Client noch von Hand gestartet werden. Dazu /usr/local/bin/restart_<HIN login>_hin_client aufrufen. Sollte man bei Gelegenheit als Service oder Desktop verpacken.
 
 h3. Unresolved problems
 
@@ -64,6 +65,12 @@ h3. TODO
 * Set default keyboard to Swiss German
 * Don't ask for upgrade of Ubuntu from 12.04 -> 14.04
 * Don't show users like vagrant; Ubuntu when
+* dsnmask
+* wol (WakeOnLan)
+* rsnapshot
+* https://github.com/elexis/elexis-cockpit
+* mysql
+* db backup
 
 h3. Interesting readings/links/snippet
 

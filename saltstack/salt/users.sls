@@ -29,17 +29,50 @@ user_{{user.name}}:
       {% endfor %}
     {% endif %}
     - require:
-      - group: user_{{user.name}}
+      - group: {{user.name}}
     {% if user.get('home', False) and grains.get('id') != 'prxserver.local' %}
     - home: {{user.home}}
+    - createhome: true
+    {% endif %}
   file.directory:
     - name:  {{user.home}}
     - user:  {{user.name}}
-    - group: {{user.gid}}
+    - group: {{user.name}}
+    - require:
+        - user: {{user.name}}
+        - group: {{user.name}}
     - recurse:
-        - user:
-        - group:
-    {% endif %}
+        - user
+        - group
+
+#----------------- Add git repo for some users -------------------------------------
+  # While developping it is handy to trace all changes in the the config directories of
+  # of one (ore more) user homes.
+  {% if user.get('git_setttings', false) %}
+  git.present:
+    - bare: false
+    - name:  {{user.home}}
+    - user: {{user.name}}
+    - require:
+        - user: {{user.name}}
+  cmd.run:
+    - cwd: {{user.home}}
+    - user:  {{user.name}}
+    - name: find . -iname ".gitignore|.local|.config|.gconf|.gnome" | xargs git add --all; git commit -m "Done"
+    - on_change:
+        - file: {{user.home}}
+{{user.home}}/.gitignore:
+  file.managed:
+    - user: {{user.name}}
+    - group: {{user.name}}
+    - contents: |
+       "HIN Client"
+       .cache
+       .medelexis-beta
+       .nothing
+  {% endif %}
+#----------------- end git repo for some users -------------------------------------
+
 
 {% endfor %}
 
@@ -50,3 +83,5 @@ user_{{user.name}}:
       - "# managed by salt"
       - '%sudo ALL = (ALL) NOPASSWD: ALL'
 
+{% if false %}
+{% endif %}

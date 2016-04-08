@@ -15,79 +15,167 @@ hin-client:
       - redir
       - thunderbird-locale-de
 
-{% if false %}
-{% for client in [] %}
-{{client.name}}:
-  user.present:
-    - uid: {{ client.get('hind', 'hind') }}
-  file.managed:
-    - name: /usr/local/bin/{{client.name}}.sh
-    - mode: 755
-    - source: salt://hin-client/file/client.sh
-    - template: jinja
-    - defaults:
-        client: {{client}}
-{% endfor %}
-{% endif %}
+{% for client in pillar['hin_clients'] %}
 
-arzt_hin_client:
+g_{{client.hin_login}}:
+  group.present:
+    - name: {{client.hin_login}}
+    - gid: {{client.uid}}
+
+  user.present:
+    - name: {{client.hin_login}}
+    - uid: {{client.uid}}
+#    - gid: {{client.uid}}
+
+{{client.hin_login}}_hin_client:
   archive.extracted:
-    - name: /mnt/homes/arzt
-    - archive_user: arzt
+    - name: /home/{{client.hin_login}}
+    - archive_user: {{client.hin_login}}
     - source: https://download.hin.ch/download/distribution/install/1.5.1-23/HINClient_unix_1_5_1-23.tar.gz
     - source_hash: sha512=c5315ca068efbd03977f2b113e894b39463cc1fc91d199f81c51b8143b642377c21e3613fe1cbf7b07591cbe2d7f3b0fade80f946e3cabc6329a69b0cd91776c
-#    - source: https://download.hin.ch/download/distribution/install/1.4.0-0/HINClient_unix_1_4_0-0.tar.gz
-#    - source_hash: sha512=de219654cd65759db80ec4e1080f109ac8c158df41610426206bebdb7603c1a96a0de67f730304e119a712bd1ef29cd1e4f13e6ff05133271d3f40fc8ab787f6
     - archive_format: tar
     - tar_options: vz
-    - if_missing: '/mnt/homes/arzt/HIN Client/hinclient'
+    - if_missing: /home/{{client.hin_login}}/HIN Client/hinclient'
+    - require:
+        - user:  {{client.hin_login}}
 
-/mnt/homes/arzt/nikgiger.hin:
-  file.copy:
-    - name: /mnt/homes/arzt/nikgiger.hin
-    - user: arzt
-    - group: arzt
-    - mode: 600
-    - source: /vagrant/saltstack/salt/nikgiger.hin
-
-/mnt/homes/arzt/HIN Client:
+/home/{{client.hin_login}}:
   file.directory:
-    - recurse: true
-    - user: arzt
-    - group: arzt
+    - recurse:
+      - user
+      - group
+    - user: {{client.hin_login}}
+    - group: {{client.hin_login}}
 
-inetd_nikggiger:
+/home/{{client.hin_login}}/{{client.hin_login}}.hin:
+  cmd.run:
+    - name: echo {{client.hin_identity}} | xxd -revert -plain > /home/{{client.hin_login}}/{{client.hin_login}}.hin
+    - user: {{client.hin_login}}
+    - group: {{client.hin_login}}
+    - mode: 600
+    - creates: /home/{{client.hin_login}}/{{client.hin_login}}.hin
+
+/home/{{client.hin_login}}/passphrase.txt:
+  file.managed:
+    - replace: False
+    - user: {{client.hin_login}}
+    - group: {{client.hin_login}}
+    - mode: 600
+    - contents: {{client.hin_passphrase}}
+
+/home/{{client.hin_login}}/.hinclient-service-parameters.txt:
+  file.managed:
+    - user: {{client.hin_login}}
+    - group: {{client.hin_login}}
+    - mode: 600
+    - contents:
+      - "keystore=/home/{{client.hin_login}}/{{client.hin_login}}.hin"
+      - "passphrase=/home/{{client.hin_login}}/passphrase.txt"
+
+inetd_{{client.hin_login}}:
   file.append:
     - name: /etc/inetd.conf
     - text: |
-        # Redir config for sharing local HIN Client nikgiger
-        8016 stream tcp nowait root /usr/bin/redir --lport=8016 --cport=5016 --caddr=localhost --inetd
-        8018 stream tcp nowait root /usr/bin/redir --lport=8018 --cport=5018 --caddr=localhost --inetd
-        8019 stream tcp nowait root /usr/bin/redir --lport=8019 --cport=5019 --caddr=localhost --inetd
-        8020 stream tcp nowait root /usr/bin/redir --lport=8020 --cport=5020 --caddr=localhost --inetd
+        # Redir config for sharing local HIN Client {{client.hin_login}}
+        {{client.http_port}} stream tcp nowait root /usr/bin/redir --lport={{client.http_port}} --cport=5016 --caddr=localhost --inetd
+        {{client.smtp_port}} stream tcp nowait root /usr/bin/redir --lport={{client.smtp_port}} --cport=5018 --caddr=localhost --inetd
+        {{client.pop3_port}} stream tcp nowait root /usr/bin/redir --lport={{client.pop3_port}} --cport=5019 --caddr=localhost --inetd
+        {{client.imap_port}} stream tcp nowait root /usr/bin/redir --lport={{client.imap_port}} --cport=5020 --caddr=localhost --inetd
+# redir options are
+# --caddr Specifies remote host to connect to. (localhost if omitted)
+# --cport Specifies port to connect to.
+# --lport Specifies port to listen for connections on (when not running from inetd)
 
 inetutils-inetd:
   service.running:
     - watch:
       - file: /etc/inetd.conf
 
-/mnt/homes/arzt/passphrase.txt:
-  file.managed:
-    - user: arzt
-    - group: arzt
-    - mode: 600
-    - contents: Mollis8752
+{% endfor %}
 
-/mnt/homes/arzt/.hinclient-service-parameters.txt:
+{% for hin_login, username in salt['pillar.get']('users_for_hinclients', {}).iteritems() %}
+  {% for a_user in username %}
+/mnt/homes/{{a_user}}/.config/autostart:
+  file.directory:
+    - user: {{a_user}}
+/usr/local/bin/restart_{{hin_login}}_hin_client:
   file.managed:
-    - user: arzt
-    - group: arzt
-    - mode: 600
+    - user: {{a_user}}
+    - mode: 755
     - contents:
-      - "keystore=/mnt/homes/arzt/nikgiger.hin"
-      - "passphrase=/mnt/homes/arzt/passphrase.txt"
+      - '#!/bin/bash'
+      - 'logger retarting HIN client for {{hin_login}}'
+      - 'sudo -Hu {{hin_login}} /home/{{hin_login}}/HIN\ Client/hinclientservice restart'
 
+{{hin_login}}_start_at_boot:
+  cron.set_special:
+    - user: {{a_user}}
+    - special: "@reboot"
+    - name: "/usr/local/bin/restart_{{hin_login}}_hin_client"
 
-{% if false %}
+/mnt/homes/{{a_user}}/.config/autostart/hin_client:
+  file.managed:
+    - user: {{a_user}}
+    - mode: 664
+    - contents:
+      - "[Desktop Entry]"
+      - Type=Application
+      - Exec=/usr/local/bin/restart_{{hin_login}}_hin_client
+      - Hidden=false
+      - NoDisplay=false
+      - X-GNOME-Autostart-enabled=true
+      - Name[de_CH]=HIN_Client_ikgiger
+      - Name=HIN_Client_ikgiger
+      - Comment[de_CH]=HIN-client neu starten
+      - Comment=HIN-client neu starten
 
-{% endif %}
+/etc/sudoers.d/{{a_user}}_hin_client:
+  file.managed:
+    - mode: 440
+    - contents:
+      - "{{a_user}}               ALL=(ALL:ALL) NOPASSWD:/usr/local/bin/restart_{{hin_login}}_hin_client"
+      - '{{a_user}},{{hin_login}} ALL=(ALL:ALL) NOPASSWD:/home/{{hin_login}}/HIN\ Client/hinclientservice'
+
+/mnt/homes/{{a_user}}/.thunderbird/{{a_user}}.hin:
+  file.directory:
+    - makedirs: true
+    - user:  {{a_user}}
+    - group:  {{a_user}}
+
+/mnt/homes/{{a_user}}/.thunderbird/profiles.ini:
+  file.managed:
+    - user:  {{a_user}}
+    - group:  {{a_user}}
+    - contents:
+      - "[General]"
+      - StartWithLastProfile=1
+      -
+      - "[Profile0]"
+      - Name=default
+      - IsRelative=1
+      - Path={{a_user}}.hin
+      - Default=1
+
+/mnt/homes/{{a_user}}/.thunderbird/{{a_user}}.hin/prefs.js:
+  file.managed:
+    - replace: false # we don't want to override the user made changes after the first installation
+    - user:  {{a_user}}
+    - source: salt://hin-client/file/prefs.js
+    - template: jinja
+    - require:
+      - file: /mnt/homes/{{a_user}}/.thunderbird/{{a_user}}.hin
+    - defaults:
+        user_name: {{a_user}}
+        {% for user_def in pillar['users'] %}
+          {% if (a_user == user_def.name) %}
+        home: {{user_def.home}}
+          {% endif %}
+        {% endfor %}
+        hin_login: {{hin_login}}
+        {% for client in pillar['hin_clients'] %}
+          {% if (hin_login == client.hin_login) %}
+        client: {{client}}
+          {% endif %}
+        {% endfor %}
+  {% endfor %}
+{% endfor %}

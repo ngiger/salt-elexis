@@ -27,11 +27,6 @@ db_user:
     - require:
         - service: postgresql
 
-  file.managed:
-    - name: /tmp/ng_test
-    - contents:
-        - {{salt['pillar.get']('elexis').db_main }}
-        - {{salt['pillar.get']('elexis').db_password }}
 db_main:
    postgres_database.present:
      - name: {{salt['pillar.get']('elexis').db_main }}
@@ -46,9 +41,6 @@ db_test:
      - owner: {{salt['pillar.get']('elexis').db_user }}
      - require:
          - postgres_user: elexis
-
-{% if false %}
-{% endif %}
 
 # Danach kann man mit Hilfe von "psql -U elexis elexis -h localhost" einloggen
 

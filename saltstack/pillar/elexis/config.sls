@@ -37,18 +37,31 @@ medelexis_apps:
     db_to_use:  elexis
     config: elexis-3.1
 
+# Defined which users may access which HIN identities
+users_for_hinclients:
+  nikgiger: # HIN login
+    labor:  # OS users using thunderbird to access above HIN login
+
+# To ease scripting we use the following
+# For each HIN Login we have with the same name a
+# - local user (which will run the service)
+# - hin identify file name $HOME/$login.hin
+# - pillar item hin_passphrase
+# - pillar item hin_identiy # which must output of xxd --plain (plain hexdump style)
 hin_clients:
-    - name: nikgiger
-    # Name of the (already activated) idendity file
-      id_file:  'bymtoerl.hin'
-    # Where to find the idendity file for coping
-      id_file_source:  '/vagrant/saltstack/salt'
-    # Local User for running the hin server
-      hind:  'hind'
+    - hin_login: nikgiger
+    # Choose an ID < 1000 or it will appear in the login choices
+      uid:       501
+      email:     niklaus.giger@hin.ch
+      fullname:  Niklaus Giger
     # Where to get the hinclient from, check 4 new versions
       url:  'https://download.hin.ch/download/distribution/install/1.4.0-0/HINClient_unix_1_4_0-0.tar.gz'
     # Redir Ports, on these ports the services will be available
-      http_port:  '9011'
-      pop3_port:  '9012'
-      smtp_port:  '9013'
-      imap_port:  '9014'
+      http_port:  9016
+      smtp_port:  9018
+      pop3_port:  9019
+      imap_port:  9020
+      hin_passphrase: DummyPassphrase
+      hin_identity: "44756d6d7920436f6e74656e742065696e20626973736368656e206cc3a4
+6e6765720a"
+
