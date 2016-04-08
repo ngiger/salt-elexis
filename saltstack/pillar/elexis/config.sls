@@ -38,11 +38,11 @@ medelexis_apps:
     config: elexis-3.1
 
 hin_clients:
-    - name: bymtoerli
+    - name: nikgiger
     # Name of the (already activated) idendity file
       id_file:  'bymtoerl.hin'
     # Where to find the idendity file for coping
-      id_file_source:  '/home/bymtoerl/Schreibtisch'
+      id_file_source:  '/vagrant/saltstack/salt'
     # Local User for running the hin server
       hind:  'hind'
     # Where to get the hinclient from, check 4 new versions

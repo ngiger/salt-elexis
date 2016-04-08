@@ -24,3 +24,11 @@ thunder_bird_install:
     - defaults:
         user: {{user}}
 {% endfor %}
+
+#./.local/share/applications/mimeapps.lis
+#[Default Applications]
+#x-scheme-handler/mailto=thunderbird.desktop
+#message/rfc822=thunderbird.desktop
+#[Added Associations]
+#x-scheme-handler/mailto=thunderbird.desktop;
+#message/rfc822=thunderbird.desktop;

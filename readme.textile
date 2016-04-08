@@ -49,6 +49,10 @@ This was a little bit tricky. Solved by:
 * Add /etc/idmapd.conf
 * Server must be configured via salt before the client minions
 
+h3. Aufsetzen des HIN-Clients
+
+Vorgängig muss aus einem Windows oder Mac der Zugang zum HIN konfiguriert werden, da HIN leider Linux nur halbwegs unterstützt.
+
 
 h3. Unresolved problems
 

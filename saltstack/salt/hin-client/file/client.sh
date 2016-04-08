@@ -10,10 +10,10 @@
 ######################################################
 
 # Name of the (already activated) idendity file
-IDENDITY_FILE={{ client.get('id_file', 'bymtoerl.hin') }}
+IDENDITY_FILE={{ client.get('id_file', 'nikgiger.hin') }}
 
 # Where to find the idendity file for coping
-IDENDITY_FILE_SOURCE_PATH={{ client.get('id_file_source', '/home/fschmid/Schreibtisch') }}
+IDENDITY_FILE_SOURCE_PATH={{ client.get('id_file_source', '/vagrant/saltstack/salt/') }}
 
 # Local User for running the hin server
 HIND_USER={{ client.get('hind', 'hind') }}
