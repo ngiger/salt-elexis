@@ -6,6 +6,7 @@ elexis:
   backup_root:   /mnt/backup
   local_files:   /usr/local
   db_type: postgresql # mysql of pg for postgresql
+  db_version: 9.4 # version of the database
   db_server: 192.168.1.222
   db_port: 8700
   db_main: elexis  # Name of DB to use for production

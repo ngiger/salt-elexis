@@ -30,10 +30,15 @@ We want to be able to configure the salt server, too, therefore the /etc/salt/mi
 bc. master: localhost
 state_output: mixed
 
-** @sudo salt-call state.highstate@ # will take a long time to download/install all stuff. It must be called first on the master to prepare all the needed stuff like NFS4-server for the clients
-** @sudo salt '*' state.highstate@ # will take a long time to download/install all stuff
+and the /etc/salt/master to something like this (which will allow you to override the defaults)
 
-and the /etc/salt/master
+bc. file_roots:
+  base:
+    - /home/some_user/salt
+    - /srv/salt/saltstack/salt
+pillar_roots:
+  base:
+    - /etc/salt/pillar
 
 
 h3. Adding and verifying minion keys on the master
@@ -41,6 +46,8 @@ h3. Adding and verifying minion keys on the master
 * In the output @sudo salt-key -L@ you should  see a line like @Unaccepted Keys:@ followed @labor.local@
 * Run @sudo salt-key -A@ and accept the keys
 * Run @sudo salt '*' test.ping@ to verify that you can
+* @sudo salt-call state.highstate@ # will take a long time to download/install all stuff. It must be called first on the master to prepare all the needed stuff like NFS4-server for the clients
+* @sudo salt '*' state.highstate@ # will take a long time to download/install all stuff
 
 h3. NFSv4 setup
 

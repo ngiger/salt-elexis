@@ -2,20 +2,24 @@ postgresql-dbserver:
   pkg.installed:
     - refresh: false
     - pkgs:
-      - postgresql:
-      - postgresql-client:
+      - postgresql-{{salt['pillar.get']('elexis').db_version}}:
+      - postgresql-client-{{salt['pillar.get']('elexis').db_version}}:
   service.running:
     - name: postgresql
     - watch:
-        - file: /etc/postgresql/9.4/main/postgresql.conf
-        - file: /etc/postgresql/9.4/main/pg_hba.conf
+        - file: /etc/postgresql/{{salt['pillar.get']('elexis').db_version}}/main/postgresql.conf
+        - file: /etc/postgresql/{{salt['pillar.get']('elexis').db_version}}/main/pg_hba.conf
 
-/etc/postgresql/9.4/main/postgresql.conf:
+/etc/postgresql/{{salt['pillar.get']('elexis').db_version}}/main/postgresql.conf:
   file.append:
+    - require:
+      - pkg: postgresql-dbserver
     - text: "listen_addresses = '*'"
 
-/etc/postgresql/9.4/main/pg_hba.conf:
+/etc/postgresql/{{salt['pillar.get']('elexis').db_version}}/main/pg_hba.conf:
   file.append:
+    - require:
+      - pkg: postgresql-dbserver
     - text: "host    all             all             192.168.1.0/24            md5"
 
 db_user:
@@ -25,7 +29,7 @@ db_user:
     - login: True
     - password: {{salt['pillar.get']('elexis').db_password }}
     - require:
-        - service: postgresql
+      - pkg: postgresql-dbserver
 
 db_main:
    postgres_database.present:
@@ -33,14 +37,16 @@ db_main:
      - encoding: 'UTF-8'
      - owner: {{salt['pillar.get']('elexis').db_user }}
      - require:
-         - postgres_user: elexis
+        - pkg: postgresql-dbserver
+        - postgres_user: elexis
 db_test:
    postgres_database.present:
      - name: {{salt['pillar.get']('elexis').db_test }}
      - encoding: 'UTF-8'
      - owner: {{salt['pillar.get']('elexis').db_user }}
      - require:
-         - postgres_user: elexis
+        - pkg: postgresql-dbserver
+        - postgres_user: elexis
 
 # Danach kann man mit Hilfe von "psql -U elexis elexis -h localhost" einloggen
 
