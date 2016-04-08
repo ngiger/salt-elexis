@@ -95,7 +95,9 @@ inetutils-inetd:
 
 {% for hin_login, username in salt['pillar.get']('users_for_hinclients', {}).iteritems() %}
   {% for a_user in username %}
-/mnt/homes/{{a_user}}/.config/autostart:
+    {% for user_def in pillar['users'] %}
+      {% if (a_user == user_def.name) %}
+{{user_def.home}}/.config/autostart:
   file.directory:
     - user: {{a_user}}
 /usr/local/bin/restart_{{hin_login}}_hin_client:
@@ -107,13 +109,7 @@ inetutils-inetd:
       - 'logger retarting HIN client for {{hin_login}}'
       - 'sudo -Hu {{hin_login}} /home/{{hin_login}}/HIN\ Client/hinclientservice restart'
 
-{{hin_login}}_start_at_boot:
-  cron.set_special:
-    - user: {{a_user}}
-    - special: "@reboot"
-    - name: "/usr/local/bin/restart_{{hin_login}}_hin_client"
-
-/mnt/homes/{{a_user}}/.config/autostart/hin_client:
+{{user_def.home}}/.config/autostart/hin_client:
   file.managed:
     - user: {{a_user}}
     - mode: 664
@@ -136,13 +132,13 @@ inetutils-inetd:
       - "{{a_user}}               ALL=(ALL:ALL) NOPASSWD:/usr/local/bin/restart_{{hin_login}}_hin_client"
       - '{{a_user}},{{hin_login}} ALL=(ALL:ALL) NOPASSWD:/home/{{hin_login}}/HIN\ Client/hinclientservice'
 
-/mnt/homes/{{a_user}}/.thunderbird/{{a_user}}.hin:
+{{user_def.home}}/.thunderbird/{{a_user}}.hin:
   file.directory:
     - makedirs: true
     - user:  {{a_user}}
     - group:  {{a_user}}
 
-/mnt/homes/{{a_user}}/.thunderbird/profiles.ini:
+{{user_def.home}}/.thunderbird/profiles.ini:
   file.managed:
     - user:  {{a_user}}
     - group:  {{a_user}}
@@ -156,26 +152,24 @@ inetutils-inetd:
       - Path={{a_user}}.hin
       - Default=1
 
-/mnt/homes/{{a_user}}/.thunderbird/{{a_user}}.hin/prefs.js:
+{{user_def.home}}/.thunderbird/{{a_user}}.hin/prefs.js:
   file.managed:
     - replace: false # we don't want to override the user made changes after the first installation
     - user:  {{a_user}}
     - source: salt://hin-client/file/prefs.js
     - template: jinja
     - require:
-      - file: /mnt/homes/{{a_user}}/.thunderbird/{{a_user}}.hin
+      - file: {{user_def.home}}/.thunderbird/{{a_user}}.hin
     - defaults:
         user_name: {{a_user}}
-        {% for user_def in pillar['users'] %}
-          {% if (a_user == user_def.name) %}
         home: {{user_def.home}}
-          {% endif %}
-        {% endfor %}
         hin_login: {{hin_login}}
         {% for client in pillar['hin_clients'] %}
           {% if (hin_login == client.hin_login) %}
         client: {{client}}
           {% endif %}
         {% endfor %}
+      {% endif %}
+    {% endfor %}
   {% endfor %}
 {% endfor %}
