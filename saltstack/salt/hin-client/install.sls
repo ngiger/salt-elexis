@@ -97,9 +97,6 @@ inetutils-inetd:
   {% for a_user in username %}
     {% for user_def in pillar['users'] %}
       {% if (a_user == user_def.name) %}
-{{user_def.home}}/.config/autostart:
-  file.directory:
-    - user: {{a_user}}
 /usr/local/bin/restart_{{hin_login}}_hin_client:
   file.managed:
     - user: {{a_user}}
@@ -113,6 +110,9 @@ inetutils-inetd:
   file.managed:
     - user: {{a_user}}
     - mode: 664
+    - makedirs: true
+    - require:
+      - user: {{a_user}}
     - contents:
       - "[Desktop Entry]"
       - Type=Application

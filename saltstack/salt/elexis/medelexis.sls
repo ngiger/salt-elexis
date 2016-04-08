@@ -39,6 +39,8 @@ libnotify-bin:
   cmd.run:
     - name: xdg-desktop-icon install /usr/share/applications/{{filename}}.desktop
     - user:  {{user.name}}
+    - require:
+        - user:  {{user.name}}
     # - only_if: diff /usr/share/applications/{{filename}}.desktop {{user.home}}/*/{{filename}}.desktop
   {% endfor %}
 
