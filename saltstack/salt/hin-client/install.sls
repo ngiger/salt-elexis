@@ -25,7 +25,7 @@ g_{{client.hin_login}}:
   user.present:
     - name: {{client.hin_login}}
     - uid: {{client.uid}}
-#    - gid: {{client.uid}}
+    - gid: {{client.uid}}
 
 {{client.hin_login}}_hin_client:
   archive.extracted:

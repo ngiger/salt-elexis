@@ -40,6 +40,22 @@ pillar_roots:
   base:
     - /etc/salt/pillar
 
+Also I recommond to add a top.sls in /home/some_user/salt with a content like this, which should reflect your environment.
+
+bc. base:
+  'ubuntu*':
+    - common
+    - homes.mount
+    - elexis
+    - unity
+    - server.idmap
+    - locale
+    - hin-client
+  "{{ pillar['server.name']}}*":
+    - common
+    - server.unattended_upgrades
+    - server.nfs
+    - server.db
 
 h3. Adding and verifying minion keys on the master
 
@@ -97,7 +113,7 @@ Grains
 Pillar
 IP Target based on IP address/subnet/range
 
-bc. sudo salt * saltutil.refresh_pillar
+bc. sudo salt '*' saltutil.refresh_pillar
 sudo salt '*' pillar.items
 sudo salt labor* state.apply users Test=true -l debug
 
