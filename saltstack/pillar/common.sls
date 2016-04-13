@@ -1,7 +1,3 @@
-common:
-  - user21
-  - user33
-
 ssmtp:
     root: some.name@provider.com
     mailhub: smtp.provider.com

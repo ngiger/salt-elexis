@@ -87,6 +87,16 @@ h3. Unresolved problems
 * Running @locale-gen de_CH.UTF-8@ in locales.sls freezes the whole system. Must call this command by hand. Why?
 * Don't know how to tell salt that installing the package unattended-upgrades creates 50unattended-upgrade
 
+h3. Available features
+
+* NFSv4 server/client
+* Setup of user homes
+* Installation of Elexis3 OpenSource. Creates Desktop icons
+* Installation of MedElexis. License File and ZIP must reside on server. Creates Desktop icons.
+* hinclient with setup of a corresponding thunderbird mail configuration
+* ssmtp
+
+
 h3. TODO
 
 * Set default keyboard to Swiss German
@@ -98,8 +108,8 @@ h3. TODO
 * rsnapshot https://github.com/Arkanosis/Arkonf/tree/master/saltstack/salt/backup
 * https://github.com/elexis/elexis-cockpit
 * mysql
-* ssmtp
 * dyndns
+* mediport plugin & MPCcommunicator
 * nginx https://www.digitalocean.com/community/tutorials/saltstack-infrastructure-creating-salt-states-for-nginx-web-servers and https://github.com/saltstack-formulas/nginx-formula
 * exim4/imap/courier mail
 * hylafax ???? (FAX will be phased out by swisscom on January, 1, 2017)

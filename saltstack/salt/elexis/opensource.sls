@@ -4,15 +4,12 @@ include:
 elexis-requires:
   pkg.installed:
     - name: unzip
-libnotify-bin:
-  pkg.installed:
-    - name: libnotify-bin
 
 /usr/share/icons/elexis-logo.png:
   file.managed:
     - source: salt://elexis/file/elexis-logo.png
 
-{% for elexis_install in pillar['elexis_installation'] %}
+{% for elexis_install in  pillar.get('elexis_installation', []) %}
 {{elexis_install.inst_path}}:
   archive.extracted:
     - if_missing: {{elexis_install.inst_path}}/Elexis3
@@ -27,7 +24,7 @@ libnotify-bin:
         - archive: {{elexis_install.inst_path}}
 {% endfor %}
 
-{% for app in pillar['elexis_apps'] %}
+{% for app in pillar.get('elexis_apps', []) %}
 {%- set filename = salt['file.basename'](app.exe) %}
 
 {{app.exe}}.sh:
