@@ -91,7 +91,7 @@ h3. TODO
 
 * Set default keyboard to Swiss German
 * Don't ask for upgrade of Ubuntu from 12.04 -> 14.04
-* Don't show users like vagrant; Ubuntu when
+* Don't show users like vagrant; Ubuntu # It is enough to change them to user ids < 1000
 * db backup
 * dnsmask https://github.com/saltstack-formulas/dnsmasq-formula
 * wol (WakeOnLan)
@@ -99,8 +99,10 @@ h3. TODO
 * https://github.com/elexis/elexis-cockpit
 * mysql
 * ssmtp
+* dyndns
 * nginx https://www.digitalocean.com/community/tutorials/saltstack-infrastructure-creating-salt-states-for-nginx-web-servers and https://github.com/saltstack-formulas/nginx-formula
 * exim4/imap/courier mail
+* hylafax ???? (FAX will be phased out by swisscom on January, 1, 2017)
 * letsencrypt
 ** https://github.com/saltstack-formulas/letsencrypt-formula
 ** https://www.kunxi.org/blog/2015/12/lets-encrypt-with-saltstack/
