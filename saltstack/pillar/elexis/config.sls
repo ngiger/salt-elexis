@@ -38,31 +38,25 @@ medelexis_apps:
     db_to_use:  elexis
     config: elexis-3.1
 
-# Defined which users may access which HIN identities
-users_for_hinclients:
-  nikgiger: # HIN login
-    labor:  # OS users using thunderbird to access above HIN login
+elexis_installation:
+  - variant: beta
+    download_uri: https://srv.elexis.info/jenkins/view/3.0/job/Elexis-3-Core-Beta/21/artifact/ch.elexis.core.p2site/target/products/ch.elexis.core.application.ElexisApp-linux.gtk.x86_64.zip
+    hash: sha256=6b2b160cf8bbd49bde8755732cf9b7e5dc11eef36b1782fc6dfca93c44024edb
+    inst_path: /usr/local/bin/elexis-3.1-beta
 
-# To ease scripting we use the following
-# For each HIN Login we have with the same name a
-# - local user (which will run the service)
-# - hin identify file name $HOME/$login.hin
-# - pillar item hin_passphrase
-# - pillar item hin_identiy # which must output of xxd --plain (plain hexdump style)
-hin_clients:
-    - hin_login: nikgiger
-    # Choose an ID < 1000 or it will appear in the login choices
-      uid:       501
-      email:     niklaus.giger@hin.ch
-      fullname:  Niklaus Giger
-    # Where to get the hinclient from, check 4 new versions
-      url:  'https://download.hin.ch/download/distribution/install/1.4.0-0/HINClient_unix_1_4_0-0.tar.gz'
-    # Redir Ports, on these ports the services will be available
-      http_port:  9016
-      smtp_port:  9018
-      pop3_port:  9019
-      imap_port:  9020
-      hin_passphrase: DummyPassphrase
-      hin_identity: "44756d6d7920436f6e74656e742065696e20626973736368656e206cc3a4
-6e6765720a"
+elexis_apps:
+  - human_name: Elexis 3.1 (BETA) auf Test-Datenbank
+    variant: beta
+    download_uri: https://srv.elexis.info/jenkins/view/3.0/job/Elexis-3-Core-Beta/21/artifact/ch.elexis.core.p2site/target/products/ch.elexis.core.application.ElexisApp-linux.gtk.x86_64.zip
+    hash: sha256=6b2b160cf8bbd49bde8755732cf9b7e5dc11eef36b1782fc6dfca93c44024edb
+    exe: /usr/local/bin/elexis-3.1-beta-test
+    db_to_use:  elexis-3-test
+    config: elexis-3.1-test
+  - human_name: Elexis 3.1 (BETA) auf scharfer Datenbank
+    variant: beta
+    download_uri: https://srv.elexis.info/jenkins/view/3.0/job/Elexis-3-Core-Beta/21/artifact/ch.elexis.core.p2site/target/products/ch.elexis.core.application.ElexisApp-linux.gtk.x86_64.zip
+    hash: sha256=6b2b160cf8bbd49bde8755732cf9b7e5dc11eef36b1782fc6dfca93c44024edb
+    exe: /usr/local/bin/elexis-3.1-beta
+    db_to_use:  elexis
+    config: elexis-3.1
 

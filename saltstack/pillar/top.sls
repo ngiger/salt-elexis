@@ -4,3 +4,4 @@ base:
     - server.config
     - users
     - elexis.config
+    - hinclient

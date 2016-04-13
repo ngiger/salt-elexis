@@ -1,0 +1,7 @@
+[Desktop Entry]
+Type=Application
+Terminal=false
+Icon=elexis-logo
+Name={{app.human_name}}
+Exec=/usr/local/bin/elexis-3.1-{{app.variant}}.sh
+Categories=MEDICALSOFTWARE;OFFICE;

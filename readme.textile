@@ -57,11 +57,15 @@ bc. base:
     - server.nfs
     - server.db
 
+It might be a good idea each part seperatley (first on the server, then on the clients) using e.g. @sudo salt-call state.apply common Test=true@.
+This will list
+
 h3. Adding and verifying minion keys on the master
 
 * In the output @sudo salt-key -L@ you should  see a line like @Unaccepted Keys:@ followed @labor.local@
 * Run @sudo salt-key -A@ and accept the keys
 * Run @sudo salt '*' test.ping@ to verify that you can
+* Run @sudo salt-call pillar.items @ to see all variables of your configuration
 * @sudo salt-call state.highstate@ # will take a long time to download/install all stuff. It must be called first on the master to prepare all the needed stuff like NFS4-server for the clients
 * @sudo salt '*' state.highstate@ # will take a long time to download/install all stuff
 
@@ -88,12 +92,18 @@ h3. TODO
 * Set default keyboard to Swiss German
 * Don't ask for upgrade of Ubuntu from 12.04 -> 14.04
 * Don't show users like vagrant; Ubuntu when
-* dsnmask
+* db backup
+* dnsmask https://github.com/saltstack-formulas/dnsmasq-formula
 * wol (WakeOnLan)
-* rsnapshot
+* rsnapshot https://github.com/Arkanosis/Arkonf/tree/master/saltstack/salt/backup
 * https://github.com/elexis/elexis-cockpit
 * mysql
-* db backup
+* ssmtp
+* nginx https://www.digitalocean.com/community/tutorials/saltstack-infrastructure-creating-salt-states-for-nginx-web-servers and https://github.com/saltstack-formulas/nginx-formula
+* exim4/imap/courier mail
+* letsencrypt
+** https://github.com/saltstack-formulas/letsencrypt-formula
+** https://www.kunxi.org/blog/2015/12/lets-encrypt-with-saltstack/
 
 h3. Interesting readings/links/snippet
 
