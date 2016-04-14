@@ -104,6 +104,7 @@ fi
 logger "User $USER starting Medelexis in $PWD with result $result using $PATH"
 
 ./Medelexis -eclipse.password ~/.medelexis.dummy.password -clean -debug -consoleLog \
+-vm /usr/lib/jvm/java-8-oracle/jre/bin/java \
 --use-config=elexis-${ELEXIS_VARIANT}-${DB_TO_USE} -vmargs \
 -Dorg.eclipse.swt.internal.gtk.cairoGraphics=false \
 $ELEXIS_DB_CONFIG_ARGS \

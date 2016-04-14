@@ -1,5 +1,6 @@
 include:
   - users
+  - java8
 
 elexis-requires:
   pkg.installed:
@@ -22,6 +23,7 @@ elexis-requires:
     - mode: 755
     - require:
         - archive: {{elexis_install.inst_path}}
+        - java:
 {% endfor %}
 
 {% for app in pillar.get('elexis_apps', []) %}
