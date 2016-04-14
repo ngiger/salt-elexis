@@ -13,3 +13,6 @@ base:
     - server.unattended_upgrades
     - server.nfs
     - server.db
+#{% if  pillar.get('letsencrypt', {}) %}
+    - letsencrypt.domains
+{% endif %}

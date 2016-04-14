@@ -1,4 +1,7 @@
 # /mnt/homes must be in sync the the pillar/users.sls file
+include:
+  - server.letsencrypt
+
 server.name:  prxserver
 
 server.config:
