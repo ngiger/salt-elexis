@@ -58,7 +58,6 @@ fi
 export PATH=/usr/lib/jvm/java-8-oracle/jre/bin:$PATH
 INST_PATH=$HOME/.medelexis-${ELEXIS_VARIANT}
 echo $INST_PATH/Medelexis
-ls -lrt $INST_PATH/Medelexis
 if [ -f $INST_PATH/Medelexis ]
 then
   echo $INST_PATH gibt es schon
