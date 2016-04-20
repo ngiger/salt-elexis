@@ -4,10 +4,12 @@ letsencrypt_example:
   config: |
     server = https://acme-v01.api.letsencrypt.org/directory
     email = webmaster@example.com
-    authenticator = webroot
-    webroot-path = /var/lib/www
+    authenticator = standalone
+    # webroot-path = /var/lib/www
     agree-tos = True
     renew-by-default = True
+    cron_hour = 2
+    cron_minute = 3
   domainsets:
     www:
       - example.com

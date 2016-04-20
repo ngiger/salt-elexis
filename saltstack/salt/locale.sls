@@ -20,4 +20,5 @@ generate_locale:
   cmd.run:
     # TODO: Here salt hangs if I try to run this command. Why?
     - name: locale-gen de_CH.UTF-8
+    - unless: egrep '^de_CH.UTF-8' /etc/locale.gen
 {% endif %}

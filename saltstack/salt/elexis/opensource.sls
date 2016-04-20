@@ -23,13 +23,12 @@ elexis-requires:
     - mode: 755
     - require:
         - archive: {{elexis_install.inst_path}}
-        - java:
 {% endfor %}
 
 {% for app in pillar.get('elexis_apps', []) %}
 {%- set filename = salt['file.basename'](app.exe) %}
 
-{{app.exe}}.sh:
+{{app.exe}}:
   file.managed:
     - mode: 755
     - source: salt://elexis/file/elexis.sh

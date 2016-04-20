@@ -28,21 +28,29 @@ medelexis_apps:
   - human_name: Medelexis 3.1 (BETA) auf Test-Datenbank
     variant: beta
     downloaded_zip: /opt/downloads/medelexis.zip
-    exe: /usr/local/bin/medelexis-3.1-beta-test
+    exe: /usr/local/bin/medelexis-3.1-beta-test.sh
     db_to_use:  elexis-3-test
     config: elexis-3.1-test
   - human_name: Medelexis 3.1 (BETA) auf scharfer Datenbank
     variant: beta
     downloaded_zip: /opt/downloads/medelexis.zip
-    exe: /usr/local/bin/medelexis-3.1-beta
+    exe: /usr/local/bin/medelexis-3.1-beta.sh
     db_to_use:  elexis
     config: elexis-3.1
 
 elexis_installation:
-  - variant: beta
-    download_uri: https://srv.elexis.info/jenkins/view/3.0/job/Elexis-3-Core-Beta/21/artifact/ch.elexis.core.p2site/target/products/ch.elexis.core.application.ElexisApp-linux.gtk.x86_64.zip
-    hash: sha256=6b2b160cf8bbd49bde8755732cf9b7e5dc11eef36b1782fc6dfca93c44024edb
-    inst_path: /usr/local/bin/elexis-3.1-beta
+  - variant: prerelease
+    exe: /usr/local/bin/exis-3.1-prerelease-test.sh
+{% if grains['os'] == 'Ubuntu' %}
+    download_uri: https://download.elexis.info/elexis.3.core/3.1.0-prerelease/products/ch.elexis.core.application.ElexisApp-linux.gtk.x86_64.zip
+    hash: sha256=0c95e4e7f4d50e833391d409c3624572879641c840256bb0348b4e79e58ee1c5
+    inst_path: /usr/local/bin/elexis-3.1-prerelease
+{% elif grains['os'] == 'Windows' %}
+    download_uri: https://download.elexis.info/elexis.3.core/3.1.0-prerelease/products/ch.elexis.core.application.ElexisApp-win32.win32.x86.zip
+    hash: sha256=ce2a0875a2227513a138b385ae8cf988d0d54a4bb6d48a22e6339d5e411d450d
+    inst_path: C:/elexis-installationen/elexis-3.1-prerelease
+{% endif %}
+
 
 elexis_apps:
   - human_name: Elexis 3.1 (BETA) auf Test-Datenbank

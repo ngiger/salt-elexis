@@ -2,6 +2,7 @@
 debconf-utils:
   pkg.installed
 
+{% if grains['os_family'] == 'Debian' %}
 oracle-java{{ java_version }}-installer:
   {% if grains['os'] == 'Ubuntu' %}
   pkgrepo.managed:
@@ -25,3 +26,4 @@ oracle-java{{ java_version }}-installer:
        - pkg: oracle-java{{ java_version }}-installer
    - require:
         - pkg: debconf-utils
+{% endif %}

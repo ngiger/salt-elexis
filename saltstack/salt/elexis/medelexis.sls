@@ -51,9 +51,11 @@ libnotify-bin:
   file.directory:
     - name: {{user.home}}/elexis
 
+{% if salt.file.file_exists(pillar['medelexis']['license_xml']) %}
 {{user.home}}/elexis/license.xml:
   file.copy:
     - source: {{ pillar['medelexis']['license_xml'] }}
+{% endif %}
 
 {% endfor %}
 

@@ -42,6 +42,7 @@ unity-desktop:
     - name: "{{user.home}}/.gconf/desktop/gnome/peripherals/keyboard/kbd/%gconf.xml"
     - user: {{user.name}}
     - group: {{user.name}}
+    - force:  false
     - contents:
        - '<?xml version="1.0"?>'
        - '<gconf>'
@@ -56,6 +57,7 @@ unity-desktop:
     - user: {{user.name}}
     - group: {{user.name}}
     - makedirs: True
+    - force:  false
 {{user.home}}/.gconf/apps/update-notifier/%gconf.xml:
   file.managed:
     - user: {{user.name}}

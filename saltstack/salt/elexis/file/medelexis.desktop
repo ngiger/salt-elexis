@@ -3,5 +3,5 @@ Type=Application
 Terminal=false
 Icon=medelexis-logo
 Name={{app.human_name}}
-Exec=/usr/local/bin/medelexis-3.1-beta
+Exec={{app.exe}}
 Categories=MedicalSoftware;Office
