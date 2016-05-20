@@ -1,7 +1,10 @@
 base:
   '*':
+    - defaults
     - common
-    - server.config
+    - rsnapshot_home
+    - network
     - users
-    - elexis.config
+  'inactive':
     - hinclient
+    - goodies
