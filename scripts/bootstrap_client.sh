@@ -1,5 +1,6 @@
 #!/bin/bash
 release=`lsb_release --codename --short`
+export DEBIAN_FRONTEND=noninteractive
 
 if [ "$release" == "jessie" -o   "$release" == "wheezy" ]
 then
@@ -26,8 +27,8 @@ fi
 if [ -z "$found" ]
 then
   echo salt-minion not yet installed
-  sudo apt-get update
-  sudo apt-get install -y salt-common salt-minion
+  sudo apt-get update --quiet
+  sudo apt-get install --no-install-recommends --quiet --yes salt-common salt-minion
 else
   echo salt-minion already installed
 fi
@@ -35,6 +36,7 @@ fi
 grep '^master' /etc/salt/minion
 if [ $? -ne 0 ]
 then
-  echo "master: 192.168.1.222" | sudo tee --append /etc/salt/minion
+  # master IP must be in sync between Vagrantfile, scripts/bootstrap_client.sh and scripts/bootstrap_master.sh
+  echo "master: 192.168.1.90" | sudo tee --append /etc/salt/minion
   sudo service salt-minion restart
 fi

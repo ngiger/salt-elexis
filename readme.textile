@@ -17,7 +17,7 @@ h3. Using real machines
 
 Set the /etc/salt/minion to something like
 
-bc. master: 192.168.1.222 # IP address or name, default is salt
+bc. master: 192.168.1.90 # IP address or name, default is salt
 state_output: mixed
 
 
