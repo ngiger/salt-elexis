@@ -5,14 +5,20 @@
 
 medelexis-requires:
   pkg.installed:
-    - name: unzip
-libnotify-bin:
-  pkg.installed:
-    - name: libnotify-bin
+    - refresh: false
+    - name:
+      - unzip
+      - libnotify-bin
 
 /usr/share/icons/medelexis-logo.png:
   file.managed:
     - source: salt://elexis/file/medelexis-logo.png
+
+{% if pillar.get('elexis:db_server', False) %}
+{% set db_server = pillar.get('server:name') %}
+{% else %}
+{% set db_server = pillar.get('elexis:db_server') %}
+{% endif %}
 
 {% for app in pillar['medelexis_apps'] %}
 {{app.exe}}:
@@ -22,6 +28,7 @@ libnotify-bin:
     - template: jinja
     - defaults:
         app: {{app}}
+        db_server: {{db_server}}
         elexis: {{ pillar.get('elexis') }} # db_parameters
         medelexis: {{ pillar.get('medelexis') }} # license
 {%- set filename = salt['file.basename'](app.exe) %}

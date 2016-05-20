@@ -1,0 +1,7 @@
+[Desktop Entry]
+Type=Application
+Terminal=false
+Icon=elexis-logo
+Name=Elexis Cockpit
+Categories=Monitor;System
+Exec=/etc/alternatives/x-www-browser http://{{server}}:9393

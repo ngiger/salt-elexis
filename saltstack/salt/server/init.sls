@@ -1,5 +1,10 @@
 include:
+  - server.dnsmasq
+{% if pillar.get('server.nfs', false) %}
   - server.idmap
   - server.nfs
-  - sever.postgresql
-  - sever.letsencrypt
+{% endif %}
+{% if pillar.get('server.postgresq', false) %}
+  - server.postgresql
+{% endif %}
+  - server.letsencrypt

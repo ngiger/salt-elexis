@@ -1,0 +1,28 @@
+h1. rsnapshot
+
+This directory should probably go into a separate salt formula. But as I do not have the time
+
+
+h2. Useage
+
+Read the rsnapshot doc (http://rsnapshot.org/rsnapshot/docs/docbook/rest.html) first to get a overview!
+
+Look at the pillar.example to get a feeling on how you can modify:
+* Backup local directories
+* Backup remote directories
+** Use a specific ssh identy file
+** Populate the ssh identy files from your pillar
+* Modify the retain strategy (hourly, daily) and the corresponding crontab entries
+
+By default we backup every 4 hours, then daily, weekly, monthly, quarterly and yearly.
+
+We ajusted the the priority of the backup to task (using nice -10 and ionice -c3) to minimize impacton you work while doing a backup.
+
+The following manual steps might be necessary:
+* The destination dir of the backup must be created manually (to avoid copying into a non mounted filesystem)
+* To accept the host-id run manually the newly generated sync command. eg.
+** sudo nice -10 ionice -c3 /usr/bin/rsnapshot -q -c /etc/rsnapshot_demo.conf sync
+
+
+
+

@@ -1,0 +1,84 @@
+# see for explanations https://help.ubuntu.com/12.04/installation-guide/en.amd64/apbs04.html
+apt-setup-udeb	apt-setup/services-select	multiselect	security
+apt-setup-udeb	apt-setup/services-select-ubuntu	multiselect	security
+bootstrap-base	base-installer/initramfs-tools/driver-policy	select	most
+bootstrap-base	base-installer/kernel/image	select	linux-generic-lts-trusty
+
+apt-mirror-setup apt-setup/universe      boolean true
+apt-mirror-setup apt-setup/multiverse    boolean true
+apt-mirror-setup apt-setup/contrib       boolean false
+apt-mirror-setup apt-setup/no_mirror     boolean false
+apt-mirror-setup apt-setup/backports     boolean true
+apt-mirror-setup apt-setup/proposed      boolean false
+apt-mirror-setup apt-setup/partner       boolean false
+apt-mirror-setup apt-setup/non-free      boolean false
+apt-mirror-setup apt-setup/mirror/error  select  Retry
+apt-mirror-setup apt-setup/use_mirror    boolean
+apt-mirror-setup apt-setup/extras        boolean false
+apt-mirror-setup apt-setup/restricted    boolean true
+d-i      time/zone       string  Europe/Zurich
+tzsetup-udeb     time/zone       string  Europe/Zurich
+d-i debian-installer/country        string  CH
+d-i mirror/country  string  CH
+d-i mirror/http/directory   string  /ubuntu/
+d-i	debconf/priority	select	high
+d-i	debian-installer/locale	select	de_CH.UTF-8
+d-i	debian-installer/main-menu	select	Installation abschließen
+d-i	ethdetect/module_select	select	no ethernet card
+d-i	hw-detect/select_modules	multiselect	usb-storage (USB storage)
+d-i	keyboard-configuration/altgr	select	The default for the keyboard layout
+d-i	keyboard-configuration/compose	select	No compose key
+d-i	keyboard-configuration/layout	select	Deutsch (Schweiz)
+d-i	keyboard-configuration/switch	select	No temporary switch
+d-i	keyboard-configuration/toggle	select	No toggling
+d-i	keyboard-configuration/variant	select	Deutsch (Schweiz)
+d-i	keyboard-configuration/xkb-keymap	select	ch
+d-i	localechooser/languagelist	select	de
+d-i	localechooser/preferred-locale	select	de_CH.UTF-8
+d-i	localechooser/shortlist	select	CH
+d-i	localechooser/supported-locales	multiselect	en_US.UTF-8
+d-i	localechooser/translation/no-select	note
+d-i	mirror/http/countries	select	CH
+d-i	mirror/http/mirror	select	ch.archive.ubuntu.com
+d-i	mirror/https/countries	select	GB
+d-i	mirror/https/mirror	select	CC.archive.ubuntu.com
+d-i	mirror/protocol	select	http
+d-i	mirror/suite	select	precise
+d-i	mirror/udeb/components	multiselect	main, restricted
+d-i	netcfg/dhcp_options	select	Configure network manually
+d-i	netcfg/wireless_adhoc_managed	select	Infrastructure (Managed) network
+d-i	retriever/net/error	select	Retry
+disk-detect	disk-detect/module_select	select	continue with no disk drive
+d-i	tasksel/first	multiselect	Ubuntu desktop
+d-i partman-auto/method string regular
+d-i partman-auto/choose_recipe select atomic
+pkgsel	pkgsel/update-policy	select	none
+pkgsel	pkgsel/upgrade	select	safe-upgrade
+
+user-setup-udeb  passwd/username string  Dr. med. FMH Elexis
+user-setup-udeb  passwd/user-fullname    string  elexis
+# next value for md5 encrypted password was generated using
+# printf "elexisTest" | mkpasswd -s -m md5
+# $1$fLMQVgyb$XmvSsB4fd5RdNxfUEtbjY1
+d-i passwd/user-password-crypted password $1$fLMQVgyb$XmvSsB4fd5RdNxfUEtbjY1
+
+partman-auto	partman-auto/init_automatically_partition	select	20some_device__________regular
+partman-base	partman/alignment	select	optimal
+partman-target	partman/mount_style	select	uuid
+# This makes partman automatically partition without confirmation, provided
+# that you told it what to do using one of the methods above.
+# d-i partman-partitioning/confirm_write_new_label boolean true
+# d-i partman/choose_partition select finish
+# d-i partman/confirm boolean true
+# d-i partman/confirm_nooverwrite boolean true
+
+pkgsel/language-pack
+
+popularity-contest      popularity-contest/submiturls   string
+popularity-contest      popularity-contest/participate  boolean false
+
+d-i grub-installer/only_debian boolean true
+d-i grub-installer/with_other_os boolean true
+clock-setup clock-setup/utc-auto    boolean true
+clock-setup clock-setup/utc boolean true
+d-i  di-utils-reboot/really_reboot boolean true

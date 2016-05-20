@@ -1,7 +1,7 @@
 # These settings should be okay for the Vagrantfile
 
 server:
-  name:  prxserver
+  name:  ElexisServerDemo
   ip: 192.168.1.90
   # name is defined in common.sls
 network:

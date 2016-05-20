@@ -42,7 +42,7 @@ medelexis_apps:
 elexis_installation:
   - variant: prerelease
     exe: /usr/local/bin/exis-3.1-prerelease-test.sh
-{% if grains['os'] == 'Ubuntu' %}
+{% if grains['os'] == 'Ubuntu' or grains['os'] == 'Debian' %}
     download_uri: https://download.elexis.info/elexis.3.core/3.1.0-prerelease/products/ch.elexis.core.application.ElexisApp-linux.gtk.x86_64.zip
     hash: sha256=0c95e4e7f4d50e833391d409c3624572879641c840256bb0348b4e79e58ee1c5
     inst_path: /usr/local/bin/elexis-3.1-prerelease

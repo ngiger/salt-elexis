@@ -1,0 +1,51 @@
+#!yamlex
+
+rsnapshot_options: !aggregate
+  exclude_file: /etc/rsync.exclude
+  sync_first: true
+  ssh_key: /root/.ssh/some_name
+  # if ssh_config is specified it will be filled with an entry for the given host (+ -rsnapshot)
+  ssh_config:
+    - remote_host
+  # Next two variables are used to fill the ssh_key-file. Else a new one with an empty passphrase will be generated
+  # ssh_key_id_rsa_pub:
+  # ssh_key_id_rsa:
+
+rsnapshot_defaults:
+  # Be aware that crontab and retain entries must be have a the same entries
+  # If you have sync_first crontab must contain a sync item too.
+  retain:
+    - daily: 7
+    - weekly: 4
+    - monthly: 12
+  crontab:
+    sync:
+      minute: 10
+      hour: 2
+    daily:
+      minute: 9
+      hour: 2
+    weekly:
+      minute: 8
+      hour: 2
+      dayweek: 0
+    monthly:
+      minute: 7
+      hour: 2
+      daymonth: 1
+
+rsnapshot_backups: !aggregate
+  localhost:
+    destination: /opt/backup
+    dirs_to_backup:
+      /home:  localhost/
+      /etc:  localhost/
+    parameters:
+      logfile: /var/log/rsnapshot.log
+  remote_host:
+      destination: /mnt/sda1/backup
+      dirs_to_backup:
+        backup@remote_host:/var/www/:  remote_host/
+    parameters:
+      # if you don't specify a logfile, nothing will get logged!
+      logfile: /var/log/rsnapshot.remote.log

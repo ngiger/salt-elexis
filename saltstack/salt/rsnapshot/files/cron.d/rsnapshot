@@ -1,0 +1,7 @@
+#
+# DO NOT CHANGE : IT WILL BE OVERRIDEN BY PUPPET ON THE NEXT RUN
+# DO NOT CHANGE : IT WILL BE OVERRIDEN BY salt ON THE NEXT RUN
+#
+30 3          * * *           root    for i in /var/cache/rsnapshot/*.conf ; do /usr/bin/rsnapshot -q -c $i daily >> /var/log/rsnapshot/$(basename $i .conf).log ; done
+0  3          * * 1           root    for i in /var/cache/rsnapshot/*.conf ; do /usr/bin/rsnapshot -q -c $i weekly >> /var/log/rsnapshot/$(basename $i .conf).log ; done
+30 2          1 * *           root    for i in /var/cache/rsnapshot/*.conf ; do /usr/bin/rsnapshot -q -c $i monthly >> /var/log/rsnapshot/$(basename $i .conf).log ; done

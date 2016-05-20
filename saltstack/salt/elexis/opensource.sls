@@ -4,6 +4,7 @@ include:
 
 elexis-requires:
   pkg.installed:
+    - refresh: false
     - name: unzip
 
 /usr/share/icons/elexis-logo.png:

@@ -1,18 +1,32 @@
 base:
-  'labor*':
+  '*':
     - common
-    - homes.mount
     - elexis
-    - unity
+{% if pillar.get('rsnapshot_backups', False) %}
+    - rsnapshot
+{% endif %}
+
+   # now the stuff which must be only installed on the server
+{% if grains.get('id') == pillar.get('server', {})['name'] %}
     - server.idmap
-    - locale
-    - hin-client
-    - apps.ssmtp
-  "{{ pillar['server.name']}}*":
-    - common
-    - server.unattended_upgrades
     - server.nfs
+    - server.unattended_upgrades
     - server.db
-#{% if  pillar.get('letsencrypt', {}) %}
+{% else %}
+   # now the stuff which must be only installed on the clients
+    - homes.mount
+    - unity
+    - locale
+{% endif %}
+
+{% if pillar.get('hin_clients', False) %}
+    - hin-client
+{% endif %}
+
+{% if pillar.get('ssmtp', False) %}
+    - apps.ssmtp
+{% endif %}
+    - common
+{% if  pillar.get('letsencrypt', False) %}
     - letsencrypt.domains
 {% endif %}

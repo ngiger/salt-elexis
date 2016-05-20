@@ -8,7 +8,7 @@ export DB_TO_USE={{app.db_to_use}}
 export ELEXIS_VARIANT={{app.variant}}
 export ELEXIS_CONFIG="{{app.config}}"
 export ELEXIS_DB_CONFIG_ARGS="-Dch.elexis.dbFlavor={{elexis.db_type}} \
--Dch.elexis.dbSpec=jdbc:{{elexis.db_type}}://{{elexis.db_server}}/{{app.db_to_use}} \
+-Dch.elexis.dbSpec=jdbc:{{elexis.db_type}}://{{db_server}}/{{app.db_to_use}} \
 -Dch.elexis.dbUser={{elexis.db_user}} \
 -Dch.elexis.dbPw={{elexis.db_password}}"
 INST_PATH=/usr/local/bin/elexis-3.1-${ELEXIS_VARIANT}

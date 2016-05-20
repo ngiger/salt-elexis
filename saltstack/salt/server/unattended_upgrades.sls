@@ -2,6 +2,7 @@
 # Other proposed: http://blog.viraptor.info/post/75262988169/ubuntu-unattended-upgrades-the-salt-way
 unattended-upgrades-on: # State ID
   pkg.installed:
+    - refresh: false
     - name: unattended-upgrades
 
 # Don't know how to tell salt that unattended-upgrades creates 50unattended-upgrade

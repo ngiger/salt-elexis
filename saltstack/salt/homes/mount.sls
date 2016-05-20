@@ -1,5 +1,6 @@
 nfs-common:
   pkg.installed:
+    - refresh: false
     - pkgs:
       - nfs-common:
 

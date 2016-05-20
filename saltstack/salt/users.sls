@@ -30,7 +30,7 @@ user_{{user.name}}:
     {% endif %}
     - require:
       - group: {{user.name}}
-    {% if user.get('home', False) and grains.get('id') != 'prxserver.local' %}
+    {% if user.get('home', False) and grains.get('id') != pillar.get('server', {})['name'] %}
     - home: {{user.home}}
     - createhome: true
     {% endif %}

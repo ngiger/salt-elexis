@@ -1,6 +1,7 @@
 {% set java_version = salt['pillar.get']('java_version', '8') %}
 debconf-utils:
-  pkg.installed
+  pkg.installed:
+    - refresh: false
 
 {% if grains['os_family'] == 'Debian' %}
 oracle-java{{ java_version }}-installer:
@@ -17,6 +18,7 @@ oracle-java{{ java_version }}-installer:
     - keyserver: keyserver.ubuntu.com
   {% endif %}
   pkg.installed:
+    - refresh: false
     - require:
       - pkgrepo: oracle-java{{ java_version }}-installer
   debconf.set:

@@ -71,6 +71,7 @@ unity-desktop:
 
 lightdm:
   pkg.installed:
+    - refresh: false
     - name: lightdm
   service.running:
     - name: lightdm

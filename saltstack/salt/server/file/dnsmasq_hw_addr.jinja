@@ -1,0 +1,3 @@
+{% for item in salt['pillar.get']('hw_addr', {}) %}
+dhcp-host={{item.hw_addr}},{{item.name}},{{item.ip}},120d
+{% endfor %}
