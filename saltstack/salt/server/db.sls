@@ -16,11 +16,16 @@ postgresql-dbserver:
       - pkg: postgresql-dbserver
     - text: "listen_addresses = '*'"
 
+
 /etc/postgresql/{{salt['pillar.get']('elexis').db_version}}/main/pg_hba.conf:
-  file.append:
+  file.blockreplace:
+    - marker_start: "# BLOCK TOP : salt managed zone : ip_network : please do not edit"
+    - marker_end: "# BLOCK BOTTOM : end of salt managed zone --"
+    - content: "host all all {{salt['pillar.get']('network', {})['ip_network'] }} md5"
+    - show_changes: True
+    - append_if_not_found: True
     - require:
       - pkg: postgresql-dbserver
-    - text: "host    all             all             192.168.1.0/24            md5"
 
 db_user:
   postgres_user.present:

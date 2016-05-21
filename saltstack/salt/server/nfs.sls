@@ -18,7 +18,7 @@ nfs:
   service.running:
     - name: nfs-kernel-server
     - watch:
-#      - file: server_nfs_kernel_server
+      - file: /etc/exports
       - file: server_nfs_common
 
 server_nfs_kernel_server:
@@ -42,7 +42,7 @@ update_exports:
   cmd.run:
     - name: exportfs -ra
     - watch:
-      - file: server_exports
+      - file: /etc/exports
 
 server_nfs_common:
   pkg.installed:
@@ -54,37 +54,10 @@ server_nfs_common:
     - group: root
     - mode: 644
 
-server_exports:
+/etc/exports:
   file.managed:
     - name: /etc/exports
-    - source: salt://server/file/exports
-    - template: jinja
-
-/exports:
-  file.directory:
-    - user:  root
-    - name:  /exports
-    - group:  root
-    - mode:  755
-
-server_tst:
-  file.managed:
-    - name: /tmp/exports
     - contents:
-      - salt['pillar.get']('server', {})
-
 {% for item in salt['pillar.get']('server', {})['nfs4'] %}
-{{item.server_name}}:
-  file.directory:
-    - name: {{item.server_name}}
-    - require:
-        - file: /exports
-/exports/{{ salt['file.basename'](item.server_name) }}:
-  file.directory:
-    - name: /exports/{{ salt['file.basename'](item.server_name) }}
-    - mode: 777
-  cmd.run:
-    - name: /bin/mount --bind {{ item.server_name }} /exports/{{ salt['file.basename'](item.server_name) }}
-    - unless: grep -c {{salt['file.basename'](item.server_name) }} /etc/mtab
-#    - creates: /exports/{{salt['file.basename'](item.server_name) }}
-{% endfor %}
+      - {{ item.server_name }} {{salt['pillar.get']('network', {})['ip_network'] }}({{ item.export_opts}}){% endfor %}
+
