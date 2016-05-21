@@ -3,12 +3,15 @@
 
 {% if salt.file.file_exists(pillar['medelexis']['linux_x86_64']) %}
 
-medelexis-requires:
+unzip:
   pkg.installed:
     - refresh: false
-    - name:
-      - unzip
-      - libnotify-bin
+libnotify-bin:
+  pkg.installed:
+    - refresh: false
+xdg-utils:
+  pkg.installed:
+    - refresh: false
 
 /usr/share/icons/medelexis-logo.png:
   file.managed:
@@ -48,6 +51,7 @@ medelexis-requires:
     - user:  {{user.name}}
     - require:
         - user:  {{user.name}}
+        - pkg: xdg-utils
     - unless: diff /usr/share/applications/{{filename}}.desktop {{user.home}}/*/{{filename}}.desktop
   {% endfor %}
 

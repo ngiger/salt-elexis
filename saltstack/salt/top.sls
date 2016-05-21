@@ -26,7 +26,6 @@ base:
 {% if pillar.get('ssmtp', False) %}
     - apps.ssmtp
 {% endif %}
-    - common
 {% if  pillar.get('letsencrypt', False) %}
     - letsencrypt.domains
 {% endif %}

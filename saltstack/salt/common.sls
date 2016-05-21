@@ -11,6 +11,8 @@ salt-minion:
 {% if grains.lsb_distrib_codename == 'jessie' and grains.lsb_distrib_id == 'Raspbian' %}
     - version: 2015.5.3+ds-1~bpo8+1
 {% elif grains.lsb_distrib_codename == 'jessie' and grains.lsb_distrib_id == 'Debian' %}
+    - version: 2015.5.3+ds-1~bpo8+1
+{% elif grains.lsb_distrib_codename == 'stretch' and grains.lsb_distrib_id == 'Debian' %}
     - version: 2015.8.8+ds-1
 {% endif %}
     - refresh: false

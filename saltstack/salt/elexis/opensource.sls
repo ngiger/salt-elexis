@@ -2,10 +2,14 @@ include:
   - users
   - java8
 
-elexis-requires:
+unzip:
   pkg.installed:
     - refresh: false
-    - name: unzip
+
+xdg-utils:
+  pkg.installed:
+    - refresh: false
+
 
 /usr/share/icons/elexis-logo.png:
   file.managed:
@@ -29,6 +33,12 @@ elexis-requires:
 {% for app in pillar.get('elexis_apps', []) %}
 {%- set filename = salt['file.basename'](app.exe) %}
 
+{% if pillar.get('elexis:db_server', False) %}
+{% set db_server = pillar.get('server:name') %}
+{% else %}
+{% set db_server = pillar.get('elexis:db_server') %}
+{% endif %}
+
 {{app.exe}}:
   file.managed:
     - mode: 755
@@ -36,6 +46,7 @@ elexis-requires:
     - template: jinja
     - defaults:
         app: {{app}}
+        db_server: {{db_server}}
         elexis: {{ pillar.get('elexis') }} # db_parameters
 /usr/share/applications/{{filename}}.desktop:
   file.managed:
@@ -43,6 +54,7 @@ elexis-requires:
     - template: jinja
     - defaults:
         app: {{app}}
+        db_server: {{db_server}}
         icon: /usr/share/icons/hicolor/scalable/elexis-logo.svg
 
   {% for user in pillar['users'] %}
@@ -53,6 +65,7 @@ elexis-requires:
     - user:  {{user.name}}
     - require:
         - user:  {{user.name}}
+        - pkg: xdg-utils
     - unless: diff /usr/share/applications/{{filename}}.desktop {{user.home}}/*/{{filename}}.desktop
   {% endfor %}
 

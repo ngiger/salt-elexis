@@ -34,7 +34,7 @@ db_user:
 db_main:
    postgres_database.present:
      - name: {{salt['pillar.get']('elexis').db_main }}
-     - encoding: 'UTF-8'
+     - encoding: 'UTF8'
      - owner: {{salt['pillar.get']('elexis').db_user }}
      - require:
         - pkg: postgresql-dbserver
@@ -42,7 +42,7 @@ db_main:
 db_test:
    postgres_database.present:
      - name: {{salt['pillar.get']('elexis').db_test }}
-     - encoding: 'UTF-8'
+     - encoding: 'UTF8'
      - owner: {{salt['pillar.get']('elexis').db_user }}
      - require:
         - pkg: postgresql-dbserver
