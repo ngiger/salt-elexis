@@ -16,6 +16,7 @@ base:
    # now the stuff which must be only installed on the clients
     - homes.mount
     - unity
+    - unity.lts_kernel
     - locale
 {% endif %}
 

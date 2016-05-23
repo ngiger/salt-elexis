@@ -41,7 +41,7 @@ medelexis_apps:
 
 elexis_installation:
   - variant: prerelease
-    exe: /usr/local/bin/exis-3.1-prerelease-test.sh
+    exe: /usr/local/bin/elexis-3.1-prerelease-test.sh
 {% if grains['os'] == 'Ubuntu' or grains['os'] == 'Debian' %}
     download_uri: https://download.elexis.info/elexis.3.core/3.1.0-prerelease/products/ch.elexis.core.application.ElexisApp-linux.gtk.x86_64.zip
     hash: sha256=0c95e4e7f4d50e833391d409c3624572879641c840256bb0348b4e79e58ee1c5
@@ -54,18 +54,18 @@ elexis_installation:
 
 
 elexis_apps:
-  - human_name: Elexis 3.1 (BETA) auf Test-Datenbank
-    variant: beta
+  - human_name: Elexis 3.1 (Pre-Release) auf Test-Datenbank
+    variant: prerelease
     download_uri: https://srv.elexis.info/jenkins/view/3.0/job/Elexis-3-Core-Beta/21/artifact/ch.elexis.core.p2site/target/products/ch.elexis.core.application.ElexisApp-linux.gtk.x86_64.zip
     hash: sha256=6b2b160cf8bbd49bde8755732cf9b7e5dc11eef36b1782fc6dfca93c44024edb
-    exe: /usr/local/bin/elexis-3.1-beta-test
+    exe: /usr/local/bin/elexis-3.1-prerelease-test.sh
     db_to_use:  elexis-3-test
     config: elexis-3.1-test
-  - human_name: Elexis 3.1 (BETA) auf scharfer Datenbank
-    variant: beta
+  - human_name: Elexis 3.1 (Pre-Release) auf scharfer Datenbank
+    variant: prerelease
     download_uri: https://srv.elexis.info/jenkins/view/3.0/job/Elexis-3-Core-Beta/21/artifact/ch.elexis.core.p2site/target/products/ch.elexis.core.application.ElexisApp-linux.gtk.x86_64.zip
     hash: sha256=6b2b160cf8bbd49bde8755732cf9b7e5dc11eef36b1782fc6dfca93c44024edb
-    exe: /usr/local/bin/elexis-3.1-beta
+    exe: /usr/local/bin/elexis-3.1-prerelease.sh
     db_to_use:  elexis
     config: elexis-3.1
 

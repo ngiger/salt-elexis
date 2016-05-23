@@ -20,12 +20,12 @@ oracle-java{{ java_version }}-installer:
   pkg.installed:
     - refresh: false
     - require:
-      - pkgrepo: oracle-java{{ java_version }}-installer
+      - pkgrepo: oracle-java{{java_version}}-installer
   debconf.set:
    - data:
        'shared/accepted-oracle-license-v1-1': {'type': 'boolean', 'value': True}
    - require_in:
-       - pkg: oracle-java{{ java_version }}-installer
+       - pkg: oracle-java{{java_version}}-installer
    - require:
         - pkg: debconf-utils
 {% endif %}

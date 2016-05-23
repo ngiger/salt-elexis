@@ -18,9 +18,9 @@ xdg-utils:
     - source: salt://elexis/file/medelexis-logo.png
 
 {% if pillar.get('elexis:db_server', False) %}
-{% set db_server = pillar.get('server:name') %}
+{% set db_server = pillar.get('server:name', 'a') %}
 {% else %}
-{% set db_server = pillar.get('elexis:db_server') %}
+{% set db_server = pillar.get('elexis:db_server', 'b') %}
 {% endif %}
 
 {% for app in pillar['medelexis_apps'] %}
@@ -33,7 +33,6 @@ xdg-utils:
         app: {{app}}
         db_server: {{db_server}}
         elexis: {{ pillar.get('elexis') }} # db_parameters
-        medelexis: {{ pillar.get('medelexis') }} # license
 {%- set filename = salt['file.basename'](app.exe) %}
 /usr/share/applications/{{filename}}.desktop:
   file.managed:

@@ -32,7 +32,7 @@ user_{{user.name}}:
       - group: {{user.name}}
     {% if user.get('home', False) and grains.get('id') != pillar.get('server', {})['name'] %}
     - home: {{user.home}}
-    - createhome: true
+    - createhome: false
     {% endif %}
   file.directory:
     - name:  {{user.home}}

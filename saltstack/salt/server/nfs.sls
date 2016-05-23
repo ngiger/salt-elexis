@@ -3,6 +3,7 @@
 
 # It is important that the server does not contain any fsid=0 entry in the /etc/exports! eg. next line is okay
 # /exports 192.168.0.0/16(rw,no_subtree_check,all_squash) 172.25.1.0/24(rw,no_subtree_check,all_squash)
+# Also we need a linux kernel >= 3.4
 
 # Not sure whether we shoud enable idmapping or not
 # see https://www.novell.com/support/kb/doc.php?id=7014266

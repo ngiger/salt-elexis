@@ -4,7 +4,7 @@ nfs-common:
     - pkgs:
       - nfs-common:
 
-{% for item in salt['pillar.get']('server.config') %}
+{% for item in salt['pillar.get']('server', {})['nfs4'] %}
 
 {{item.mount_point}}:
   file.directory:

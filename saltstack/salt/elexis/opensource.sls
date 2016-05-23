@@ -30,13 +30,21 @@ xdg-utils:
         - archive: {{elexis_install.inst_path}}
 {% endfor %}
 
+/tmp/tst:
+  file.managed:
+    - contents:
+      - "pillar.get('elexis_apps', [])"
+      - "elexis:db_server {{pillar.get('elexis:db_server', [])}}"
+      - "server:name {{pillar.get('server:name', [])}}"
+      - "server {{pillar.get('server', [])}}"
+      - "server2 {{pillar.get('server', {}).get('name')}}"
 {% for app in pillar.get('elexis_apps', []) %}
 {%- set filename = salt['file.basename'](app.exe) %}
 
-{% if pillar.get('elexis:db_server', False) %}
-{% set db_server = pillar.get('server:name') %}
+{% if pillar.get('server', {}).get('name') %}
+{% set db_server = pillar.get('server', {}).get('name') %}
 {% else %}
-{% set db_server = pillar.get('elexis:db_server') %}
+{% set db_server = pillar.get('elexis', {}).get('db_server', 'db_server') %}
 {% endif %}
 
 {{app.exe}}:
@@ -48,6 +56,7 @@ xdg-utils:
         app: {{app}}
         db_server: {{db_server}}
         elexis: {{ pillar.get('elexis') }} # db_parameters
+        elexis_install: {{ pillar.get('elexis_install') }}
 /usr/share/applications/{{filename}}.desktop:
   file.managed:
     - source: salt://elexis/file/elexis.desktop
