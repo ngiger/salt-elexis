@@ -62,3 +62,8 @@ server_nfs_common:
 {% for item in salt['pillar.get']('server', {})['nfs4'] %}
       - {{ item.server_name }} {{salt['pillar.get']('network', {})['ip_network'] }}({{ item.export_opts}}){% endfor %}
 
+{% for item in salt['pillar.get']('server', {})['nfs4'] %}
+nfs_{{item.server_name}}:
+  file.directory:
+    - name: {{item.server_name}}
+{% endfor %}

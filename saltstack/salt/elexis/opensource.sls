@@ -49,6 +49,7 @@ elexis_needs:
     - archive_format: zip
 {{inst_path}}/Elexis3:
   file.managed:
+    - replace: False
     - mode: 755
     - require:
         - archive: {{inst_path}}

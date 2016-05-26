@@ -33,10 +33,9 @@ user_{{user.name}}:
     {% endif %}
     - require:
       - group: {{user.name}}
-    {% if user.get('home', False) and grains.get('id') != pillar.get('server', {})['name'] %}
+  {% if user.get('home', False) and grains.get('id') != pillar.get('server', {})['name'] %}
     - home: {{user.home}}
     - createhome: false
-    {% endif %}
   file.directory:
     - name:  {{user.home}}
     - user:  {{user.name}}
@@ -44,7 +43,7 @@ user_{{user.name}}:
     - require:
         - user: {{user.name}}
         - group: {{user.name}}
-
+  {% endif %}
 
 #----------------- Add git repo for some users -------------------------------------
   # While developping it is handy to trace all changes in the the config directories of

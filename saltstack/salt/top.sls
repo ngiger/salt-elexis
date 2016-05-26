@@ -1,11 +1,6 @@
 base:
   '*':
     - common
-    - elexis
-{% if pillar.get('rsnapshot_backups', False) %}
-    - rsnapshot
-{% endif %}
-
    # now the stuff which must be only installed on the server
 {% if grains.get('id') == pillar.get('server', {})['name'] %}
     - server.idmap
@@ -20,6 +15,12 @@ base:
     - locale
 {% endif %}
 
+    - elexis
+
+{% if pillar.get('rsnapshot_backups', False) %}
+    - rsnapshot
+{% endif %}
+
 {% if pillar.get('hin_clients', False) %}
     - hin-client
 {% endif %}
@@ -27,6 +28,7 @@ base:
 {% if pillar.get('ssmtp', False) %}
     - apps.ssmtp
 {% endif %}
+
 {% if  pillar.get('letsencrypt', False) %}
     - letsencrypt.domains
 {% endif %}
