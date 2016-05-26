@@ -1,0 +1,27 @@
+#!/usr/bin/env ruby
+#
+# Copyright (c) Niklaus Giger niklaus.giger@member.fsf.org
+#
+# Simple test script for the elexis-vagrant project to import
+# the elexis database into the tst_db. Should be run e.g. each week
+$: << File.dirname( __FILE__)
+require 'pg_util.rb'
+
+def system(cmd)
+  puts cmd if $VERBOSE
+  res = Kernel.system(cmd)
+  unless res
+    logAction("cmd: #{cmd} failed! Will exit with error")
+    exit 1
+  end
+  res
+end
+
+$startTime = Time.now
+
+def logAction(msg)
+  full = "logger '#{$0}: running for #{(Time.now - $startTime).to_i} seconds: #{msg}'"
+  # puts(full)
+  Kernel.system(full)
+end
+

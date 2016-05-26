@@ -1,0 +1,28 @@
+#!/usr/bin/env ruby
+#
+# Copyright (c) Niklaus Giger niklaus.giger@member.fsf.org
+#
+# Simple test script for the elexis-vagrant project to import
+# the elexis database into the tst_db. Should be run e.g. each week
+$: << File.dirname( __FILE__)
+require 'pg_util.rb'
+
+pg_main_db_user      = "{{elexis.db_user}}"
+pg_main_db_password  = "{{elexis.db_password}}"
+pg_dump_dir          = '/opt/backup/pg/dumps'
+
+ENV['PGPASSWORD'] = pg_main_db_password
+dump   = "#{pg_dump_dir}/{{db_to_load}}.dump.gz"
+dump = ARGV[0] if ARGV.size > 0
+logAction("load of postgres database {{db_to_load}} via #{dump} started. ARGV is #{ARGV}")
+
+cmd  = "gunzip --to-stdout #{dump} | "
+cmd += "psql --user elexis --host localhost --dbname={{db_to_load}} >> /tmp/pg_load_{{db_to_load}}.log 2>&1"
+
+if File.exist?(dump)
+  res = system(cmd)
+  logAction("load of postgres database {{db_to_load}} from #{dump} #{res.inspect} #{res ? 'completed successfully': 'failed'}")
+else
+  res = false
+  logAction("load of postgres database {{db_to_load}} failed! Missing #{dump}")
+end

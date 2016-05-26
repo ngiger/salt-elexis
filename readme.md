@@ -87,7 +87,11 @@ Open a firefox browser and got to the address http://192.168.1.90:9393/ and you 
 Press link "Test-Datenbank einelesen". Navigate to "/mnt/opt/downloads/postresql" and select the file "simple.sql.bz2".
 Now press "Backup einlesen" to load the database dump. It just take a few seconds. BTW, did you remark that you successfully tested the NFS mounts from the ElexisServerDemo to ElexisLaborDemo?
 
-Close the Firefox window and double click the shortcut "Elexis 3.1 (Pre-Release) auf Test-Datenbank". The dialog "Elexis - Anmeldung" should appear. Enter 007 as Benutzername and topsecret as Passwort and you should be able to work with Elexis.
+Close the Firefox window and double click the shortcut "Elexis 3.1 (Pre-Release) auf Test-Datenbank". The dialog "Elexis - Anmeldung" should appear.
+![Image of elexis-cockit](images/elexis_login.png)
+
+Enter 007 as Benutzername and topsecret as Passwort. The Elexis application should pop up. Click on "Name" and select the only patient visible to see
+![Image of elexis-cockit](images/elexis_first.png)
 
 *Warning* Elexis-Cockpit has not yet fully migrated to the new salt infrastructure. Therefore many commands don't work properly, yet.
 
