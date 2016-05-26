@@ -63,6 +63,13 @@ rsnapshot:
 {% endif %}
 
 # create ssh_config entry if copying from remote server
+{% for key, value in config.dirs_to_backup.iteritems() %}
+create_dir_{{key}}:
+  file.directory:
+    - name: "{{key}}"
+    - makedirs: true
+{% endfor %}
+
 {% if options.ssh_config is defined and config.dirs_to_backup.items()[0][0].find(':') != -1 %}
 rsnapshot_ssh_config_{{idx}}:
   file.blockreplace:
