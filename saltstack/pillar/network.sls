@@ -7,6 +7,11 @@ server:
 network:
   domain_name: elexis-demo.dyndns.org
   ip_network: 192.168.1.0/24
+  # By default allow acces from all private address spaces
+  allow_from:
+    - 192.168.0.0/16
+    - 172.16.0.0/12
+    - 10.0.0.0/8
 
   # Next items need only if you want a DHCP client and DNS cache with dnsmasq
   gateway: 192.168.1.90

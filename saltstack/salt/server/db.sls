@@ -21,7 +21,8 @@ postgresql-dbserver:
   file.blockreplace:
     - marker_start: "# BLOCK TOP : salt managed zone : ip_network : please do not edit"
     - marker_end: "# BLOCK BOTTOM : end of salt managed zone --"
-    - content: "host all all {{salt['pillar.get']('network', {})['ip_network'] }} md5"
+    - content: "host all all {{salt['pillar.get']('network', {})['ip_network'] }} md5
+{% for allow in salt['pillar.get']('network', {}).get('allow_from',{}) %}\nhost all all {{allow}} md5{% endfor %}"
     - show_changes: True
     - append_if_not_found: True
     - require:
