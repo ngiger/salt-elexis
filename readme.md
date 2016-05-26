@@ -76,9 +76,20 @@ Key for minion ElexisLaborDemo accepted.
 
 This will fail with a notice like `Failed:    11` as we need a more recent Linux kernel to mount our NFSv4 shares from the PraxisServerDemo. Therefore we `exit` this shell and call `vagrant reload ElexisLaborDemo` to restart ElexisLaborDemo.
 
-Now lets run `vagrant ssh ElexisServerDemo` a second time and call again `sudo salt-call state.highstate`
+Now lets run `vagrant ssh ElexisServerDemo` a second time and call again `sudo salt-call state.highstate`. This should be quite fast, as only some mounts and desktop files are generated.
 
+If you look at your VirtualBox, you should see a machine called "salt-elexis-LaborDemo_<x>". A double-click should open the Ubuntu Login dialog. You may login as "mpa" or "arzt" using the password "elexis".
 
+Open a firefox browser and got to the address http://192.168.1.90:9393/ and you should see the following page.
+
+![Image of elexis-cockit](images/elexis_cockpit.png)
+
+Press link "Test-Datenbank einelesen". Navigate to "/mnt/opt/downloads/postresql" and select the file "simple.sql.bz2".
+Now press "Backup einlesen" to load the database dump. It just take a few seconds. BTW, did you remark that you successfully tested the NFS mounts from the ElexisServerDemo to ElexisLaborDemo?
+
+Close the Firefox window and double click the shortcut "Elexis 3.1 (Pre-Release) auf Test-Datenbank". The dialog "Elexis - Anmeldung" should appear. Enter 007 as Benutzername and topsecret as Passwort and you should be able to work with Elexis.
+
+*Warning* Elexis-Cockpit has not yet fully migrated to the new salt infrastructure. Therefore many commands don't work properly, yet.
 
 ### Using real machines
 

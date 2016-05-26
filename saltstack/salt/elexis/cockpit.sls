@@ -5,7 +5,7 @@
     - source: salt://elexis/file/elexis-logo.png
 /usr/share/applications/elexis-cockpit.desktop:
   file.managed:
-    - source: salt://elexis/file/elexis-cockpit.desktop
+    - source: salt://elexis/file/elexis-cockpit.desktop.jinja
     - template: jinja
     - defaults:
         server: {{pillar.get('server.name', '0.0.0.0')}}
@@ -35,6 +35,7 @@ cockpit_needs:
       - ruby-full
       - bundler
       - daemontools
+      - daemontools-run
       - libsqlite3-dev
       - libxml2-dev
       - libxslt1-dev
@@ -65,10 +66,6 @@ cockpit-bundle:
     - creates:  {{install_dir}}/vendor
     - require:
       - git: cockpit-checkout
-      - pkg:
-        -names:
-          - ruby-full
-          - bundler
     - watch:
       - git: cockpit-checkout
   file.managed:
@@ -82,7 +79,7 @@ cockpit-bundle:
       - 'exec 2>&1'
       - 'ulimit -v 10240000'
       - "cd {{install_dir}}"
-      - "sudo -u cockpit /usr/bin/bundle install --deployment --without=test"
+      - "sudo -u cockpit /usr/bin/bundle install --deployment --without test debugger"
       - "exec sudo -u cockpit /usr/bin/bundle exec /usr/bin/ruby elexis-cockpit.rb"
 
   service.running:
@@ -90,11 +87,7 @@ cockpit-bundle:
     - provider: daemontools
     - enable: True
     - require:
-      - pkg:
-        -names:
-          - ruby-full
-          - bundler
-      - git: cockpit-checkout
+      - cmd: cockpit-bundle
     - watch:
       - git: cockpit-checkout
       - file: /etc/service/cockpit/run

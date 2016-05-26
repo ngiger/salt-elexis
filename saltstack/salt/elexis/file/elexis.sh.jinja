@@ -71,11 +71,11 @@ cd $INST_PATH
 logger "User $USER starting Elexis3 in $PWD with result $result using $PATH"
 
 ./Elexis3 -eclipse.password ~/.elexis.dummy.password -clean -debug -consoleLog \
+-data ~/elexis/{{filename}} \
 -vm /usr/lib/jvm/java-8-oracle/jre/bin/java \
 --use-config=elexis-${ELEXIS_VARIANT}-${DB_TO_USE} -vmargs \
 -Dorg.eclipse.swt.internal.gtk.cairoGraphics=false \
-$ELEXIS_DB_CONFIG_ARGS \
-
+$ELEXIS_DB_CONFIG_ARGS
 
 set result=$?
 logger "User $USER done with Elexis3 in $PWD with result $result using $PATH"
