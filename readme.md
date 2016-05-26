@@ -198,13 +198,14 @@ gitfs_remotes:
 * rsnapshot backup of all HOME directories
 * dnsmask server
 * dnsmask tftp server for Ubuntu netboot + installer preseeds
-* elexis-cockpit. See https://github.com/elexis/elexis-cockpit
 * letsenscrpt
 ** https://github.com/saltstack-formulas/letsencrypt-formula
 ** https://www.kunxi.org/blog/2015/12/lets-encrypt-with-saltstack/
 
 ### TODO
 
+* elexis-cockpit. See https://github.com/elexis/elexis-cockpit
+** Replace /etc/hiera.yaml by a more salt friendly yaml
 * Set default keyboard to Swiss German
 * Don't ask for upgrade of Ubuntu from 12.04 -> 14.04
 * Don't show users like vagrant; Ubuntu # It is enough to change them to user ids < 1000

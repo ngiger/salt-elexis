@@ -12,7 +12,7 @@ ssmtp:
 
 # /mnt/homes must be in sync the the pillar/users.sls file
 server:
-  with_elexis_cockpit: true
+  with_elexis_cockpit: false
   nfs4: # Please be aware that we NFS setup will fail if you specify somewhere int mount_opts fsid=0
     - server_name: /home
       export_opts: rw,no_subtree_check,no_root_squash
