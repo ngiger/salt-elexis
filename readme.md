@@ -150,9 +150,9 @@ This will list
 ### NFSv4 setup
 
 This was a little bit tricky. Solved by:
-* Installing rpcbind
-* Add /etc/idmapd.conf
 * Server must be configured via salt before the client minions
+* Client/server need a linux kernel >= 3.4
+* Client must be reboot (not yet automated) after upgrading to the new linux kernel
 
 ### Aufsetzen des HIN-Clients
 
@@ -183,7 +183,7 @@ gitfs_remotes:
 * Running `locale-gen de_CH.UTF-8` in locales.sls freezes the whole system. Must call this command by hand. Why?
 * Don't know how to tell salt that installing the package unattended-upgrades creates 50unattended-upgrade
 
-### Available features
+### Core features
 
 * NFSv4 server/client
 * Setup of user homes
@@ -192,17 +192,26 @@ gitfs_remotes:
 * hinclient with setup of a corresponding thunderbird mail configuration
 * ssmtp
 
+### Optional features
+
+* building Elexis-core/base from fork and a choosen branch/revision
+* rsnapshot backup of all HOME directories
+* dnsmask server
+* dnsmask tftp server for Ubuntu netboot + installer preseeds
+* elexis-cockpit. See https://github.com/elexis/elexis-cockpit
+* letsenscrpt
+** https://github.com/saltstack-formulas/letsencrypt-formula
+** https://www.kunxi.org/blog/2015/12/lets-encrypt-with-saltstack/
 
 ### TODO
 
 * Set default keyboard to Swiss German
 * Don't ask for upgrade of Ubuntu from 12.04 -> 14.04
 * Don't show users like vagrant; Ubuntu # It is enough to change them to user ids < 1000
+* Add/remove apps from the Ubuntu sidebar
+* rsnapshot (see TODO in saltstack/salt/rsnapshot/readme.textile)
 * db backup
-* dnsmask https://github.com/saltstack-formulas/dnsmasq-formula
 * wol (WakeOnLan)
-* rsnapshot https://github.com/Arkanosis/Arkonf/tree/master/saltstack/salt/backup
-* https://github.com/elexis/elexis-cockpit
 * mysql
 * dyndns
 * Use docker containers for HIN-clients
@@ -210,32 +219,3 @@ gitfs_remotes:
 * nginx https://www.digitalocean.com/community/tutorials/saltstack-infrastructure-creating-salt-states-for-nginx-web-servers and https://github.com/saltstack-formulas/nginx-formula
 * exim4/imap/courier mail
 * hylafax ???? (FAX will be phased out by swisscom on January, 1, 2017)
-* letsencrypt
-** https://github.com/saltstack-formulas/letsencrypt-formula
-** https://www.kunxi.org/blog/2015/12/lets-encrypt-with-saltstack/
-
-### Interesting readings/links/snippet
-
-To develop/debug use (on the minion) `salt-call -l debug state.apply`
-
-https://docs.saltstack.com/en/latest/topics/tutorials/walkthrough.html
-salt '*' cmd.run 'ls -l /etc'
-
-See "Managing your computers with a Salt Master and Git":http://talks.caktusgroup.com/lightning-talks/2013/salt-master/
-
-Targeting https://docs.saltstack.com/en/develop/topics/targeting/index.html
-
-Salt allows for minions to be targeted based on a wide range of criteria. The default targeting system uses globular expressions to match minions, hence if there are minions named larry1, larry2, curly1, and curly2, a glob of larry* will match larry1 and larry2, and a glob of *1 will match larry1 and curly1.
-
-Many other targeting systems can be used other than globs, these systems include:
-Grains
-Pillar
-IP Target based on IP address/subnet/range
-
-````
-sudo salt '*' saltutil.refresh_pillar
-sudo salt '*' pillar.items
-sudo salt ElexisLaborDemo* state.apply users Test=true -l debug
-````
-
-
