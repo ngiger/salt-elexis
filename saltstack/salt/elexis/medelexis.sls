@@ -1,17 +1,26 @@
 # You have to download manually the Medelexis zip and license file to
 # and specifiy the content of the license file in the pillar data
 
-{% if salt.file.file_exists(pillar['medelexis']['linux_x86_64']) %}
+{% if salt.file.file_exists(pillar['medelexis']['linux_x86_64']) != true %}
+/tmp/Medelexis_not_found:
+  file.managed:
+    - contents:
+      - "Could not find {{pillar['medelexis']['linux_x86_64'] }}"
+{% else %}
 
-unzip:
+include:
+  - users
+  - java8
+
+medelexis_needs:
+  file.directory:
+    - names:
+      - /usr/local/bin
   pkg.installed:
     - refresh: false
-libnotify-bin:
-  pkg.installed:
-    - refresh: false
-xdg-utils:
-  pkg.installed:
-    - refresh: false
+    - names:
+      - libnotify-bin
+      - xdg-utils
 
 /usr/share/icons/medelexis-logo.png:
   file.managed:
@@ -24,21 +33,26 @@ xdg-utils:
 {% endif %}
 
 {% for app in pillar['medelexis_apps'] %}
-{{app.exe}}:
+{%- set filename = 'medelexis-'+ app.variant + '-' + app.db_to_use %}
+{%- set exe = '/usr/local/bin/' + filename +'.sh' %}
+{{exe}}:
   file.managed:
     - mode: 755
-    - source: salt://elexis/file/medelexis.sh
+    - source: salt://elexis/file/medelexis.sh.jinja
     - template: jinja
     - defaults:
+        filename: {{filename}}
+        exe: {{exe}}
         app: {{app}}
         db_server: {{db_server}}
+        medelexis: {{ pillar.get('medelexis') }} # location of downloaded zip
         elexis: {{ pillar.get('elexis') }} # db_parameters
-{%- set filename = salt['file.basename'](app.exe) %}
 /usr/share/applications/{{filename}}.desktop:
   file.managed:
-    - source: salt://elexis/file/medelexis.desktop
+    - source: salt://elexis/file/medelexis.desktop.jinja
     - template: jinja
     - defaults:
+        exe: {{exe}}
         app: {{app}}
         icon: /usr/share/icons/hicolor/scalable/medelexis-logo.svg
 

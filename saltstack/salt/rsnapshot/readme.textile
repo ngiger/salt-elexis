@@ -23,6 +23,11 @@ The following manual steps might be necessary:
 * To accept the host-id run manually the newly generated sync command. eg.
 ** sudo nice -10 ionice -c3 /usr/bin/rsnapshot -q -c /etc/rsnapshot_demo.conf sync
 
+h2. TODO
+
+* Create a script/salt state to fill all initial hourly, daily, weekly, etc backups.
+* Create on each backup a human readable index which list all backups with name, date of creation, human readable time diff like "one week ago"
+
 
 
 

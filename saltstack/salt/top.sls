@@ -30,3 +30,6 @@ base:
 {% if  pillar.get('letsencrypt', False) %}
     - letsencrypt.domains
 {% endif %}
+
+  'goodies':
+    - elexis.build

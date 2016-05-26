@@ -1,6 +1,11 @@
 medelexis:
+{% if grains.get('id') == 'ElexisServerDemo' %}
   linux_x86_64:  '/opt/downloads/ch.medelexis.application.product.Medelexis-linux.gtk.x86_64.zip'
   license_xml:   '/opt/downloads/license.xml'
+{% else %}
+  linux_x86_64:  '/mnt/opt/downloads/ch.medelexis.application.product.Medelexis-linux.gtk.x86_64.zip'
+  license_xml:   '/mnt/opt/downloads/license.xml'
+{% endif %}
 
 elexis:
   backup_root:   /mnt/backup
@@ -14,6 +19,14 @@ elexis:
   db_test: test  # DB to use for tests
   db_user: elexis  # DB-User to access both DB
   db_password: elexisTest # a convention
+  core:
+    url: https://github.com/elexis/elexis-3-core.git
+    target: /usr/local/src/elexis-3-core
+    branch: master
+  base:
+    url: https://github.com/ngiger/elexis-3-base.git
+    target: /usr/local/src/elexis-3-base
+    branch: master
 
 language: de_CH
 
@@ -28,44 +41,37 @@ java:
 medelexis_apps:
   - human_name: Medelexis 3.1 (BETA) auf Test-Datenbank
     variant: beta
-    downloaded_zip: /opt/downloads/medelexis.zip
-    exe: /usr/local/bin/medelexis-3.1-beta-test.sh
-    db_to_use:  elexis-3-test
-    config: elexis-3.1-test
+    db_to_use:  test
   - human_name: Medelexis 3.1 (BETA) auf scharfer Datenbank
     variant: beta
-    downloaded_zip: /opt/downloads/medelexis.zip
-    exe: /usr/local/bin/medelexis-3.1-beta.sh
     db_to_use:  elexis
-    config: elexis-3.1
 
+{% if grains['os'] == 'Windows' %}
 elexis_installation:
   - variant: prerelease
-    exe: /usr/local/bin/elexis-3.1-prerelease-test.sh
-{% if grains['os'] == 'Ubuntu' or grains['os'] == 'Debian' %}
-    download_uri: https://download.elexis.info/elexis.3.core/3.1.0-prerelease/products/ch.elexis.core.application.ElexisApp-linux.gtk.x86_64.zip
-    hash: sha256=0c95e4e7f4d50e833391d409c3624572879641c840256bb0348b4e79e58ee1c5
-    inst_path: /usr/local/bin/elexis-3.1-prerelease
-{% elif grains['os'] == 'Windows' %}
     download_uri: https://download.elexis.info/elexis.3.core/3.1.0-prerelease/products/ch.elexis.core.application.ElexisApp-win32.win32.x86.zip
     hash: sha256=ce2a0875a2227513a138b385ae8cf988d0d54a4bb6d48a22e6339d5e411d450d
     inst_path: C:/elexis-installationen/elexis-3.1-prerelease
 {% endif %}
 
-
+# Conventions used:
+#  exe is place /usr/local/bin and  named elexis-<variant>-<db_to_use>.sh
+#  configuration $HOME/elexis/ and  named elexis-<variant>-<db_to_use>.cfg
+#  desktop /usr/share/applications/ named elexis-<variant>-<db_to_use>.desktop
+# The part "elexis-<variant>-<db_to_use>" is passed a file_name to the jinja
 elexis_apps:
   - human_name: Elexis 3.1 (Pre-Release) auf Test-Datenbank
     variant: prerelease
-    download_uri: https://srv.elexis.info/jenkins/view/3.0/job/Elexis-3-Core-Beta/21/artifact/ch.elexis.core.p2site/target/products/ch.elexis.core.application.ElexisApp-linux.gtk.x86_64.zip
-    hash: sha256=6b2b160cf8bbd49bde8755732cf9b7e5dc11eef36b1782fc6dfca93c44024edb
-    exe: /usr/local/bin/elexis-3.1-prerelease-test.sh
-    db_to_use:  elexis-3-test
-    config: elexis-3.1-test
+    download_uri: https://srv.elexis.info/jenkins/view/3.0/job/Elexis-3.0-Core-Releases/149/artifact/ch.elexis.core.p2site/target/products/ch.elexis.core.application.ElexisApp-linux.gtk.x86_64.zip
+    hash: sha256=4bbadccd8ea8018498197e577a48bb71fccbd92e5c3f6b5387b97ffc9e7b22f5
+    db_to_use:  test
   - human_name: Elexis 3.1 (Pre-Release) auf scharfer Datenbank
     variant: prerelease
-    download_uri: https://srv.elexis.info/jenkins/view/3.0/job/Elexis-3-Core-Beta/21/artifact/ch.elexis.core.p2site/target/products/ch.elexis.core.application.ElexisApp-linux.gtk.x86_64.zip
-    hash: sha256=6b2b160cf8bbd49bde8755732cf9b7e5dc11eef36b1782fc6dfca93c44024edb
-    exe: /usr/local/bin/elexis-3.1-prerelease.sh
+    download_uri: https://srv.elexis.info/jenkins/view/3.0/job/Elexis-3.0-Core-Releases/149/artifact/ch.elexis.core.p2site/target/products/ch.elexis.core.application.ElexisApp-linux.gtk.x86_64.zip
+    hash: sha256=4bbadccd8ea8018498197e577a48bb71fccbd92e5c3f6b5387b97ffc9e7b22f5
     db_to_use:  elexis
-    config: elexis-3.1
 
+elexis_from_source:
+  - human_name: Elexis 3.1 (Spezial aus Quellcode) auf Test-Datenbank
+    variant: from_source
+    db_to_use:  test
