@@ -1,0 +1,1118 @@
+Welcome to Ubuntu 12.04.5 LTS (GNU/Linux 3.13.0-86-generic x86_64)
+
+ * Documentation:  https://help.ubuntu.com/
+
+  System information as of Thu May 26 12:37:02 UTC 2016
+
+  System load:  0.1                Users logged in:     0
+  Usage of /:   10.5% of 39.34GB   IP address for eth0: 10.0.2.15
+  Memory usage: 10%                IP address for eth1: 192.168.1.91
+  Swap usage:   0%                 IP address for eth2: 172.25.1.190
+  Processes:    128
+
+  Graph this data and manage this system at:
+    https://landscape.canonical.com/
+
+  Get cloud support with Ubuntu Advantage Cloud Guest:
+    http://www.ubuntu.com/business/services/cloud
+
+New release '14.04.4 LTS' available.
+Run 'do-release-upgrade' to upgrade to it.
+
+
+Your Hardware Enablement Stack (HWE) is supported until April 2017.
+
+Last login: Thu May 26 12:11:10 2016 from 10.0.2.2
+
+]0;vagrant@ElexisLaborDemo: ~vagrant@ElexisLaborDemo:~$ sudo salt-call state.highstate
+[INFO    ] Loading fresh modules for state activity
+[INFO    ] Fetching file from saltenv 'base', ** skipped ** latest already in cache 'salt://top.sls'
+[INFO    ] Creating module dir '/var/cache/salt/minion/extmods/beacons'
+[INFO    ] Syncing beacons for environment 'base'
+[INFO    ] Loading cache from salt://_beacons, for base)
+[INFO    ] Caching directory '_beacons/' for environment 'base'
+[INFO    ] Creating module dir '/var/cache/salt/minion/extmods/modules'
+[INFO    ] Syncing modules for environment 'base'
+[INFO    ] Loading cache from salt://_modules, for base)
+[INFO    ] Caching directory '_modules/' for environment 'base'
+[INFO    ] Creating module dir '/var/cache/salt/minion/extmods/states'
+[INFO    ] Syncing states for environment 'base'
+[INFO    ] Loading cache from salt://_states, for base)
+[INFO    ] Caching directory '_states/' for environment 'base'
+[INFO    ] Creating module dir '/var/cache/salt/minion/extmods/grains'
+[INFO    ] Syncing grains for environment 'base'
+[INFO    ] Loading cache from salt://_grains, for base)
+[INFO    ] Caching directory '_grains/' for environment 'base'
+[INFO    ] Creating module dir '/var/cache/salt/minion/extmods/renderers'
+[INFO    ] Syncing renderers for environment 'base'
+[INFO    ] Loading cache from salt://_renderers, for base)
+[INFO    ] Caching directory '_renderers/' for environment 'base'
+[INFO    ] Creating module dir '/var/cache/salt/minion/extmods/returners'
+[INFO    ] Syncing returners for environment 'base'
+[INFO    ] Loading cache from salt://_returners, for base)
+[INFO    ] Caching directory '_returners/' for environment 'base'
+[INFO    ] Creating module dir '/var/cache/salt/minion/extmods/outputters'
+[INFO    ] Syncing outputters for environment 'base'
+[INFO    ] Loading cache from salt://_outputters, for base)
+[INFO    ] Caching directory '_outputters/' for environment 'base'
+[INFO    ] Creating module dir '/var/cache/salt/minion/extmods/utils'
+[INFO    ] Syncing utils for environment 'base'
+[INFO    ] Loading cache from salt://_utils, for base)
+[INFO    ] Caching directory '_utils/' for environment 'base'
+[INFO    ] Loading fresh modules for state activity
+[INFO    ] Fetching file from saltenv 'base', ** skipped ** latest already in cache 'salt://common.sls'
+[INFO    ] Fetching file from saltenv 'base', ** skipped ** latest already in cache 'salt://homes/mount.sls'
+[INFO    ] Fetching file from saltenv 'base', ** skipped ** latest already in cache 'salt://unity/init.sls'
+[INFO    ] Fetching file from saltenv 'base', ** skipped ** latest already in cache 'salt://unity/desktop.sls'
+[INFO    ] Fetching file from saltenv 'base', ** skipped ** latest already in cache 'salt://unity/lts_kernel.sls'
+[INFO    ] Fetching file from saltenv 'base', ** skipped ** latest already in cache 'salt://locale.sls'
+[INFO    ] Fetching file from saltenv 'base', ** skipped ** latest already in cache 'salt://elexis/init.sls'
+[INFO    ] Fetching file from saltenv 'base', ** skipped ** latest already in cache 'salt://users.sls'
+[INFO    ] Fetching file from saltenv 'base', ** skipped ** latest already in cache 'salt://java8.sls'
+[INFO    ] Fetching file from saltenv 'base', ** skipped ** latest already in cache 'salt://elexis/medelexis.sls'
+[INFO    ] Fetching file from saltenv 'base', ** skipped ** latest already in cache 'salt://elexis/opensource.sls'
+[INFO    ] Fetching file from saltenv 'base', ** skipped ** latest already in cache 'salt://rsnapshot/init.sls'
+[INFO    ] Fetching file from saltenv 'base', ** skipped ** latest already in cache 'salt://apps/ssmtp.sls'
+[INFO    ] Running state [salt-minion] at time 12:37:25.440966
+[INFO    ] Executing state pkg.installed for salt-minion
+[INFO    ] Executing command ['dpkg-query', '--showformat', '${Status} ${Package} ${Version} ${Architecture}\n', '-W'] in directory '/home/vagrant'
+[INFO    ] Package salt-minion is already installed.
+[INFO    ] Completed state [salt-minion] at time 12:37:26.027211
+[INFO    ] Running state [salt-minion] at time 12:37:26.036686
+[INFO    ] Executing state service.running for salt-minion
+[INFO    ] Executing command ['runlevel', '/run/utmp'] in directory '/home/vagrant'
+[INFO    ] Executing command ['service', 'salt-minion', 'status'] in directory '/home/vagrant'
+[INFO    ] The service salt-minion is already running
+[INFO    ] Completed state [salt-minion] at time 12:37:26.077002
+[INFO    ] Running state [common] at time 12:37:26.077496
+[INFO    ] Executing state pkg.installed for common
+[INFO    ] All specified packages are already installed.
+[INFO    ] Completed state [common] at time 12:37:26.082677
+[INFO    ] Running state [nfs-common] at time 12:37:26.083102
+[INFO    ] Executing state pkg.installed for nfs-common
+[INFO    ] All specified packages are already installed.
+[INFO    ] Completed state [nfs-common] at time 12:37:26.088807
+[INFO    ] Running state [/mnt/homes] at time 12:37:26.099973
+[INFO    ] Executing state file.directory for /mnt/homes
+[INFO    ] Directory /mnt/homes is in the correct state
+[INFO    ] Completed state [/mnt/homes] at time 12:37:26.101430
+[INFO    ] Running state [/mnt/homes] at time 12:37:26.102476
+[INFO    ] Executing state mount.mounted for /mnt/homes
+[INFO    ] Executing command 'egrep "192.168.1.90:/home.*rw,soft,intr,rsize=32768,wsize=32768,timeo=14,intr,actimeo=10" /etc/fstab && grep " /mnt/homes" /etc/mtab' in directory '/home/vagrant'
+[INFO    ] unless execution succeeded
+[INFO    ] Completed state [/mnt/homes] at time 12:37:26.196967
+[INFO    ] Running state [/mnt/opt] at time 12:37:26.197482
+[INFO    ] Executing state file.directory for /mnt/opt
+[INFO    ] Directory /mnt/opt is in the correct state
+[INFO    ] Completed state [/mnt/opt] at time 12:37:26.198823
+[INFO    ] Running state [/mnt/opt] at time 12:37:26.199238
+[INFO    ] Executing state mount.mounted for /mnt/opt
+[INFO    ] Executing command 'egrep "192.168.1.90:/opt.*rw,soft,intr,rsize=32768,wsize=32768,timeo=14,intr,actimeo=10" /etc/fstab && grep " /mnt/opt" /etc/mtab' in directory '/home/vagrant'
+[INFO    ] unless execution succeeded
+[INFO    ] Completed state [/mnt/opt] at time 12:37:26.207705
+[INFO    ] Running state [/mnt/backup] at time 12:37:26.208076
+[INFO    ] Executing state file.directory for /mnt/backup
+[INFO    ] Directory /mnt/backup is in the correct state
+[INFO    ] Completed state [/mnt/backup] at time 12:37:26.209024
+[INFO    ] Running state [/mnt/backup] at time 12:37:26.209198
+[INFO    ] Executing state mount.mounted for /mnt/backup
+[INFO    ] Executing command 'egrep "192.168.1.90:/backup.*rw,soft,intr,rsize=32768,wsize=32768,timeo=14,intr,actimeo=10" /etc/fstab && grep " /mnt/backup" /etc/mtab' in directory '/home/vagrant'
+[INFO    ] Executing command 'mount -l' in directory '/home/vagrant'
+[INFO    ] Executing command 'blkid' in directory '/home/vagrant'
+[INFO    ] Executing command 'mount -o rw,soft,intr,rsize=32768,wsize=32768,timeo=14,intr,actimeo=10 -t nfs4 192.168.1.90:/backup /mnt/backup ' in directory '/home/vagrant'
+[ERROR   ] Command 'mount -o rw,soft,intr,rsize=32768,wsize=32768,timeo=14,intr,actimeo=10 -t nfs4 192.168.1.90:/backup /mnt/backup ' failed with return code: 32
+[ERROR   ] stderr: mount.nfs4: mounting 192.168.1.90:/backup failed, reason given by server:
+  No such file or directory
+[ERROR   ] retcode: 32
+[INFO    ] Executing command 'mount -l' in directory '/home/vagrant'
+[INFO    ] Executing command 'blkid' in directory '/home/vagrant'
+[ERROR   ] mount.nfs4: mounting 192.168.1.90:/backup failed, reason given by server:
+  No such file or directory
+[INFO    ] Completed state [/mnt/backup] at time 12:37:26.279088
+[INFO    ] Running state [unity-desktop] at time 12:37:26.279486
+[INFO    ] Executing state pkg.installed for unity-desktop
+[INFO    ] Executing command ['apt-get', '-q', '-y', '-o', 'DPkg::Options::=--force-confold', '-o', 'DPkg::Options::=--force-confdef', 'install', 'ubuntu-desktop'] in directory '/home/vagrant'
+[INFO    ] Executing command ['dpkg-query', '--showformat', '${Status} ${Package} ${Version} ${Architecture}\n', '-W'] in directory '/home/vagrant'
+[INFO    ] Installed Packages:
+ubuntu-desktop changed from absent to 1.267.1
+x-window-system changed from absent to 1
+xorg changed from absent to 1:7.6+12ubuntu2
+x-window-system-core changed from absent to 1
+
+[INFO    ] Loading fresh modules for state activity
+[INFO    ] Completed state [unity-desktop] at time 12:37:32.086673
+[INFO    ] Running state [/var/lib/AccountsService/users/arzt] at time 12:37:32.090034
+[INFO    ] Executing state file.managed for /var/lib/AccountsService/users/arzt
+[INFO    ] File /var/lib/AccountsService/users/arzt is in the correct state
+[INFO    ] Completed state [/var/lib/AccountsService/users/arzt] at time 12:37:32.095345
+[INFO    ] Running state [/mnt/homes/arzt/.gconf] at time 12:37:32.095983
+[INFO    ] Executing state file.directory for /mnt/homes/arzt/.gconf
+[INFO    ] {'/mnt/homes/arzt/.gconf': 'New Dir'}
+[INFO    ] Completed state [/mnt/homes/arzt/.gconf] at time 12:37:32.132520
+[INFO    ] Running state [/mnt/homes/arzt/.gconf/desktop/gnome/peripherals/keyboard/kbd/] at time 12:37:32.132734
+[INFO    ] Executing state file.directory for /mnt/homes/arzt/.gconf/desktop/gnome/peripherals/keyboard/kbd/
+[INFO    ] {'/mnt/homes/arzt/.gconf/desktop/gnome/peripherals/keyboard/kbd': 'New Dir'}
+[INFO    ] Completed state [/mnt/homes/arzt/.gconf/desktop/gnome/peripherals/keyboard/kbd/] at time 12:37:32.153725
+[INFO    ] Running state [/mnt/homes/arzt/.gconf/desktop/gnome/peripherals/keyboard/kbd/%gconf.xml] at time 12:37:32.154403
+[INFO    ] Executing state file.managed for /mnt/homes/arzt/.gconf/desktop/gnome/peripherals/keyboard/kbd/%gconf.xml
+[INFO    ] File changed:
+New file
+[INFO    ] Completed state [/mnt/homes/arzt/.gconf/desktop/gnome/peripherals/keyboard/kbd/%gconf.xml] at time 12:37:32.189354
+[INFO    ] Running state [/mnt/homes/arzt/.gconf/apps/update-notifier/] at time 12:37:32.189649
+[INFO    ] Executing state file.directory for /mnt/homes/arzt/.gconf/apps/update-notifier/
+[INFO    ] {'/mnt/homes/arzt/.gconf/apps/update-notifier': 'New Dir'}
+[INFO    ] Completed state [/mnt/homes/arzt/.gconf/apps/update-notifier/] at time 12:37:32.197290
+[INFO    ] Running state [/mnt/homes/arzt/.gconf/apps/update-notifier/%gconf.xml] at time 12:37:32.197599
+[INFO    ] Executing state file.managed for /mnt/homes/arzt/.gconf/apps/update-notifier/%gconf.xml
+[INFO    ] File changed:
+New file
+[INFO    ] Completed state [/mnt/homes/arzt/.gconf/apps/update-notifier/%gconf.xml] at time 12:37:32.218184
+[INFO    ] Running state [/var/lib/AccountsService/users/mpa] at time 12:37:32.218411
+[INFO    ] Executing state file.managed for /var/lib/AccountsService/users/mpa
+[INFO    ] File /var/lib/AccountsService/users/mpa is in the correct state
+[INFO    ] Completed state [/var/lib/AccountsService/users/mpa] at time 12:37:32.219596
+[INFO    ] Running state [/mnt/homes/mpa/.gconf] at time 12:37:32.219765
+[INFO    ] Executing state file.directory for /mnt/homes/mpa/.gconf
+[INFO    ] {'/mnt/homes/mpa/.gconf': 'New Dir'}
+[INFO    ] Completed state [/mnt/homes/mpa/.gconf] at time 12:37:32.225582
+[INFO    ] Running state [/mnt/homes/mpa/.gconf/desktop/gnome/peripherals/keyboard/kbd/] at time 12:37:32.225763
+[INFO    ] Executing state file.directory for /mnt/homes/mpa/.gconf/desktop/gnome/peripherals/keyboard/kbd/
+[INFO    ] {'/mnt/homes/mpa/.gconf/desktop/gnome/peripherals/keyboard/kbd': 'New Dir'}
+[INFO    ] Completed state [/mnt/homes/mpa/.gconf/desktop/gnome/peripherals/keyboard/kbd/] at time 12:37:32.248665
+[INFO    ] Running state [/mnt/homes/mpa/.gconf/desktop/gnome/peripherals/keyboard/kbd/%gconf.xml] at time 12:37:32.248960
+[INFO    ] Executing state file.managed for /mnt/homes/mpa/.gconf/desktop/gnome/peripherals/keyboard/kbd/%gconf.xml
+[INFO    ] File changed:
+New file
+[INFO    ] Completed state [/mnt/homes/mpa/.gconf/desktop/gnome/peripherals/keyboard/kbd/%gconf.xml] at time 12:37:32.268900
+[INFO    ] Running state [/mnt/homes/mpa/.gconf/apps/update-notifier/] at time 12:37:32.269300
+[INFO    ] Executing state file.directory for /mnt/homes/mpa/.gconf/apps/update-notifier/
+[INFO    ] {'/mnt/homes/mpa/.gconf/apps/update-notifier': 'New Dir'}
+[INFO    ] Completed state [/mnt/homes/mpa/.gconf/apps/update-notifier/] at time 12:37:32.277670
+[INFO    ] Running state [/mnt/homes/mpa/.gconf/apps/update-notifier/%gconf.xml] at time 12:37:32.277926
+[INFO    ] Executing state file.managed for /mnt/homes/mpa/.gconf/apps/update-notifier/%gconf.xml
+[INFO    ] File changed:
+New file
+[INFO    ] Completed state [/mnt/homes/mpa/.gconf/apps/update-notifier/%gconf.xml] at time 12:37:32.295426
+[INFO    ] Running state [lightdm] at time 12:37:32.298258
+[INFO    ] Executing state pkg.installed for lightdm
+[INFO    ] Package lightdm is already installed.
+[INFO    ] Completed state [lightdm] at time 12:37:32.443575
+[INFO    ] Running state [lightdm] at time 12:37:32.444331
+[INFO    ] Executing state service.running for lightdm
+[INFO    ] Executing command ['service', 'lightdm', 'status'] in directory '/home/vagrant'
+[INFO    ] The service lightdm is already running
+[INFO    ] Completed state [lightdm] at time 12:37:32.468087
+[INFO    ] Running state [linux-generic-lts-trusty] at time 12:37:32.468631
+[INFO    ] Executing state pkg.installed for linux-generic-lts-trusty
+[INFO    ] Package linux-generic-lts-trusty is already installed.
+[INFO    ] Completed state [linux-generic-lts-trusty] at time 12:37:32.472111
+[INFO    ] Running state [libgl1-mesa-glx-lts-trusty] at time 12:37:32.472425
+[INFO    ] Executing state pkg.installed for libgl1-mesa-glx-lts-trusty
+[INFO    ] Package libgl1-mesa-glx-lts-trusty is already installed.
+[INFO    ] Completed state [libgl1-mesa-glx-lts-trusty] at time 12:37:32.475367
+[INFO    ] Running state [xserver-xorg-lts-trusty] at time 12:37:32.475754
+[INFO    ] Executing state pkg.installed for xserver-xorg-lts-trusty
+[INFO    ] Package xserver-xorg-lts-trusty is already installed.
+[INFO    ] Completed state [xserver-xorg-lts-trusty] at time 12:37:32.479198
+[INFO    ] Running state [linux-image-generic-lts-trusty] at time 12:37:32.479395
+[INFO    ] Executing state pkg.installed for linux-image-generic-lts-trusty
+[INFO    ] Package linux-image-generic-lts-trusty is already installed.
+[INFO    ] Completed state [linux-image-generic-lts-trusty] at time 12:37:32.482874
+[INFO    ] Running state [linux-headers-generic-lts-trusty] at time 12:37:32.483211
+[INFO    ] Executing state pkg.installed for linux-headers-generic-lts-trusty
+[INFO    ] Package linux-headers-generic-lts-trusty is already installed.
+[INFO    ] Completed state [linux-headers-generic-lts-trusty] at time 12:37:32.486013
+[INFO    ] Running state [/etc/locale.gen] at time 12:37:32.486486
+[INFO    ] Executing state file.managed for /etc/locale.gen
+[INFO    ] File /etc/locale.gen is in the correct state
+[INFO    ] Completed state [/etc/locale.gen] at time 12:37:32.501077
+[INFO    ] Running state [/etc/default/locale] at time 12:37:32.501443
+[INFO    ] Executing state file.managed for /etc/default/locale
+[INFO    ] File /etc/default/locale is in the correct state
+[INFO    ] Completed state [/etc/default/locale] at time 12:37:32.502996
+[INFO    ] Running state [locale-gen de_CH.UTF-8] at time 12:37:32.503666
+[INFO    ] Executing state cmd.run for locale-gen de_CH.UTF-8
+[INFO    ] Executing command "egrep '^de_CH.UTF-8' /etc/locale.gen" in directory '/home/vagrant'
+[INFO    ] unless execution succeeded
+[INFO    ] Completed state [locale-gen de_CH.UTF-8] at time 12:37:32.510264
+[INFO    ] Running state [pi] at time 12:37:32.511082
+[INFO    ] Executing state user.absent for pi
+[INFO    ] User pi is not present
+[INFO    ] Completed state [pi] at time 12:37:32.511812
+[INFO    ] Running state [arzt] at time 12:37:32.512229
+[INFO    ] Executing state group.present for arzt
+[INFO    ] Group arzt is present and up to date
+[INFO    ] Completed state [arzt] at time 12:37:32.512857
+[INFO    ] Running state [arzt] at time 12:37:32.513498
+[INFO    ] Executing state user.present for arzt
+[INFO    ] User arzt is present and up to date
+[INFO    ] Completed state [arzt] at time 12:37:32.514779
+[INFO    ] Running state [/mnt/homes/arzt] at time 12:37:32.515342
+[INFO    ] Executing state file.directory for /mnt/homes/arzt
+[INFO    ] Directory /mnt/homes/arzt is in the correct state
+[INFO    ] Completed state [/mnt/homes/arzt] at time 12:37:32.516229
+[INFO    ] Running state [mpa] at time 12:37:32.516451
+[INFO    ] Executing state group.present for mpa
+[INFO    ] Group mpa is present and up to date
+[INFO    ] Completed state [mpa] at time 12:37:32.516977
+[INFO    ] Running state [mpa] at time 12:37:32.517433
+[INFO    ] Executing state user.present for mpa
+[INFO    ] User mpa is present and up to date
+[INFO    ] Completed state [mpa] at time 12:37:32.518508
+[INFO    ] Running state [/mnt/homes/mpa] at time 12:37:32.519055
+[INFO    ] Executing state file.directory for /mnt/homes/mpa
+[INFO    ] Directory /mnt/homes/mpa is in the correct state
+[INFO    ] Completed state [/mnt/homes/mpa] at time 12:37:32.519893
+[INFO    ] Running state [/etc/sudoers.d/nopasswd] at time 12:37:32.520043
+[INFO    ] Executing state file.managed for /etc/sudoers.d/nopasswd
+[INFO    ] File /etc/sudoers.d/nopasswd is in the correct state
+[INFO    ] Completed state [/etc/sudoers.d/nopasswd] at time 12:37:32.521248
+[INFO    ] Running state [debconf-utils] at time 12:37:32.521472
+[INFO    ] Executing state pkg.installed for debconf-utils
+[INFO    ] Package debconf-utils is already installed.
+[INFO    ] Completed state [debconf-utils] at time 12:37:32.526479
+[INFO    ] Running state [oracle-java8-installer] at time 12:37:32.526911
+[INFO    ] Executing state pkgrepo.managed for oracle-java8-installer
+[INFO    ] Package repo 'oracle-java8-installer' already configured
+[INFO    ] Completed state [oracle-java8-installer] at time 12:37:32.616631
+[INFO    ] Running state [oracle-java8-installer] at time 12:37:32.618621
+[INFO    ] Executing state debconf.set for oracle-java8-installer
+[INFO    ] Executing command 'debconf-get-selections' in directory '/home/vagrant'
+[INFO    ] All specified answers are already set
+[INFO    ] Completed state [oracle-java8-installer] at time 12:37:32.836797
+[INFO    ] Running state [oracle-java8-installer] at time 12:37:32.837577
+[INFO    ] Executing state pkg.installed for oracle-java8-installer
+[INFO    ] Package oracle-java8-installer is already installed.
+[INFO    ] Completed state [oracle-java8-installer] at time 12:37:32.840818
+[INFO    ] Running state [/tmp/Medelexis_not_found] at time 12:37:32.841004
+[INFO    ] Executing state file.managed for /tmp/Medelexis_not_found
+[INFO    ] File changed:
+New file
+[INFO    ] Completed state [/tmp/Medelexis_not_found] at time 12:37:32.842618
+[INFO    ] Running state [/usr/local/bin] at time 12:37:32.842771
+[INFO    ] Executing state file.directory for /usr/local/bin
+[INFO    ] Directory /usr/local/bin is in the correct state
+[INFO    ] Completed state [/usr/local/bin] at time 12:37:32.843354
+[INFO    ] Running state [xdg-utils] at time 12:37:32.843537
+[INFO    ] Executing state pkg.installed for xdg-utils
+[INFO    ] Package xdg-utils is already installed.
+[INFO    ] Completed state [xdg-utils] at time 12:37:32.846476
+[INFO    ] Running state [/usr/share/icons/elexis-logo.png] at time 12:37:32.846646
+[INFO    ] Executing state file.managed for /usr/share/icons/elexis-logo.png
+[INFO    ] File /usr/share/icons/elexis-logo.png is in the correct state
+[INFO    ] Completed state [/usr/share/icons/elexis-logo.png] at time 12:37:32.876033
+[INFO    ] Running state [/usr/local/elexis-prerelease-test] at time 12:37:32.877087
+[INFO    ] Executing state archive.extracted for /usr/local/elexis-prerelease-test
+[INFO    ] /usr/local/elexis-prerelease-test/Elexis3 already exists
+[INFO    ] Completed state [/usr/local/elexis-prerelease-test] at time 12:37:32.882459
+[INFO    ] Running state [/usr/local/elexis-prerelease-test/Elexis3] at time 12:37:32.883211
+[INFO    ] Executing state file.managed for /usr/local/elexis-prerelease-test/Elexis3
+[WARNING ] Neither 'source' nor 'contents' nor 'contents_pillar' nor 'contents_grains' was defined, yet 'replace' was set to 'True'. As there is no source to replace the file with, 'replace' has been set to 'False' to avoid reading the file unnecessarily
+[INFO    ] File /usr/local/elexis-prerelease-test/Elexis3 exists with proper permissions. No changes made.
+[INFO    ] Completed state [/usr/local/elexis-prerelease-test/Elexis3] at time 12:37:32.884171
+[INFO    ] Running state [/usr/local/bin/elexis-prerelease-test.sh] at time 12:37:32.884405
+[INFO    ] Executing state file.managed for /usr/local/bin/elexis-prerelease-test.sh
+[INFO    ] File /usr/local/bin/elexis-prerelease-test.sh is in the correct state
+[INFO    ] Completed state [/usr/local/bin/elexis-prerelease-test.sh] at time 12:37:32.921869
+[INFO    ] Running state [/usr/share/applications/elexis-prerelease-test.desktop] at time 12:37:32.922079
+[INFO    ] Executing state file.managed for /usr/share/applications/elexis-prerelease-test.desktop
+[INFO    ] File /usr/share/applications/elexis-prerelease-test.desktop is in the correct state
+[INFO    ] Completed state [/usr/share/applications/elexis-prerelease-test.desktop] at time 12:37:32.955515
+[INFO    ] Running state [xdg-desktop-icon install /usr/share/applications/elexis-prerelease-test.desktop] at time 12:37:32.956609
+[INFO    ] Executing state cmd.run for xdg-desktop-icon install /usr/share/applications/elexis-prerelease-test.desktop
+[INFO    ] Executing command 'diff /usr/share/applications/elexis-prerelease-test.desktop /mnt/homes/arzt/*/elexis-prerelease-test.desktop' as user 'arzt' in directory '/mnt/homes/arzt'
+[INFO    ] unless execution succeeded
+[INFO    ] Completed state [xdg-desktop-icon install /usr/share/applications/elexis-prerelease-test.desktop] at time 12:37:33.057492
+[INFO    ] Running state [xdg-desktop-icon install /usr/share/applications/elexis-prerelease-test.desktop] at time 12:37:33.058516
+[INFO    ] Executing state cmd.run for xdg-desktop-icon install /usr/share/applications/elexis-prerelease-test.desktop
+[INFO    ] Executing command 'diff /usr/share/applications/elexis-prerelease-test.desktop /mnt/homes/mpa/*/elexis-prerelease-test.desktop' as user 'mpa' in directory '/mnt/homes/mpa'
+[INFO    ] unless execution succeeded
+[INFO    ] Completed state [xdg-desktop-icon install /usr/share/applications/elexis-prerelease-test.desktop] at time 12:37:33.123113
+[INFO    ] Running state [/usr/local/elexis-prerelease-elexis] at time 12:37:33.123402
+[INFO    ] Executing state archive.extracted for /usr/local/elexis-prerelease-elexis
+[INFO    ] /usr/local/elexis-prerelease-elexis/Elexis3 already exists
+[INFO    ] Completed state [/usr/local/elexis-prerelease-elexis] at time 12:37:33.131862
+[INFO    ] Running state [/usr/local/elexis-prerelease-elexis/Elexis3] at time 12:37:33.132702
+[INFO    ] Executing state file.managed for /usr/local/elexis-prerelease-elexis/Elexis3
+[WARNING ] Neither 'source' nor 'contents' nor 'contents_pillar' nor 'contents_grains' was defined, yet 'replace' was set to 'True'. As there is no source to replace the file with, 'replace' has been set to 'False' to avoid reading the file unnecessarily
+[INFO    ] File /usr/local/elexis-prerelease-elexis/Elexis3 exists with proper permissions. No changes made.
+[INFO    ] Completed state [/usr/local/elexis-prerelease-elexis/Elexis3] at time 12:37:33.133674
+[INFO    ] Running state [/usr/local/bin/elexis-prerelease-elexis.sh] at time 12:37:33.133867
+[INFO    ] Executing state file.managed for /usr/local/bin/elexis-prerelease-elexis.sh
+[INFO    ] File /usr/local/bin/elexis-prerelease-elexis.sh is in the correct state
+[INFO    ] Completed state [/usr/local/bin/elexis-prerelease-elexis.sh] at time 12:37:33.143011
+[INFO    ] Running state [/usr/share/applications/elexis-prerelease-elexis.desktop] at time 12:37:33.143296
+[INFO    ] Executing state file.managed for /usr/share/applications/elexis-prerelease-elexis.desktop
+[INFO    ] File /usr/share/applications/elexis-prerelease-elexis.desktop is in the correct state
+[INFO    ] Completed state [/usr/share/applications/elexis-prerelease-elexis.desktop] at time 12:37:33.149749
+[INFO    ] Running state [xdg-desktop-icon install /usr/share/applications/elexis-prerelease-elexis.desktop] at time 12:37:33.150384
+[INFO    ] Executing state cmd.run for xdg-desktop-icon install /usr/share/applications/elexis-prerelease-elexis.desktop
+[INFO    ] Executing command 'diff /usr/share/applications/elexis-prerelease-elexis.desktop /mnt/homes/arzt/*/elexis-prerelease-elexis.desktop' as user 'arzt' in directory '/mnt/homes/arzt'
+[INFO    ] unless execution succeeded
+[INFO    ] Completed state [xdg-desktop-icon install /usr/share/applications/elexis-prerelease-elexis.desktop] at time 12:37:33.200880
+[INFO    ] Running state [xdg-desktop-icon install /usr/share/applications/elexis-prerelease-elexis.desktop] at time 12:37:33.201648
+[INFO    ] Executing state cmd.run for xdg-desktop-icon install /usr/share/applications/elexis-prerelease-elexis.desktop
+[INFO    ] Executing command 'diff /usr/share/applications/elexis-prerelease-elexis.desktop /mnt/homes/mpa/*/elexis-prerelease-elexis.desktop' as user 'mpa' in directory '/mnt/homes/mpa'
+[INFO    ] unless execution succeeded
+[INFO    ] Completed state [xdg-desktop-icon install /usr/share/applications/elexis-prerelease-elexis.desktop] at time 12:37:33.253382
+[INFO    ] Running state [rsnapshot] at time 12:37:33.253651
+[INFO    ] Executing state pkg.installed for rsnapshot
+[INFO    ] Package rsnapshot is already installed.
+[INFO    ] Completed state [rsnapshot] at time 12:37:33.255026
+[INFO    ] Running state [/etc/rsync.exclude] at time 12:37:33.255220
+[INFO    ] Executing state file.managed for /etc/rsync.exclude
+[INFO    ] File /etc/rsync.exclude is in the correct state
+[INFO    ] Completed state [/etc/rsync.exclude] at time 12:37:33.261110
+[INFO    ] Running state [/etc/rsnapshot_home_localhost.conf] at time 12:37:33.261313
+[INFO    ] Executing state file.managed for /etc/rsnapshot_home_localhost.conf
+[INFO    ] File /etc/rsnapshot_home_localhost.conf is in the correct state
+[INFO    ] Completed state [/etc/rsnapshot_home_localhost.conf] at time 12:37:33.277745
+[INFO    ] Running state [nice -10 ionice -c3 /usr/bin/rsnapshot -q -c /etc/rsnapshot_home_localhost.conf yearly 1>/dev/null] at time 12:37:33.278570
+[INFO    ] Executing state cron.present for nice -10 ionice -c3 /usr/bin/rsnapshot -q -c /etc/rsnapshot_home_localhost.conf yearly 1>/dev/null
+[INFO    ] Executing command 'crontab -l -u root' in directory '/home/vagrant'
+[INFO    ] Cron nice -10 ionice -c3 /usr/bin/rsnapshot -q -c /etc/rsnapshot_home_localhost.conf yearly 1>/dev/null already present
+[INFO    ] Completed state [nice -10 ionice -c3 /usr/bin/rsnapshot -q -c /etc/rsnapshot_home_localhost.conf yearly 1>/dev/null] at time 12:37:33.312207
+[INFO    ] Running state [nice -10 ionice -c3 /usr/bin/rsnapshot -q -c /etc/rsnapshot_home_localhost.conf hourly 1>/dev/null] at time 12:37:33.312696
+[INFO    ] Executing state cron.present for nice -10 ionice -c3 /usr/bin/rsnapshot -q -c /etc/rsnapshot_home_localhost.conf hourly 1>/dev/null
+[INFO    ] Executing command 'crontab -l -u root' in directory '/home/vagrant'
+[INFO    ] Cron nice -10 ionice -c3 /usr/bin/rsnapshot -q -c /etc/rsnapshot_home_localhost.conf hourly 1>/dev/null already present
+[INFO    ] Completed state [nice -10 ionice -c3 /usr/bin/rsnapshot -q -c /etc/rsnapshot_home_localhost.conf hourly 1>/dev/null] at time 12:37:33.318450
+[INFO    ] Running state [nice -10 ionice -c3 /usr/bin/rsnapshot -q -c /etc/rsnapshot_home_localhost.conf monthly 1>/dev/null] at time 12:37:33.318848
+[INFO    ] Executing state cron.present for nice -10 ionice -c3 /usr/bin/rsnapshot -q -c /etc/rsnapshot_home_localhost.conf monthly 1>/dev/null
+[INFO    ] Executing command 'crontab -l -u root' in directory '/home/vagrant'
+[INFO    ] Cron nice -10 ionice -c3 /usr/bin/rsnapshot -q -c /etc/rsnapshot_home_localhost.conf monthly 1>/dev/null already present
+[INFO    ] Completed state [nice -10 ionice -c3 /usr/bin/rsnapshot -q -c /etc/rsnapshot_home_localhost.conf monthly 1>/dev/null] at time 12:37:33.324232
+[INFO    ] Running state [nice -10 ionice -c3 /usr/bin/rsnapshot -q -c /etc/rsnapshot_home_localhost.conf sync 1>/dev/null] at time 12:37:33.324680
+[INFO    ] Executing state cron.present for nice -10 ionice -c3 /usr/bin/rsnapshot -q -c /etc/rsnapshot_home_localhost.conf sync 1>/dev/null
+[INFO    ] Executing command 'crontab -l -u root' in directory '/home/vagrant'
+[INFO    ] Cron nice -10 ionice -c3 /usr/bin/rsnapshot -q -c /etc/rsnapshot_home_localhost.conf sync 1>/dev/null already present
+[INFO    ] Completed state [nice -10 ionice -c3 /usr/bin/rsnapshot -q -c /etc/rsnapshot_home_localhost.conf sync 1>/dev/null] at time 12:37:33.330450
+[INFO    ] Running state [nice -10 ionice -c3 /usr/bin/rsnapshot -q -c /etc/rsnapshot_home_localhost.conf daily 1>/dev/null] at time 12:37:33.330808
+[INFO    ] Executing state cron.present for nice -10 ionice -c3 /usr/bin/rsnapshot -q -c /etc/rsnapshot_home_localhost.conf daily 1>/dev/null
+[INFO    ] Executing command 'crontab -l -u root' in directory '/home/vagrant'
+[INFO    ] Cron nice -10 ionice -c3 /usr/bin/rsnapshot -q -c /etc/rsnapshot_home_localhost.conf daily 1>/dev/null already present
+[INFO    ] Completed state [nice -10 ionice -c3 /usr/bin/rsnapshot -q -c /etc/rsnapshot_home_localhost.conf daily 1>/dev/null] at time 12:37:33.337095
+[INFO    ] Running state [nice -10 ionice -c3 /usr/bin/rsnapshot -q -c /etc/rsnapshot_home_localhost.conf quarterly 1>/dev/null] at time 12:37:33.337601
+[INFO    ] Executing state cron.present for nice -10 ionice -c3 /usr/bin/rsnapshot -q -c /etc/rsnapshot_home_localhost.conf quarterly 1>/dev/null
+[INFO    ] Executing command 'crontab -l -u root' in directory '/home/vagrant'
+[INFO    ] Cron nice -10 ionice -c3 /usr/bin/rsnapshot -q -c /etc/rsnapshot_home_localhost.conf quarterly 1>/dev/null already present
+[INFO    ] Completed state [nice -10 ionice -c3 /usr/bin/rsnapshot -q -c /etc/rsnapshot_home_localhost.conf quarterly 1>/dev/null] at time 12:37:33.343541
+[INFO    ] Running state [nice -10 ionice -c3 /usr/bin/rsnapshot -q -c /etc/rsnapshot_home_localhost.conf weekly 1>/dev/null] at time 12:37:33.343993
+[INFO    ] Executing state cron.present for nice -10 ionice -c3 /usr/bin/rsnapshot -q -c /etc/rsnapshot_home_localhost.conf weekly 1>/dev/null
+[INFO    ] Executing command 'crontab -l -u root' in directory '/home/vagrant'
+[INFO    ] Cron nice -10 ionice -c3 /usr/bin/rsnapshot -q -c /etc/rsnapshot_home_localhost.conf weekly 1>/dev/null already present
+[INFO    ] Completed state [nice -10 ionice -c3 /usr/bin/rsnapshot -q -c /etc/rsnapshot_home_localhost.conf weekly 1>/dev/null] at time 12:37:33.349905
+[INFO    ] Running state [bsd-mailx] at time 12:37:33.350478
+[INFO    ] Executing state pkg.installed for bsd-mailx
+[INFO    ] Package bsd-mailx is already installed.
+[INFO    ] Completed state [bsd-mailx] at time 12:37:33.351569
+[INFO    ] Running state [ssmtp] at time 12:37:33.351801
+[INFO    ] Executing state pkg.installed for ssmtp
+[INFO    ] Package ssmtp is already installed.
+[INFO    ] Completed state [ssmtp] at time 12:37:33.352962
+[INFO    ] Running state [/etc/ssmtp/ssmtp.conf] at time 12:37:33.354007
+[INFO    ] Executing state file.managed for /etc/ssmtp/ssmtp.conf
+[INFO    ] File /etc/ssmtp/ssmtp.conf is in the correct state
+[INFO    ] Completed state [/etc/ssmtp/ssmtp.conf] at time 12:37:33.369935
+[0;31mlocal:[0m
+[0;32m----------[0m
+    [0;32m      ID: salt-minion[0m
+    [0;32mFunction: pkg.installed[0m
+    [0;32m  Result: True[0m
+    [0;32m Comment: Package salt-minion is already installed.[0m
+    [0;32m Started: 12:37:25.440966[0m
+    [0;32mDuration: 586.245 ms[0m
+[0;32m     Changes:   [0m
+[0;32m----------[0m
+    [0;32m      ID: salt-minion-service[0m
+    [0;32mFunction: service.running[0m
+    [0;32m    Name: salt-minion[0m
+    [0;32m  Result: True[0m
+    [0;32m Comment: The service salt-minion is already running[0m
+    [0;32m Started: 12:37:26.036686[0m
+    [0;32mDuration: 40.316 ms[0m
+[0;32m     Changes:   [0m
+[0;32m----------[0m
+    [0;32m      ID: common[0m
+    [0;32mFunction: pkg.installed[0m
+    [0;32m  Result: True[0m
+    [0;32m Comment: All specified packages are already installed.[0m
+    [0;32m Started: 12:37:26.077496[0m
+    [0;32mDuration: 5.181 ms[0m
+[0;32m     Changes:   [0m
+[0;32m----------[0m
+    [0;32m      ID: nfs-common[0m
+    [0;32mFunction: pkg.installed[0m
+    [0;32m  Result: True[0m
+    [0;32m Comment: All specified packages are already installed.[0m
+    [0;32m Started: 12:37:26.083102[0m
+    [0;32mDuration: 5.705 ms[0m
+[0;32m     Changes:   [0m
+[0;32m----------[0m
+    [0;32m      ID: /mnt/homes[0m
+    [0;32mFunction: file.directory[0m
+    [0;32m  Result: True[0m
+    [0;32m Comment: Directory /mnt/homes is in the correct state[0m
+    [0;32m Started: 12:37:26.099973[0m
+    [0;32mDuration: 1.457 ms[0m
+[0;32m     Changes:   [0m
+[0;32m----------[0m
+    [0;32m      ID: /mnt/homes[0m
+    [0;32mFunction: mount.mounted[0m
+    [0;32m  Result: True[0m
+    [0;32m Comment: unless execution succeeded[0m
+    [0;32m Started: 12:37:26.102476[0m
+    [0;32mDuration: 94.491 ms[0m
+[0;32m     Changes:   [0m
+[0;32m----------[0m
+    [0;32m      ID: /mnt/opt[0m
+    [0;32mFunction: file.directory[0m
+    [0;32m  Result: True[0m
+    [0;32m Comment: Directory /mnt/opt is in the correct state[0m
+    [0;32m Started: 12:37:26.197482[0m
+    [0;32mDuration: 1.341 ms[0m
+[0;32m     Changes:   [0m
+[0;32m----------[0m
+    [0;32m      ID: /mnt/opt[0m
+    [0;32mFunction: mount.mounted[0m
+    [0;32m  Result: True[0m
+    [0;32m Comment: unless execution succeeded[0m
+    [0;32m Started: 12:37:26.199238[0m
+    [0;32mDuration: 8.467 ms[0m
+[0;32m     Changes:   [0m
+[0;32m----------[0m
+    [0;32m      ID: /mnt/backup[0m
+    [0;32mFunction: file.directory[0m
+    [0;32m  Result: True[0m
+    [0;32m Comment: Directory /mnt/backup is in the correct state[0m
+    [0;32m Started: 12:37:26.208076[0m
+    [0;32mDuration: 0.948 ms[0m
+[0;32m     Changes:   [0m
+[0;31m----------[0m
+    [0;31m      ID: /mnt/backup[0m
+    [0;31mFunction: mount.mounted[0m
+    [0;31m  Result: True[0m
+    [0;31m Comment: Directory /mnt/backup is in the correct state[0m
+    [0;31m Started: 12:37:26.209198[0m
+    [0;31mDuration: 69.89 ms[0m
+[0;31m     Changes:   [0m
+[0;36m----------[0m
+    [0;36m      ID: unity-desktop[0m
+    [0;36mFunction: pkg.installed[0m
+    [0;36m  Result: True[0m
+    [0;36m Comment: The following packages were installed/updated: ubuntu-desktop The following packages were already installed: myspell-de-ch, unity, language-pack-de, lightdm[0m
+    [0;36m Started: 12:37:26.279486[0m
+    [0;36mDuration: 5807.187 ms[0m
+[0;36m     Changes:   
+              [0;36m----------[0m
+              [0;36mubuntu-desktop[0m:
+                  [0;36m----------[0m
+                  [0;36mnew[0m:
+                      [0;32m1.267.1[0m
+                  [0;36mold[0m:
+              [0;36mx-window-system[0m:
+                  [0;36m----------[0m
+                  [0;36mnew[0m:
+                      [0;32m1[0m
+                  [0;36mold[0m:
+              [0;36mx-window-system-core[0m:
+                  [0;36m----------[0m
+                  [0;36mnew[0m:
+                      [0;32m1[0m
+                  [0;36mold[0m:
+              [0;36mxorg[0m:
+                  [0;36m----------[0m
+                  [0;36mnew[0m:
+                      [0;32m1:7.6+12ubuntu2[0m
+                  [0;36mold[0m:[0m
+[0;32m----------[0m
+    [0;32m      ID: /var/lib/AccountsService/users/arzt[0m
+    [0;32mFunction: file.managed[0m
+    [0;32m  Result: True[0m
+    [0;32m Comment: File /var/lib/AccountsService/users/arzt is in the correct state[0m
+    [0;32m Started: 12:37:32.090034[0m
+    [0;32mDuration: 5.311 ms[0m
+[0;32m     Changes:   [0m
+[0;36m----------[0m
+    [0;36m      ID: /mnt/homes/arzt/.gconf[0m
+    [0;36mFunction: file.directory[0m
+    [0;36m  Result: True[0m
+    [0;36m Comment: Directory /mnt/homes/arzt/.gconf updated[0m
+    [0;36m Started: 12:37:32.095983[0m
+    [0;36mDuration: 36.537 ms[0m
+[0;36m     Changes:   
+              [0;36m----------[0m
+              [0;36m/mnt/homes/arzt/.gconf[0m:
+                  [0;32mNew Dir[0m[0m
+[0;36m----------[0m
+    [0;36m      ID: /mnt/homes/arzt/.gconf/desktop/gnome/peripherals/keyboard/kbd/[0m
+    [0;36mFunction: file.directory[0m
+    [0;36m  Result: True[0m
+    [0;36m Comment: Directory /mnt/homes/arzt/.gconf/desktop/gnome/peripherals/keyboard/kbd updated[0m
+    [0;36m Started: 12:37:32.132734[0m
+    [0;36mDuration: 20.991 ms[0m
+[0;36m     Changes:   
+              [0;36m----------[0m
+              [0;36m/mnt/homes/arzt/.gconf/desktop/gnome/peripherals/keyboard/kbd[0m:
+                  [0;32mNew Dir[0m[0m
+[0;36m----------[0m
+    [0;36m      ID: /mnt/homes/arzt.kbd.gconf.xml[0m
+    [0;36mFunction: file.managed[0m
+    [0;36m    Name: /mnt/homes/arzt/.gconf/desktop/gnome/peripherals/keyboard/kbd/%gconf.xml[0m
+    [0;36m  Result: True[0m
+    [0;36m Comment: File /mnt/homes/arzt/.gconf/desktop/gnome/peripherals/keyboard/kbd/%gconf.xml updated[0m
+    [0;36m Started: 12:37:32.154403[0m
+    [0;36mDuration: 34.951 ms[0m
+[0;36m     Changes:   
+              [0;36m----------[0m
+              [0;36mdiff[0m:
+                  [0;32mNew file[0m
+              [0;36mgroup[0m:
+                  [0;32marzt[0m
+              [0;36muser[0m:
+                  [0;32marzt[0m[0m
+[0;36m----------[0m
+    [0;36m      ID: /mnt/homes/arzt/.gconf/apps/update-notifier/[0m
+    [0;36mFunction: file.directory[0m
+    [0;36m  Result: True[0m
+    [0;36m Comment: Directory /mnt/homes/arzt/.gconf/apps/update-notifier updated[0m
+    [0;36m Started: 12:37:32.189649[0m
+    [0;36mDuration: 7.641 ms[0m
+[0;36m     Changes:   
+              [0;36m----------[0m
+              [0;36m/mnt/homes/arzt/.gconf/apps/update-notifier[0m:
+                  [0;32mNew Dir[0m[0m
+[0;36m----------[0m
+    [0;36m      ID: /mnt/homes/arzt/.gconf/apps/update-notifier/%gconf.xml[0m
+    [0;36mFunction: file.managed[0m
+    [0;36m  Result: True[0m
+    [0;36m Comment: File /mnt/homes/arzt/.gconf/apps/update-notifier/%gconf.xml updated[0m
+    [0;36m Started: 12:37:32.197599[0m
+    [0;36mDuration: 20.585 ms[0m
+[0;36m     Changes:   
+              [0;36m----------[0m
+              [0;36mdiff[0m:
+                  [0;32mNew file[0m
+              [0;36mgroup[0m:
+                  [0;32marzt[0m
+              [0;36muser[0m:
+                  [0;32marzt[0m[0m
+[0;32m----------[0m
+    [0;32m      ID: /var/lib/AccountsService/users/mpa[0m
+    [0;32mFunction: file.managed[0m
+    [0;32m  Result: True[0m
+    [0;32m Comment: File /var/lib/AccountsService/users/mpa is in the correct state[0m
+    [0;32m Started: 12:37:32.218411[0m
+    [0;32mDuration: 1.185 ms[0m
+[0;32m     Changes:   [0m
+[0;36m----------[0m
+    [0;36m      ID: /mnt/homes/mpa/.gconf[0m
+    [0;36mFunction: file.directory[0m
+    [0;36m  Result: True[0m
+    [0;36m Comment: Directory /mnt/homes/mpa/.gconf updated[0m
+    [0;36m Started: 12:37:32.219765[0m
+    [0;36mDuration: 5.817 ms[0m
+[0;36m     Changes:   
+              [0;36m----------[0m
+              [0;36m/mnt/homes/mpa/.gconf[0m:
+                  [0;32mNew Dir[0m[0m
+[0;36m----------[0m
+    [0;36m      ID: /mnt/homes/mpa/.gconf/desktop/gnome/peripherals/keyboard/kbd/[0m
+    [0;36mFunction: file.directory[0m
+    [0;36m  Result: True[0m
+    [0;36m Comment: Directory /mnt/homes/mpa/.gconf/desktop/gnome/peripherals/keyboard/kbd updated[0m
+    [0;36m Started: 12:37:32.225763[0m
+    [0;36mDuration: 22.902 ms[0m
+[0;36m     Changes:   
+              [0;36m----------[0m
+              [0;36m/mnt/homes/mpa/.gconf/desktop/gnome/peripherals/keyboard/kbd[0m:
+                  [0;32mNew Dir[0m[0m
+[0;36m----------[0m
+    [0;36m      ID: /mnt/homes/mpa.kbd.gconf.xml[0m
+    [0;36mFunction: file.managed[0m
+    [0;36m    Name: /mnt/homes/mpa/.gconf/desktop/gnome/peripherals/keyboard/kbd/%gconf.xml[0m
+    [0;36m  Result: True[0m
+    [0;36m Comment: File /mnt/homes/mpa/.gconf/desktop/gnome/peripherals/keyboard/kbd/%gconf.xml updated[0m
+    [0;36m Started: 12:37:32.248960[0m
+    [0;36mDuration: 19.94 ms[0m
+[0;36m     Changes:   
+              [0;36m----------[0m
+              [0;36mdiff[0m:
+                  [0;32mNew file[0m
+              [0;36mgroup[0m:
+                  [0;32mmpa[0m
+              [0;36muser[0m:
+                  [0;32mmpa[0m[0m
+[0;36m----------[0m
+    [0;36m      ID: /mnt/homes/mpa/.gconf/apps/update-notifier/[0m
+    [0;36mFunction: file.directory[0m
+    [0;36m  Result: True[0m
+    [0;36m Comment: Directory /mnt/homes/mpa/.gconf/apps/update-notifier updated[0m
+    [0;36m Started: 12:37:32.269300[0m
+    [0;36mDuration: 8.37 ms[0m
+[0;36m     Changes:   
+              [0;36m----------[0m
+              [0;36m/mnt/homes/mpa/.gconf/apps/update-notifier[0m:
+                  [0;32mNew Dir[0m[0m
+[0;36m----------[0m
+    [0;36m      ID: /mnt/homes/mpa/.gconf/apps/update-notifier/%gconf.xml[0m
+    [0;36mFunction: file.managed[0m
+    [0;36m  Result: True[0m
+    [0;36m Comment: File /mnt/homes/mpa/.gconf/apps/update-notifier/%gconf.xml updated[0m
+    [0;36m Started: 12:37:32.277926[0m
+    [0;36mDuration: 17.5 ms[0m
+[0;36m     Changes:   
+              [0;36m----------[0m
+              [0;36mdiff[0m:
+                  [0;32mNew file[0m
+              [0;36mgroup[0m:
+                  [0;32mmpa[0m
+              [0;36muser[0m:
+                  [0;32mmpa[0m[0m
+[0;32m----------[0m
+    [0;32m      ID: lightdm[0m
+    [0;32mFunction: pkg.installed[0m
+    [0;32m  Result: True[0m
+    [0;32m Comment: Package lightdm is already installed.[0m
+    [0;32m Started: 12:37:32.298258[0m
+    [0;32mDuration: 145.317 ms[0m
+[0;32m     Changes:   [0m
+[0;32m----------[0m
+    [0;32m      ID: lightdm[0m
+    [0;32mFunction: service.running[0m
+    [0;32m  Result: True[0m
+    [0;32m Comment: The service lightdm is already running[0m
+    [0;32m Started: 12:37:32.444331[0m
+    [0;32mDuration: 23.756 ms[0m
+[0;32m     Changes:   [0m
+[0;32m----------[0m
+    [0;32m      ID: new_kernel[0m
+    [0;32mFunction: pkg.installed[0m
+    [0;32m    Name: linux-generic-lts-trusty[0m
+    [0;32m  Result: True[0m
+    [0;32m Comment: Package linux-generic-lts-trusty is already installed.[0m
+    [0;32m Started: 12:37:32.468631[0m
+    [0;32mDuration: 3.48 ms[0m
+[0;32m     Changes:   [0m
+[0;32m----------[0m
+    [0;32m      ID: new_kernel[0m
+    [0;32mFunction: pkg.installed[0m
+    [0;32m    Name: libgl1-mesa-glx-lts-trusty[0m
+    [0;32m  Result: True[0m
+    [0;32m Comment: Package libgl1-mesa-glx-lts-trusty is already installed.[0m
+    [0;32m Started: 12:37:32.472425[0m
+    [0;32mDuration: 2.942 ms[0m
+[0;32m     Changes:   [0m
+[0;32m----------[0m
+    [0;32m      ID: new_kernel[0m
+    [0;32mFunction: pkg.installed[0m
+    [0;32m    Name: xserver-xorg-lts-trusty[0m
+    [0;32m  Result: True[0m
+    [0;32m Comment: Package xserver-xorg-lts-trusty is already installed.[0m
+    [0;32m Started: 12:37:32.475754[0m
+    [0;32mDuration: 3.444 ms[0m
+[0;32m     Changes:   [0m
+[0;32m----------[0m
+    [0;32m      ID: new_kernel[0m
+    [0;32mFunction: pkg.installed[0m
+    [0;32m    Name: linux-image-generic-lts-trusty[0m
+    [0;32m  Result: True[0m
+    [0;32m Comment: Package linux-image-generic-lts-trusty is already installed.[0m
+    [0;32m Started: 12:37:32.479395[0m
+    [0;32mDuration: 3.479 ms[0m
+[0;32m     Changes:   [0m
+[0;32m----------[0m
+    [0;32m      ID: new_kernel[0m
+    [0;32mFunction: pkg.installed[0m
+    [0;32m    Name: linux-headers-generic-lts-trusty[0m
+    [0;32m  Result: True[0m
+    [0;32m Comment: Package linux-headers-generic-lts-trusty is already installed.[0m
+    [0;32m Started: 12:37:32.483211[0m
+    [0;32mDuration: 2.802 ms[0m
+[0;32m     Changes:   [0m
+[0;32m----------[0m
+    [0;32m      ID: /etc/locale.gen[0m
+    [0;32mFunction: file.managed[0m
+    [0;32m  Result: True[0m
+    [0;32m Comment: File /etc/locale.gen is in the correct state[0m
+    [0;32m Started: 12:37:32.486486[0m
+    [0;32mDuration: 14.591 ms[0m
+[0;32m     Changes:   [0m
+[0;32m----------[0m
+    [0;32m      ID: /etc/default/locale[0m
+    [0;32mFunction: file.managed[0m
+    [0;32m  Result: True[0m
+    [0;32m Comment: File /etc/default/locale is in the correct state[0m
+    [0;32m Started: 12:37:32.501443[0m
+    [0;32mDuration: 1.553 ms[0m
+[0;32m     Changes:   [0m
+[0;32m----------[0m
+    [0;32m      ID: generate_locale[0m
+    [0;32mFunction: cmd.run[0m
+    [0;32m    Name: locale-gen de_CH.UTF-8[0m
+    [0;32m  Result: True[0m
+    [0;32m Comment: unless execution succeeded[0m
+    [0;32m Started: 12:37:32.503666[0m
+    [0;32mDuration: 6.598 ms[0m
+[0;32m     Changes:   [0m
+[0;32m----------[0m
+    [0;32m      ID: user_pi[0m
+    [0;32mFunction: user.absent[0m
+    [0;32m    Name: pi[0m
+    [0;32m  Result: True[0m
+    [0;32m Comment: User pi is not present[0m
+    [0;32m Started: 12:37:32.511082[0m
+    [0;32mDuration: 0.73 ms[0m
+[0;32m     Changes:   [0m
+[0;32m----------[0m
+    [0;32m      ID: arzt[0m
+    [0;32mFunction: group.present[0m
+    [0;32m  Result: True[0m
+    [0;32m Comment: Group arzt is present and up to date[0m
+    [0;32m Started: 12:37:32.512229[0m
+    [0;32mDuration: 0.628 ms[0m
+[0;32m     Changes:   [0m
+[0;32m----------[0m
+    [0;32m      ID: arzt[0m
+    [0;32mFunction: user.present[0m
+    [0;32m  Result: True[0m
+    [0;32m Comment: User arzt is present and up to date[0m
+    [0;32m Started: 12:37:32.513498[0m
+    [0;32mDuration: 1.281 ms[0m
+[0;32m     Changes:   [0m
+[0;32m----------[0m
+    [0;32m      ID: arzt[0m
+    [0;32mFunction: file.directory[0m
+    [0;32m    Name: /mnt/homes/arzt[0m
+    [0;32m  Result: True[0m
+    [0;32m Comment: Directory /mnt/homes/arzt is in the correct state[0m
+    [0;32m Started: 12:37:32.515342[0m
+    [0;32mDuration: 0.887 ms[0m
+[0;32m     Changes:   [0m
+[0;32m----------[0m
+    [0;32m      ID: mpa[0m
+    [0;32mFunction: group.present[0m
+    [0;32m  Result: True[0m
+    [0;32m Comment: Group mpa is present and up to date[0m
+    [0;32m Started: 12:37:32.516451[0m
+    [0;32mDuration: 0.526 ms[0m
+[0;32m     Changes:   [0m
+[0;32m----------[0m
+    [0;32m      ID: mpa[0m
+    [0;32mFunction: user.present[0m
+    [0;32m  Result: True[0m
+    [0;32m Comment: User mpa is present and up to date[0m
+    [0;32m Started: 12:37:32.517433[0m
+    [0;32mDuration: 1.075 ms[0m
+[0;32m     Changes:   [0m
+[0;32m----------[0m
+    [0;32m      ID: mpa[0m
+    [0;32mFunction: file.directory[0m
+    [0;32m    Name: /mnt/homes/mpa[0m
+    [0;32m  Result: True[0m
+    [0;32m Comment: Directory /mnt/homes/mpa is in the correct state[0m
+    [0;32m Started: 12:37:32.519055[0m
+    [0;32mDuration: 0.838 ms[0m
+[0;32m     Changes:   [0m
+[0;32m----------[0m
+    [0;32m      ID: /etc/sudoers.d/nopasswd[0m
+    [0;32mFunction: file.managed[0m
+    [0;32m  Result: True[0m
+    [0;32m Comment: File /etc/sudoers.d/nopasswd is in the correct state[0m
+    [0;32m Started: 12:37:32.520043[0m
+    [0;32mDuration: 1.205 ms[0m
+[0;32m     Changes:   [0m
+[0;32m----------[0m
+    [0;32m      ID: debconf-utils[0m
+    [0;32mFunction: pkg.installed[0m
+    [0;32m  Result: True[0m
+    [0;32m Comment: Package debconf-utils is already installed.[0m
+    [0;32m Started: 12:37:32.521472[0m
+    [0;32mDuration: 5.007 ms[0m
+[0;32m     Changes:   [0m
+[0;32m----------[0m
+    [0;32m      ID: oracle-java8-installer[0m
+    [0;32mFunction: pkgrepo.managed[0m
+    [0;32m  Result: True[0m
+    [0;32m Comment: Package repo 'oracle-java8-installer' already configured[0m
+    [0;32m Started: 12:37:32.526911[0m
+    [0;32mDuration: 89.72 ms[0m
+[0;32m     Changes:   [0m
+[0;32m----------[0m
+    [0;32m      ID: oracle-java8-installer[0m
+    [0;32mFunction: debconf.set[0m
+    [0;32m  Result: True[0m
+    [0;32m Comment: All specified answers are already set[0m
+    [0;32m Started: 12:37:32.618621[0m
+    [0;32mDuration: 218.176 ms[0m
+[0;32m     Changes:   [0m
+[0;32m----------[0m
+    [0;32m      ID: oracle-java8-installer[0m
+    [0;32mFunction: pkg.installed[0m
+    [0;32m  Result: True[0m
+    [0;32m Comment: Package oracle-java8-installer is already installed.[0m
+    [0;32m Started: 12:37:32.837577[0m
+    [0;32mDuration: 3.241 ms[0m
+[0;32m     Changes:   [0m
+[0;36m----------[0m
+    [0;36m      ID: /tmp/Medelexis_not_found[0m
+    [0;36mFunction: file.managed[0m
+    [0;36m  Result: True[0m
+    [0;36m Comment: File /tmp/Medelexis_not_found updated[0m
+    [0;36m Started: 12:37:32.841004[0m
+    [0;36mDuration: 1.614 ms[0m
+[0;36m     Changes:   
+              [0;36m----------[0m
+              [0;36mdiff[0m:
+                  [0;32mNew file[0m[0m
+[0;32m----------[0m
+    [0;32m      ID: elexis_needs[0m
+    [0;32mFunction: file.directory[0m
+    [0;32m    Name: /usr/local/bin[0m
+    [0;32m  Result: True[0m
+    [0;32m Comment: Directory /usr/local/bin is in the correct state[0m
+    [0;32m Started: 12:37:32.842771[0m
+    [0;32mDuration: 0.583 ms[0m
+[0;32m     Changes:   [0m
+[0;32m----------[0m
+    [0;32m      ID: elexis_needs[0m
+    [0;32mFunction: pkg.installed[0m
+    [0;32m    Name: xdg-utils[0m
+    [0;32m  Result: True[0m
+    [0;32m Comment: Package xdg-utils is already installed.[0m
+    [0;32m Started: 12:37:32.843537[0m
+    [0;32mDuration: 2.939 ms[0m
+[0;32m     Changes:   [0m
+[0;32m----------[0m
+    [0;32m      ID: /usr/share/icons/elexis-logo.png[0m
+    [0;32mFunction: file.managed[0m
+    [0;32m  Result: True[0m
+    [0;32m Comment: File /usr/share/icons/elexis-logo.png is in the correct state[0m
+    [0;32m Started: 12:37:32.846646[0m
+    [0;32mDuration: 29.387 ms[0m
+[0;32m     Changes:   [0m
+[0;32m----------[0m
+    [0;32m      ID: /usr/local/elexis-prerelease-test[0m
+    [0;32mFunction: archive.extracted[0m
+    [0;32m  Result: True[0m
+    [0;32m Comment: /usr/local/elexis-prerelease-test/Elexis3 already exists[0m
+    [0;32m Started: 12:37:32.877087[0m
+    [0;32mDuration: 5.372 ms[0m
+[0;32m     Changes:   [0m
+[0;32m----------[0m
+    [0;32m      ID: /usr/local/elexis-prerelease-test/Elexis3[0m
+    [0;32mFunction: file.managed[0m
+    [0;32m  Result: True[0m
+    [0;32m Comment: File /usr/local/elexis-prerelease-test/Elexis3 exists with proper permissions. No changes made.[0m
+    [0;32m Started: 12:37:32.883211[0m
+    [0;32mDuration: 0.96 ms[0m
+[0;32m     Changes:   [0m
+[0;32m----------[0m
+    [0;32m      ID: elexis-prerelease-test[0m
+    [0;32mFunction: file.managed[0m
+    [0;32m    Name: /usr/local/bin/elexis-prerelease-test.sh[0m
+    [0;32m  Result: True[0m
+    [0;32m Comment: File /usr/local/bin/elexis-prerelease-test.sh is in the correct state[0m
+    [0;32m Started: 12:37:32.884405[0m
+    [0;32mDuration: 37.464 ms[0m
+[0;32m     Changes:   [0m
+[0;32m----------[0m
+    [0;32m      ID: /usr/share/applications/elexis-prerelease-test.desktop[0m
+    [0;32mFunction: file.managed[0m
+    [0;32m  Result: True[0m
+    [0;32m Comment: File /usr/share/applications/elexis-prerelease-test.desktop is in the correct state[0m
+    [0;32m Started: 12:37:32.922079[0m
+    [0;32mDuration: 33.436 ms[0m
+[0;32m     Changes:   [0m
+[0;32m----------[0m
+    [0;32m      ID: /mnt/homes/arzt/elexis-prerelease-test[0m
+    [0;32mFunction: cmd.run[0m
+    [0;32m    Name: xdg-desktop-icon install /usr/share/applications/elexis-prerelease-test.desktop[0m
+    [0;32m  Result: True[0m
+    [0;32m Comment: unless execution succeeded[0m
+    [0;32m Started: 12:37:32.956609[0m
+    [0;32mDuration: 100.883 ms[0m
+[0;32m     Changes:   [0m
+[0;32m----------[0m
+    [0;32m      ID: /mnt/homes/mpa/elexis-prerelease-test[0m
+    [0;32mFunction: cmd.run[0m
+    [0;32m    Name: xdg-desktop-icon install /usr/share/applications/elexis-prerelease-test.desktop[0m
+    [0;32m  Result: True[0m
+    [0;32m Comment: unless execution succeeded[0m
+    [0;32m Started: 12:37:33.058516[0m
+    [0;32mDuration: 64.597 ms[0m
+[0;32m     Changes:   [0m
+[0;32m----------[0m
+    [0;32m      ID: /usr/local/elexis-prerelease-elexis[0m
+    [0;32mFunction: archive.extracted[0m
+    [0;32m  Result: True[0m
+    [0;32m Comment: /usr/local/elexis-prerelease-elexis/Elexis3 already exists[0m
+    [0;32m Started: 12:37:33.123402[0m
+    [0;32mDuration: 8.46 ms[0m
+[0;32m     Changes:   [0m
+[0;32m----------[0m
+    [0;32m      ID: /usr/local/elexis-prerelease-elexis/Elexis3[0m
+    [0;32mFunction: file.managed[0m
+    [0;32m  Result: True[0m
+    [0;32m Comment: File /usr/local/elexis-prerelease-elexis/Elexis3 exists with proper permissions. No changes made.[0m
+    [0;32m Started: 12:37:33.132702[0m
+    [0;32mDuration: 0.972 ms[0m
+[0;32m     Changes:   [0m
+[0;32m----------[0m
+    [0;32m      ID: elexis-prerelease-elexis[0m
+    [0;32mFunction: file.managed[0m
+    [0;32m    Name: /usr/local/bin/elexis-prerelease-elexis.sh[0m
+    [0;32m  Result: True[0m
+    [0;32m Comment: File /usr/local/bin/elexis-prerelease-elexis.sh is in the correct state[0m
+    [0;32m Started: 12:37:33.133867[0m
+    [0;32mDuration: 9.144 ms[0m
+[0;32m     Changes:   [0m
+[0;32m----------[0m
+    [0;32m      ID: /usr/share/applications/elexis-prerelease-elexis.desktop[0m
+    [0;32mFunction: file.managed[0m
+    [0;32m  Result: True[0m
+    [0;32m Comment: File /usr/share/applications/elexis-prerelease-elexis.desktop is in the correct state[0m
+    [0;32m Started: 12:37:33.143296[0m
+    [0;32mDuration: 6.453 ms[0m
+[0;32m     Changes:   [0m
+[0;32m----------[0m
+    [0;32m      ID: /mnt/homes/arzt/elexis-prerelease-elexis[0m
+    [0;32mFunction: cmd.run[0m
+    [0;32m    Name: xdg-desktop-icon install /usr/share/applications/elexis-prerelease-elexis.desktop[0m
+    [0;32m  Result: True[0m
+    [0;32m Comment: unless execution succeeded[0m
+    [0;32m Started: 12:37:33.150384[0m
+    [0;32mDuration: 50.496 ms[0m
+[0;32m     Changes:   [0m
+[0;32m----------[0m
+    [0;32m      ID: /mnt/homes/mpa/elexis-prerelease-elexis[0m
+    [0;32mFunction: cmd.run[0m
+    [0;32m    Name: xdg-desktop-icon install /usr/share/applications/elexis-prerelease-elexis.desktop[0m
+    [0;32m  Result: True[0m
+    [0;32m Comment: unless execution succeeded[0m
+    [0;32m Started: 12:37:33.201648[0m
+    [0;32mDuration: 51.734 ms[0m
+[0;32m     Changes:   [0m
+[0;32m----------[0m
+    [0;32m      ID: rsnapshot[0m
+    [0;32mFunction: pkg.installed[0m
+    [0;32m  Result: True[0m
+    [0;32m Comment: Package rsnapshot is already installed.[0m
+    [0;32m Started: 12:37:33.253651[0m
+    [0;32mDuration: 1.375 ms[0m
+[0;32m     Changes:   [0m
+[0;32m----------[0m
+    [0;32m      ID: /etc/rsync.exclude[0m
+    [0;32mFunction: file.managed[0m
+    [0;32m  Result: True[0m
+    [0;32m Comment: File /etc/rsync.exclude is in the correct state[0m
+    [0;32m Started: 12:37:33.255220[0m
+    [0;32mDuration: 5.89 ms[0m
+[0;32m     Changes:   [0m
+[0;32m----------[0m
+    [0;32m      ID: /etc/rsnapshot_home_localhost.conf[0m
+    [0;32mFunction: file.managed[0m
+    [0;32m  Result: True[0m
+    [0;32m Comment: File /etc/rsnapshot_home_localhost.conf is in the correct state[0m
+    [0;32m Started: 12:37:33.261313[0m
+    [0;32mDuration: 16.432 ms[0m
+[0;32m     Changes:   [0m
+[0;32m----------[0m
+    [0;32m      ID: rsnapshot_home_localhost_yearly.tst[0m
+    [0;32mFunction: cron.present[0m
+    [0;32m    Name: nice -10 ionice -c3 /usr/bin/rsnapshot -q -c /etc/rsnapshot_home_localhost.conf yearly 1>/dev/null[0m
+    [0;32m  Result: True[0m
+    [0;32m Comment: Cron nice -10 ionice -c3 /usr/bin/rsnapshot -q -c /etc/rsnapshot_home_localhost.conf yearly 1>/dev/null already present[0m
+    [0;32m Started: 12:37:33.278570[0m
+    [0;32mDuration: 33.637 ms[0m
+[0;32m     Changes:   [0m
+[0;32m----------[0m
+    [0;32m      ID: rsnapshot_home_localhost_hourly.tst[0m
+    [0;32mFunction: cron.present[0m
+    [0;32m    Name: nice -10 ionice -c3 /usr/bin/rsnapshot -q -c /etc/rsnapshot_home_localhost.conf hourly 1>/dev/null[0m
+    [0;32m  Result: True[0m
+    [0;32m Comment: Cron nice -10 ionice -c3 /usr/bin/rsnapshot -q -c /etc/rsnapshot_home_localhost.conf hourly 1>/dev/null already present[0m
+    [0;32m Started: 12:37:33.312696[0m
+    [0;32mDuration: 5.754 ms[0m
+[0;32m     Changes:   [0m
+[0;32m----------[0m
+    [0;32m      ID: rsnapshot_home_localhost_monthly.tst[0m
+    [0;32mFunction: cron.present[0m
+    [0;32m    Name: nice -10 ionice -c3 /usr/bin/rsnapshot -q -c /etc/rsnapshot_home_localhost.conf monthly 1>/dev/null[0m
+    [0;32m  Result: True[0m
+    [0;32m Comment: Cron nice -10 ionice -c3 /usr/bin/rsnapshot -q -c /etc/rsnapshot_home_localhost.conf monthly 1>/dev/null already present[0m
+    [0;32m Started: 12:37:33.318848[0m
+    [0;32mDuration: 5.384 ms[0m
+[0;32m     Changes:   [0m
+[0;32m----------[0m
+    [0;32m      ID: rsnapshot_home_localhost_sync.tst[0m
+    [0;32mFunction: cron.present[0m
+    [0;32m    Name: nice -10 ionice -c3 /usr/bin/rsnapshot -q -c /etc/rsnapshot_home_localhost.conf sync 1>/dev/null[0m
+    [0;32m  Result: True[0m
+    [0;32m Comment: Cron nice -10 ionice -c3 /usr/bin/rsnapshot -q -c /etc/rsnapshot_home_localhost.conf sync 1>/dev/null already present[0m
+    [0;32m Started: 12:37:33.324680[0m
+    [0;32mDuration: 5.77 ms[0m
+[0;32m     Changes:   [0m
+[0;32m----------[0m
+    [0;32m      ID: rsnapshot_home_localhost_daily.tst[0m
+    [0;32mFunction: cron.present[0m
+    [0;32m    Name: nice -10 ionice -c3 /usr/bin/rsnapshot -q -c /etc/rsnapshot_home_localhost.conf daily 1>/dev/null[0m
+    [0;32m  Result: True[0m
+    [0;32m Comment: Cron nice -10 ionice -c3 /usr/bin/rsnapshot -q -c /etc/rsnapshot_home_localhost.conf daily 1>/dev/null already present[0m
+    [0;32m Started: 12:37:33.330808[0m
+    [0;32mDuration: 6.287 ms[0m
+[0;32m     Changes:   [0m
+[0;32m----------[0m
+    [0;32m      ID: rsnapshot_home_localhost_quarterly.tst[0m
+    [0;32mFunction: cron.present[0m
+    [0;32m    Name: nice -10 ionice -c3 /usr/bin/rsnapshot -q -c /etc/rsnapshot_home_localhost.conf quarterly 1>/dev/null[0m
+    [0;32m  Result: True[0m
+    [0;32m Comment: Cron nice -10 ionice -c3 /usr/bin/rsnapshot -q -c /etc/rsnapshot_home_localhost.conf quarterly 1>/dev/null already present[0m
+    [0;32m Started: 12:37:33.337601[0m
+    [0;32mDuration: 5.94 ms[0m
+[0;32m     Changes:   [0m
+[0;32m----------[0m
+    [0;32m      ID: rsnapshot_home_localhost_weekly.tst[0m
+    [0;32mFunction: cron.present[0m
+    [0;32m    Name: nice -10 ionice -c3 /usr/bin/rsnapshot -q -c /etc/rsnapshot_home_localhost.conf weekly 1>/dev/null[0m
+    [0;32m  Result: True[0m
+    [0;32m Comment: Cron nice -10 ionice -c3 /usr/bin/rsnapshot -q -c /etc/rsnapshot_home_localhost.conf weekly 1>/dev/null already present[0m
+    [0;32m Started: 12:37:33.343993[0m
+    [0;32mDuration: 5.912 ms[0m
+[0;32m     Changes:   [0m
+[0;32m----------[0m
+    [0;32m      ID: bsd_mailx[0m
+    [0;32mFunction: pkg.installed[0m
+    [0;32m    Name: bsd-mailx[0m
+    [0;32m  Result: True[0m
+    [0;32m Comment: Package bsd-mailx is already installed.[0m
+    [0;32m Started: 12:37:33.350478[0m
+    [0;32mDuration: 1.091 ms[0m
+[0;32m     Changes:   [0m
+[0;32m----------[0m
+    [0;32m      ID: ssmtp_install[0m
+    [0;32mFunction: pkg.installed[0m
+    [0;32m    Name: ssmtp[0m
+    [0;32m  Result: True[0m
+    [0;32m Comment: Package ssmtp is already installed.[0m
+    [0;32m Started: 12:37:33.351801[0m
+    [0;32mDuration: 1.161 ms[0m
+[0;32m     Changes:   [0m
+[0;32m----------[0m
+    [0;32m      ID: /etc/ssmtp/ssmtp.conf[0m
+    [0;32mFunction: file.managed[0m
+    [0;32m  Result: True[0m
+    [0;32m Comment: File /etc/ssmtp/ssmtp.conf is in the correct state[0m
+    [0;32m Started: 12:37:33.354007[0m
+    [0;32mDuration: 15.928 ms[0m
+[0;32m     Changes:   [0m
+[0;36m
+Summary
+-------------[0m
+[0;32mSucceeded: 73[0m ([0;32mchanged=12[0m)
+[0;31mFailed:     0[0m
+[0;36m-------------
+Total states run:     74[0m
+]0;vagrant@ElexisLaborDemo: ~vagrant@ElexisLaborDemo:~$ exit
+Abgemeldet
+Connection to 127.0.0.1 closed.
