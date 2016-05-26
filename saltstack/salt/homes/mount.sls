@@ -13,10 +13,11 @@ nfs-common:
     - device: {{item.server_ip}}:{{item.server_name}}
     - fstype: nfs4
     - mkmnt: True
-    - config: /etc/fstab
     - persist: True
     - opts:
       - {{item.mount_opts}}
+    # Hack to avoid seeing changes every time I run salt-apply
+    - unless: egrep "{{item.server_ip}}:{{item.server_name}}.*{{item.mount_opts}}" /etc/fstab && grep " {{item.mount_point}}" /etc/mtab
 {% endfor %}
 
 
