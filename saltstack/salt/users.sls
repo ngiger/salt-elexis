@@ -16,8 +16,11 @@ user_{{user.name}}:
   user.present:
     - enforce_password: false
     - shell: /bin/bash
-    # initial password is set to elexis
+    # initial password is set to elexis, generated with the commad, where is the salt
+    # python -c "import crypt, getpass, pwd; print crypt.crypt('elexis', '\$6\$Dwn/RN6q\$')"
+    # or with alt-call random.shadow_hash 'Dwn/RN6q' 'elexis' sha512
     - password: '$6$Dwn/RN6q$H38lUgjc0AEmXMu.V3nGN/CmwbROmV3FtZ26y7iAMD3gKzHJUG.FviYSxXmdCa96hca3RRpi87lMp99RZzN5.1'
+    - enforce_password: false # Users should be able to change their password as they want
     - fullname: "{{user.name}}"
     - name: {{user.name}}
     - uid: {{user.uid}}
@@ -41,9 +44,7 @@ user_{{user.name}}:
     - require:
         - user: {{user.name}}
         - group: {{user.name}}
-    - recurse:
-        - user
-        - group
+
 
 #----------------- Add git repo for some users -------------------------------------
   # While developping it is handy to trace all changes in the the config directories of
@@ -83,5 +84,3 @@ user_{{user.name}}:
       - "# managed by salt"
       - '%sudo ALL = (ALL) NOPASSWD: ALL'
 
-{% if false %}
-{% endif %}
