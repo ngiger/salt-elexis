@@ -213,23 +213,26 @@ gitfs_remotes:
 * rsnapshot backup of all HOME directories
 * dnsmask server
 * dnsmask tftp server for Ubuntu netboot + installer preseeds
+* elexis-cockpit. See https://github.com/elexis/elexis-cockpit
 * letsenscrpt
 ** https://github.com/saltstack-formulas/letsencrypt-formula
 ** https://www.kunxi.org/blog/2015/12/lets-encrypt-with-saltstack/
 
 ### TODO
 
-* elexis-cockpit. See https://github.com/elexis/elexis-cockpit
-** Replace /etc/hiera.yaml by a more salt friendly yaml
+* elexis-cockpit. Verify functionality
 * Set default keyboard to Swiss German
 * Don't ask for upgrade of Ubuntu from 12.04 -> 14.04
 * Don't show users like vagrant; Ubuntu # It is enough to change them to user ids < 1000
 * Add/remove apps from the Ubuntu sidebar
-* rsnapshot (see TODO in saltstack/salt/rsnapshot/readme.textile)
+* rsnapshot extension (see TODO in saltstack/salt/rsnapshot/readme.textile)
 * db backup
-* wol (WakeOnLan)
 * mysql
 * dyndns
+* gollum praxis wiki
+* sample nginx server for public internet, praxis wiki and elexis-cockpit with letsencrypt certificate
+* make private (keys only) project with ElexisServerDemo.dyndns.org for above and hinclient. Deploy it on a Raspberry PI3
+* wol (WakeOnLan)
 * Use docker containers for HIN-clients
 * mediport plugin & MPCcommunicator
 * nginx https://www.digitalocean.com/community/tutorials/saltstack-infrastructure-creating-salt-states-for-nginx-web-servers and https://github.com/saltstack-formulas/nginx-formula

@@ -22,11 +22,11 @@ server:
     - server_name: /opt
       export_opts: rw,no_subtree_check,no_root_squash
       mount_opts: rw,soft,intr,rsize=32768,wsize=32768,timeo=14,intr,actimeo=10
-      mount_point: /mnt/opt
+      mount_point: /opt
       server_ip: 192.168.1.90
     - server_name: /backup
       export_opts: rw,no_subtree_check,no_root_squash
       mount_opts: rw,soft,intr,rsize=32768,wsize=32768,timeo=14,intr,actimeo=10
-      mount_point: /mnt/backup
+      mount_point: /backup
       server_ip: 192.168.1.90
 

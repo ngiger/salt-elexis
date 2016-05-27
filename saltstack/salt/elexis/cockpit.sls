@@ -11,7 +11,7 @@
         server: {{pillar.get('server.name', '0.0.0.0')}}
         icon: /usr/share/icons/hicolor/256x256/elexis-logo.png
 
-{% if grains.get('id') == pillar.get('server', {})['name'] %}
+{% if grains.get('host') == pillar.get('server', {})['name'] %}
 {% set install_dir = '/opt/checkout/cockpit' %}
 {% set pillar_yaml = '/etc/pillar.yaml' %}
 cockpit:

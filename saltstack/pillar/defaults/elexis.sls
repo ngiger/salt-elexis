@@ -1,14 +1,9 @@
 medelexis:
-{% if grains.get('id') == 'ElexisServerDemo' %}
   linux_x86_64:  '/opt/downloads/ch.medelexis.application.product.Medelexis-linux.gtk.x86_64.zip'
   license_xml:   '/opt/downloads/license.xml'
-{% else %}
-  linux_x86_64:  '/mnt/opt/downloads/ch.medelexis.application.product.Medelexis-linux.gtk.x86_64.zip'
-  license_xml:   '/mnt/opt/downloads/license.xml'
-{% endif %}
 
 elexis:
-  backup_root:   /mnt/backup
+  backup_root:   /backup
   local_files:   /usr/local
   db_type: postgresql # mysql of pg for postgresql
   db_version: 9.4 # version of the database

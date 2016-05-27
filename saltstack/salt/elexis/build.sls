@@ -43,14 +43,6 @@ git_elexis_core:
     - require:
       - pkg: git
 
-build_elexis_core:
-  cmd.run:
-    - creates: {{core_target}}/ch.elexis.core.p2site/target/products/ch.elexis.core.application.ElexisApp-linux.gtk.x86_64.zip
-    - name: "mvn clean install -Dmaven.test.skip=true -Pall-archs 2>&1 | tee maven-salt.log"
-    - cwd: {{core_target}}
-    - require:
-      - pkg: maven
-
 {{base_target}}:
   git.latest:
     - target: {{base_target}}
@@ -58,17 +50,6 @@ build_elexis_core:
     - rev: {{base_rev}}
     - require:
       - pkg: git
-      - cmd: build_elexis_core
-
-build_elexis_base:
-  cmd.run:
-    - creates: {{base_target}}/ch.elexis.base.p2site/target/targetPlatformRepository
-    - name: "mvn clean install -Dmaven.test.skip=true 2>&1 | tee maven-salt.log"
-    - cwd: {{base_target}}
-    - require:
-      - pkg: maven
-    - watch:
-      - git: {{base_target}}
 
 {{build_elexis}}:
   file.managed:

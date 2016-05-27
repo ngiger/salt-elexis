@@ -2,7 +2,7 @@ base:
   '*':
     - common
    # now the stuff which must be only installed on the server
-{% if grains.get('id') == pillar.get('server', {})['name'] %}
+{% if grains.get('host') == pillar.get('server', {})['name'] %}
     - server.idmap
     - server.nfs
     - server.unattended_upgrades
