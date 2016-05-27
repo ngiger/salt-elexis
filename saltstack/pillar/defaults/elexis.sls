@@ -19,14 +19,6 @@ elexis:
   db_test: test  # DB to use for tests
   db_user: elexis  # DB-User to access both DB
   db_password: elexisTest # a convention
-  core:
-    url: https://github.com/elexis/elexis-3-core.git
-    target: /usr/local/src/elexis-3-core
-    branch: master
-  base:
-    url: https://github.com/ngiger/elexis-3-base.git
-    target: /usr/local/src/elexis-3-base
-    branch: master
 
 language: de_CH
 
@@ -72,6 +64,14 @@ elexis_apps:
     db_to_use:  elexis
 
 elexis_from_source:
-  - human_name: Elexis 3.1 (Spezial aus Quellcode) auf Test-Datenbank
-    variant: from_source
-    db_to_use:  test
+  human_name: Elexis 3.1 (Spezial aus Quellcode) auf Test-Datenbank
+  variant: from_source
+  db_to_use:  test
+  core_url: https://github.com/elexis/elexis-3-core.git
+  core_target: /usr/local/src/elexis-3-core
+  core_rev: master
+  base_url: https://github.com/elexis/elexis-3-base.git
+  base_target: /usr/local/src/elexis-3-base
+  base_rev: master
+  users:
+    - arzt
