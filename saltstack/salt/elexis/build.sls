@@ -28,7 +28,7 @@ elexis_build_needs:
 {% set install_win32       = '/usr/local/bin/install_win32.sh' %}
 {% set filename            = 'elexis-'+ app.variant + '-' + app.db_to_use %}
 {% set exe                 = base_target + '/' + filename +'.sh' %}
-{% set inst_path           = '/usr/local/' + filename %}
+{% set inst_path           = '/usr/local/' +  'elexis-'+ app.variant %}
 {% if                        pillar.get('server', {}).get('name') %}
 {% set db_server           = pillar.get('server', {}).get('name') %}
 {% else %}
