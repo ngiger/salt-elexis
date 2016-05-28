@@ -15,6 +15,7 @@ base:
     - locale
 {% endif %}
 
+    - server.apt-cacher-ng
     - elexis
 
 {% if pillar.get('rsnapshot_backups', False) %}

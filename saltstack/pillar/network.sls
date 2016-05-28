@@ -5,6 +5,7 @@ server:
   ip: 192.168.1.90
   # name is defined in common.sls
 network:
+  apt_cacher_ng_server: ElexisServerDemo
   domain_name: elexis-demo.dyndns.org
   ip_network: 192.168.1.0/24
   # By default allow acces from all private address spaces
