@@ -9,10 +9,16 @@ users:
     uid: 2000
     gid: 2000
     home: /mnt/homes/arzt
+    groups: [ praxis, adm, lpadmin, ssh, sudo ]
   - name: mpa
     uid: 2001
     gid: 2001
     home: /mnt/homes/mpa
+    groups: [ praxis ]
+groups:
+  - name: praxis
+    gid:  3000
+
 #  - name: labor
 #    uid: 2002
 #    gid: 2002

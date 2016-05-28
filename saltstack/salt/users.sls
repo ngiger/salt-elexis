@@ -7,8 +7,16 @@ user_{{user.name}}:
     {% endif %}
 {% endfor %}
 
+
+{% for group in pillar['groups'] %}
+{{group.name}}:
+  group.present:
+    - name: {{group.name}}
+    - gid: {{group.gid}}
+{% endfor %}
+
 {% for user in pillar['users'] %}
-{{user.name}}:
+group_{{user.name}}:
   group.present:
     - name: {{user.name}}
     - gid: {{user.gid}}
