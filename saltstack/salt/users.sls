@@ -20,7 +20,7 @@ user_{{user.name}}:
 {% endfor %}
 
 
-{% for group in pillar['groups'] %}
+{% for group in pillar.get('groups', []) %}
 {{group.name}}:
   group.present:
     - name: {{group.name}}
