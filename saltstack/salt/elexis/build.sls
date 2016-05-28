@@ -12,6 +12,7 @@ elexis_build_needs:
       - xdg-utils
       - git
       - oracle-java8-installer
+      - oracle-java8-set-default # Or you will get failure like "import java.time.Duration failed"
       - maven
       - dos2unix
 

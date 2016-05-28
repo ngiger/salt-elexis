@@ -1,5 +1,5 @@
 # kate: syntax python; space-indent on; indent-width 4; mixedindent off; replace-tabs on
-
+# see also http://askubuntu.com/questions/195297/install-oracle-java7-installer-through-apt-cacher-ng
 {% set hostname = salt['pillar.get']('network:apt_cacher_ng_server', false) %}
 {% if hostname %}
 apt_proxy:
