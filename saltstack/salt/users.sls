@@ -1,3 +1,15 @@
+
+/etc/sudoers.d/nopasswd:
+{% if pillar.get('sudo', {}).get('no_passwd', false) %}
+  file.managed:
+    - mode: 440
+    - contents:
+      - "# managed by salt"
+      - '%sudo ALL = (ALL) NOPASSWD: ALL'
+{% else %}
+  file.absent
+{% endif %}
+
 {% for user in pillar.get('users_absent', []) %}
 user_{{user.name}}:
   user.absent:
@@ -83,11 +95,4 @@ group_{{user.name}}:
 
 
 {% endfor %}
-
-/etc/sudoers.d/nopasswd:
-  file.managed:
-    - mode: 440
-    - contents:
-      - "# managed by salt"
-      - '%sudo ALL = (ALL) NOPASSWD: ALL'
 

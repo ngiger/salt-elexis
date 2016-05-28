@@ -2,6 +2,9 @@ users_absent:
   - name: pi
     purge: True
 
+sudo:
+  no_passwd: true # Set to false to fore sudo users to enter a password before calling sudo a first time
+
 # keep the UID far away from the normally generated ones
 # /mnt/homes must be in sync the the pillar/users.sls file
 users:
