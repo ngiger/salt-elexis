@@ -1,0 +1,1 @@
+Elexis3 -clean -debug -consoleLog -vmargs --use-config=elexis-{{app.variant}} -Dch.elexis.dbFlavor={{elexis.db_type}} -Dch.elexis.dbSpec=jdbc:{{elexis.db_type}}://{{db_server}}/{{app.db_to_use}} -Dch.elexis.dbUser={{elexis.db_user}} -Dch.elexis.dbPw={{elexis.db_password}}
