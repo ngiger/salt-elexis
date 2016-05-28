@@ -41,10 +41,16 @@ group_{{user.name}}:
     # or with alt-call random.shadow_hash 'Dwn/RN6q' 'elexis' sha512
     - password: '$6$Dwn/RN6q$H38lUgjc0AEmXMu.V3nGN/CmwbROmV3FtZ26y7iAMD3gKzHJUG.FviYSxXmdCa96hca3RRpi87lMp99RZzN5.1'
     - enforce_password: false # Users should be able to change their password as they want
-    - fullname: "{{user.name}}"
+    {% if user.fullname is defined %}
+    - fullname: "{{user.fullname}}"
+    {% endif %}
     - name: {{user.name}}
+    {% if user.uid is defined %}
     - uid: {{user.uid}}
+    {% endif %}
+    {% if user.gid is defined %}
     - gid: {{user.gid}}
+    {% endif %}
     {% if user.get('groups', user.name) %}
     - optional_groups:
       {% for group in user.get('groups', user.name) %}
