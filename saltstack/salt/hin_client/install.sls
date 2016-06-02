@@ -76,14 +76,17 @@ g_{{client.hin_login}}:
       - "passphrase=/home/{{client.hin_login}}/passphrase.txt"
 
 inetd_{{client.hin_login}}:
-  file.append:
+  file.blockreplace:
     - name: /etc/inetd.conf
-    - text: |
-        # Redir config for sharing local HIN Client {{client.hin_login}}
-        {{client.http_port}} stream tcp nowait root /usr/bin/redir --lport={{client.http_port}} --cport=5016 --caddr=localhost --inetd
-        {{client.smtp_port}} stream tcp nowait root /usr/bin/redir --lport={{client.smtp_port}} --cport=5018 --caddr=localhost --inetd
-        {{client.pop3_port}} stream tcp nowait root /usr/bin/redir --lport={{client.pop3_port}} --cport=5019 --caddr=localhost --inetd
-        {{client.imap_port}} stream tcp nowait root /usr/bin/redir --lport={{client.imap_port}} --cport=5020 --caddr=localhost --inetd
+    - marker_start: "# BLOCK TOP : salt managed zone {{client.hin_login}}: please do not edit"
+    - marker_end: "# BLOCK BOTTOM : end of salt managed zone {{client.hin_login}}: --"
+    - show_changes: True
+    - append_if_not_found: True
+    - content: "# Redir config for sharing local HIN Client {{client.hin_login}}\n
+        {{client.http_port}} stream tcp nowait root /usr/bin/redir --lport={{client.http_port}} --cport=5016 --caddr=localhost --inetd\n
+        {{client.smtp_port}} stream tcp nowait root /usr/bin/redir --lport={{client.smtp_port}} --cport=5018 --caddr=localhost --inetd\n
+        {{client.pop3_port}} stream tcp nowait root /usr/bin/redir --lport={{client.pop3_port}} --cport=5019 --caddr=localhost --inetd\n
+        {{client.imap_port}} stream tcp nowait root /usr/bin/redir --lport={{client.imap_port}} --cport=5020 --caddr=localhost --inetd\n"
 # redir options are
 # --caddr Specifies remote host to connect to. (localhost if omitted)
 # --cport Specifies port to connect to.
