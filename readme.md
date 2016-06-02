@@ -142,7 +142,7 @@ base:
     - unity
     - server.idmap
     - locale
-    - hin-client
+    - hin_client
   "{{ pillar['server.name']}}*":
     - common
     - server.unattended_upgrades
@@ -204,7 +204,7 @@ gitfs_remotes:
 * Setup of user homes
 * Installation of Elexis3 OpenSource. Creates Desktop icons
 * Installation of MedElexis. License File and ZIP must reside on server. Creates Desktop icons.
-* hinclient with setup of a corresponding thunderbird mail configuration
+* HIN-client with setup of a corresponding thunderbird mail configuration
 * ssmtp
 
 ### Optional features

@@ -23,7 +23,7 @@ base:
 {% endif %}
 
 {% if pillar.get('hin_clients', False) %}
-    - hin-client
+    - hin_client
 {% endif %}
 
 {% if pillar.get('ssmtp', False) %}

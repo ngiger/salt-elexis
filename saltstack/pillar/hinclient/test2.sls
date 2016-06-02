@@ -13,7 +13,4 @@ hin_clients:
     pop3_port:  9219
     imap_port:  9220
     hin_passphrase: NoSecretAtAll
-    hin_identity: "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
-6e6765720a"
 

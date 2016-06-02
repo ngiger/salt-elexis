@@ -3,7 +3,6 @@
 # - local user (which will run the service)
 # - hin identify file name $HOME/$login.hin
 # - pillar item hin_passphrase
-# - pillar item hin_identiy # which must output of xxd --plain (plain hexdump style)
 hin_clients:
   test1:
     hin_login: test1
@@ -19,6 +18,4 @@ hin_clients:
     pop3_port:  9119
     imap_port:  9120
     hin_passphrase: DummyPassphrase
-    hin_identity: "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
-dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd
-affe"
+    hin_passphrase_replace: true # if set to true users will be unable to change the passphrase for thein HIN account

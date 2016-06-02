@@ -24,14 +24,18 @@ user_{{user.name}}:
 {{group.name}}:
   group.present:
     - name: {{group.name}}
+    {% if group.gid is defined %}
     - gid: {{group.gid}}
+    {% endif %}
 {% endfor %}
 
 {% for user in pillar['users'] %}
 group_{{user.name}}:
   group.present:
     - name: {{user.name}}
+    {% if user.gid is defined %}
     - gid: {{user.gid}}
+    {% endif %}
 
   user.present:
     - enforce_password: false
@@ -51,9 +55,9 @@ group_{{user.name}}:
     {% if user.gid is defined %}
     - gid: {{user.gid}}
     {% endif %}
-    {% if user.get('groups', user.name) %}
-    - optional_groups:
-      {% for group in user.get('groups', user.name) %}
+    {% if user.groups is defined %}
+    - groups:
+      {% for group in user.groups %}
       - {{group}}
       {% endfor %}
     {% endif %}
@@ -70,7 +74,6 @@ group_{{user.name}}:
         - user: {{user.name}}
         - group: {{user.name}}
   {% endif %}
-
 #----------------- Add git repo for some users -------------------------------------
   # While developping it is handy to trace all changes in the the config directories of
   # of one (ore more) user homes.

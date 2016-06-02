@@ -1,21 +1,24 @@
-# You have to download manually the Medelexis bootstrap to
-# /srv/salt/ch.medelexis.application.product.Medelexis-linux.gtk.x86_64.zip
-# and the license.xml to
-# /srv/salt/license.xml
-# Datei auf Windows-PC erstellt. Gefunden unter C:\Users\xx\AppData\Roaming\HIN\HIN Client
-# we assume that the client.hin was conviert to xxd -p client.hin > client.hin.xxd
-# reverse operation is cat  client.hin.xxd | xxd -r -pr > client.hin
-# 107 lines
+# The *.hin file must be create on Windows-PC found under C:\Users\xx\AppData\Roaming\HIN\HIN Client
 
-hin-client:
+{% if grains.osfullname == 'Debian' %}
+  {% set mail_pkg = "icedove-l10n-de" %}
+  {% set mail_dir_name = ".icedove" %}
+{% elif grains.osfullname == 'Ubuntu' %}
+  {% set mail_pkg = "thunderbird-locale-de" %}
+  {% set mail_dir_name = ".thunderbird" %}
+{% endif %}
+{% set hin_passphrase_replace = false %}
+hin_client:
   pkg.installed:
     - refresh: False
     - pkgs:
       - inetutils-inetd
       - redir
-      - thunderbird-locale-de
-
-{% for client in pillar['hin_clients'] %}
+      - {{mail_pkg}}
+{% for id, client in pillar.get('hin_clients',{}).iteritems() %}
+    {% if client.hin_passphrase_replace is defined %}
+      {% set hin_passphrase_replace = client.hin_passphrase_replace %}
+    {% endif %}
 
 g_{{client.hin_login}}:
   group.present:
@@ -48,20 +51,20 @@ g_{{client.hin_login}}:
     - group: {{client.hin_login}}
 
 /home/{{client.hin_login}}/{{client.hin_login}}.hin:
-  cmd.run:
-    - name: echo {{client.hin_identity}} | xxd -revert -plain > /home/{{client.hin_login}}/{{client.hin_login}}.hin
+  file.managed:
     - user: {{client.hin_login}}
     - group: {{client.hin_login}}
     - mode: 600
-    - creates: /home/{{client.hin_login}}/{{client.hin_login}}.hin
+    - source: {{client.hin_identity_file}}
 
 /home/{{client.hin_login}}/passphrase.txt:
   file.managed:
-    - replace: False
+    - replace: {{hin_passphrase_replace}}
     - user: {{client.hin_login}}
     - group: {{client.hin_login}}
     - mode: 600
-    - contents: {{client.hin_passphrase}}
+    - contents:
+      - {{client.hin_passphrase}}
 
 /home/{{client.hin_login}}/.hinclient-service-parameters.txt:
   file.managed:
@@ -97,7 +100,13 @@ inetutils-inetd:
   {% for a_user in username %}
     {% for user_def in pillar['users'] %}
       {% if (a_user == user_def.name) %}
-/usr/local/bin/restart_{{hin_login}}_hin_client:
+        {% if user_def.home is defined %}
+        {% set home_dir = user_def.home %}
+        {% else %}
+        {% set home_dir = '/home/'+user_def.name %}
+        {% endif %}
+
+/usr/local/bin/restart_{{hin_login}}_hin_client_{{a_user}}:
   file.managed:
     - user: {{a_user}}
     - mode: 755
@@ -106,7 +115,7 @@ inetutils-inetd:
       - 'logger retarting HIN client for {{hin_login}}'
       - 'sudo -Hu {{hin_login}} /home/{{hin_login}}/HIN\ Client/hinclientservice restart'
 
-{{user_def.home}}/.config/autostart/hin_client:
+{{home_dir}}/.config/autostart/hin_client:
   file.managed:
     - user: {{a_user}}
     - mode: 664
@@ -132,13 +141,13 @@ inetutils-inetd:
       - "{{a_user}}               ALL=(ALL:ALL) NOPASSWD:/usr/local/bin/restart_{{hin_login}}_hin_client"
       - '{{a_user}},{{hin_login}} ALL=(ALL:ALL) NOPASSWD:/home/{{hin_login}}/HIN\ Client/hinclientservice'
 
-{{user_def.home}}/.thunderbird/{{a_user}}.hin:
+{{home_dir}}/{{mail_dir_name}}/{{a_user}}.hin:
   file.directory:
     - makedirs: true
     - user:  {{a_user}}
     - group:  {{a_user}}
 
-{{user_def.home}}/.thunderbird/profiles.ini:
+{{home_dir}}/{{mail_dir_name}}/profiles.ini:
   file.managed:
     - user:  {{a_user}}
     - group:  {{a_user}}
@@ -152,19 +161,19 @@ inetutils-inetd:
       - Path={{a_user}}.hin
       - Default=1
 
-{{user_def.home}}/.thunderbird/{{a_user}}.hin/prefs.js:
+{{home_dir}}/{{mail_dir_name}}/{{a_user}}.hin/prefs.js:
   file.managed:
-    - replace: false # we don't want to override the user made changes after the first installation
+    - replace: {{hin_passphrase_replace}}
     - user:  {{a_user}}
-    - source: salt://hin-client/file/prefs.js
+    - source: salt://hin_client/file/prefs.js
     - template: jinja
     - require:
-      - file: {{user_def.home}}/.thunderbird/{{a_user}}.hin
+      - file: {{home_dir}}/{{mail_dir_name}}/{{a_user}}.hin
     - defaults:
         user_name: {{a_user}}
-        home: {{user_def.home}}
+        home: {{home_dir}}
         hin_login: {{hin_login}}
-        {% for client in pillar['hin_clients'] %}
+        {% for id, client in pillar.get('hin_clients',{}).iteritems() %}
           {% if (hin_login == client.hin_login) %}
         client: {{client}}
           {% endif %}
