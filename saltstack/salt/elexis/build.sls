@@ -61,12 +61,16 @@ git_elexis_core:
       - 'cd {{core_target}}'
       - 'git remote update'
       - 'git checkout --force {{core_rev}} .'
+      - 'git pull'
       - 'git branch -l'
+      - 'git log -1 | cat'
       - "mvn clean install -Dmaven.test.skip=true -Pall-archs 2>&1 | tee maven-{{core_rev}}-salt.log"
       - 'cd {{base_target}}'
       - 'git remote update'
       - 'git checkout --force {{base_rev}} .'
+      - 'git pull'
       - 'git branch -l'
+      - 'git log -1 | cat'
       - "mvn clean install -Dmaven.test.skip=true 2>&1 | tee maven-{{base_rev}}-salt.log"
       - "{{install_x86_64}}"
       - "{{install_win32}}"
