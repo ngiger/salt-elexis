@@ -1,4 +1,5 @@
 # see for explanations https://help.ubuntu.com/12.04/installation-guide/en.amd64/apbs04.html
+# Check its syntax using debconf-set-selections -c /path/to/this/file
 apt-setup-udeb	apt-setup/services-select	multiselect	security
 apt-setup-udeb	apt-setup/services-select-ubuntu	multiselect	security
 bootstrap-base	base-installer/initramfs-tools/driver-policy	select	most
@@ -55,8 +56,8 @@ d-i partman-auto/choose_recipe select atomic
 pkgsel	pkgsel/update-policy	select	none
 pkgsel	pkgsel/upgrade	select	safe-upgrade
 
-user-setup-udeb  passwd/username string  Dr. med. FMH Elexis
-user-setup-udeb  passwd/user-fullname    string  elexis
+user-setup-udeb  passwd/username string elexis
+user-setup-udeb  passwd/user-fullname    string Dr. med. FMH Elexis
 # next value for md5 encrypted password was generated using
 # printf "elexisTest" | mkpasswd -s -m md5
 # $1$fLMQVgyb$XmvSsB4fd5RdNxfUEtbjY1
@@ -72,8 +73,6 @@ partman-target	partman/mount_style	select	uuid
 # d-i partman/confirm boolean true
 # d-i partman/confirm_nooverwrite boolean true
 
-pkgsel/language-pack
-
 popularity-contest      popularity-contest/submiturls   string
 popularity-contest      popularity-contest/participate  boolean false
 
@@ -82,3 +81,7 @@ d-i grub-installer/with_other_os boolean true
 clock-setup clock-setup/utc-auto    boolean true
 clock-setup clock-setup/utc boolean true
 d-i  di-utils-reboot/really_reboot boolean true
+
+# d-i preseed/late_command string apt-install zsh; in-target chsh -s /bin/zsh
+d-i preseed/late_command string apt-install salt-minion
+# Would change the md5rum of the file! in-target sh "echo {{pillar.get('network::salt_master', 'salt') | tee /etc/salt/minion"}}

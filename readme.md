@@ -217,6 +217,7 @@ gitfs_remotes:
 * letsenscrpt
 ** https://github.com/saltstack-formulas/letsencrypt-formula
 ** https://www.kunxi.org/blog/2015/12/lets-encrypt-with-saltstack/
+* apt-cacher-ng with workaround for install java from oracle
 
 ### TODO
 
@@ -229,7 +230,7 @@ gitfs_remotes:
 * db backup
 * mysql
 * dyndns
-* gollum praxis wiki
+* gollum praxis wiki, https://github.com/ngiger/elexis-admin/wiki/Startstruktur-f%C3%BCr-Wiki-in-einer-Arztpraxis
 * sample nginx server for public internet, praxis wiki and elexis-cockpit with letsencrypt certificate
 * make private (keys only) project with ElexisServerDemo.dyndns.org for above and hinclient. Deploy it on a Raspberry PI3
 * wol (WakeOnLan)

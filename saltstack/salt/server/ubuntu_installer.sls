@@ -9,7 +9,8 @@
 
 {% set if_name = salt['pillar.get']('network:dnsmasq_interface', 'eth0') %}
 {% set if_addr = salt['grains.get'](if_name, '172.99.99.99')[0] %}
-{% set preseed_md5 = '41e6e591c6ed8cb50be65bdff6e3371d' %}
+{% set server_name = salt['pillar.get']('network:dnsmasq_server') %}
+{% set preseed_file = salt['pillar.get']('network:preseed_path', false) %}
 
 /var/lib/tftpboot:
   file.directory:
@@ -27,13 +28,22 @@
 # does not work correctly as not in the initrd
 # see https://help.ubuntu.com/lts/installation-guide/armhf/apbs02.html
 # assuming that we have a web server running, too
-/var/www/ubuntu_12_04_preseed.txt:
+
+{% if  preseed_file %}
+install_preseed_file:
   file.managed:
+    - name: {{preseed_file}}
     - mode: 0644
-    - source: salt://elexis/file/ubuntu_12_04_preseed.txt
-    - source_hash: {{preseed_md5}}
+    - source: salt://server/file/ubuntu_12_04_preseed.txt
+    - makedirs: true
     - require:
       - archive: /var/lib/tftpboot
+  # Check whether the syntax of the preseed is correct. Better fail early
+  cmd.run:
+    - require:
+      - file: {{preseed_file}}
+    - name: "debconf-set-selections -c {{preseed_file}}"
+{%endif %}
 
 /etc/dnsmasq.d/install_ubuntu.conf:
   file.managed:
@@ -41,12 +51,17 @@
     - contents:
       - enable-tftp
       - tftp-root=/var/lib/tftpboot/
-      - dhcp-boot=/pxelinux.0,server,{{if_addr}}
+      - dhcp-boot=/pxelinux.0
       - dhcp-no-override
       - dhcp-option=vendor:pxe,6,2b
       - dhcp-vendorclass=pxe,PXEClient
       - log-dhcp
       - '#  filename "/pxelinux.0"'
+{% if  preseed_file %}
+    - require:
+      - cmd: install_preseed_file
+{%endif %}
+
 
 /var/lib/tftpboot/ubuntu-installer/amd64/boot-screens/syslinux.cfg:
   file.managed:
@@ -58,12 +73,17 @@
       - menu label ^Install
       - prompt 0
       - timeout 0
-      - kernel ubuntu-installer/amd64linux
+      - kernel ubuntu-installer/amd64/linux
+      # See https://www.debian.org/releases/jessie/amd64/apbs02.html.en for discussion of the pressed parameter
       - "append vga=normal initrd=ubuntu-installer/amd64/initrd.gz
       locale=en_AU console-setup/ask_detect=false keyboard-configuration/layoutcode=sg
-      netcfg/get_hostname=unassigned-hostname netcfg/get_domain=unassigned-domain
-      preseed/url=http://{{if_addr}}/ubuntu_12_04_preseed.txt netcfg/get_hostname
+      netcfg/get_hostname={{server_name}} netcfg/get_domain={{salt['pillar.get']('network:domain_name')}}
+      {% if salt['pillar.get']('network:preseed_url', False) %}url={{salt['pillar.get']('network:preseed_url')}}{% endif %}
       -- quiet"
+{% if  preseed_file %}
+    - require:
+      - cmd: install_preseed_file
+{%endif %}
 
 /var/lib/tftpboot/pxelinux.cfg/default_old:
   file.managed:
@@ -73,15 +93,17 @@
       - label harddisk
       - localboot 0x80
       - label install
-      - kernel ubuntu-installer/amd64linux
+      - kernel ubuntu-installer/amd64/linux
       - append vga=normal locale=de_CH setup/layoutcode=de_CH console-setup/layoutcode=sb initrd=ubuntu-installer/amd64/initrd.gz preseed/url=http://{{if_addr}}/ubuntu-installer/amd64/preseed.txt netcfg/get_hostname -- quiet
       - ''
       -  prompt 1
       -  timeout 300
 # still asked
-# Australia for mirror, http for proxy
-# new user name, id, password, encrypt
-# select SCSI, write partition
+# proxy
+# select SCSI, write partition # This is okay
+# eth0 or wlan
+# Encrypt home directory
+# Selected per defaul on ng-tr sda (external UBS-Stick as candidate)
 
 # To get the preseed values used
 # sudo aptitude install debconf-utils openssh-installer

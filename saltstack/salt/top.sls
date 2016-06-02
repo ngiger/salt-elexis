@@ -14,7 +14,7 @@ base:
     - unity.lts_kernel
     - locale
 {% endif %}
-
+    - server.dnsmasq
     - server.apt-cacher-ng
     - elexis
 

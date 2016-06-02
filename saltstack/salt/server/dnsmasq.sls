@@ -11,23 +11,6 @@ dnsmasq:
 #    - name: /var/lib/tftpboot
 
 {% else %}
-{% if salt['pillar.get']('network:ubuntu_installer', None) %}
-include:
-  - server.ubuntu_installer
-/tmp/ubuntu_installer_true:
-  file.managed:
-    - mode: 644
-    - contents:
-      - domain=ngiger.dyndns.org
-{% else %}
-/tmp/ubuntu_installer_false:
-  file.managed:
-    - mode: 644
-    - contents:
-      - domain=ngiger.dyndns.org
-      - {{salt['pillar.get']('network:ubuntu_installer', None)}}
-{% endif %}
-
 dnsmasq:
   pkg.installed:
     - refresh: false
@@ -41,6 +24,8 @@ dnsmasq:
       - file: /etc/hosts
 {% if salt['pillar.get']('network:ubuntu_installer', None) %}
       - file: /etc/dnsmasq.d/install_ubuntu.conf
+include:
+  - server.ubuntu_installer
 {% endif %}
 
 /etc/dnsmasq.d/{{hostname}}:
