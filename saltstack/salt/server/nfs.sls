@@ -67,3 +67,11 @@ nfs_{{item.server_name}}:
   file.directory:
     - name: {{item.server_name}}
 {% endfor %}
+
+{% for item in salt['pillar.get']('server', {})['soft_links'] %}
+soft_link_{{item.name}}:
+  file.symlink:
+    - name: {{item.name}}
+    - target: {{item.target}}
+{% endfor %}
+

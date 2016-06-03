@@ -92,8 +92,9 @@ inetd_{{client.hin_login}}:
 # --cport Specifies port to connect to.
 # --lport Specifies port to listen for connections on (when not running from inetd)
 
-inetutils-inetd:
+service-inetutils-inetd-{{client.hin_login}}:
   service.running:
+    - name: inetutils-inetd
     - watch:
       - file: /etc/inetd.conf
 
@@ -115,7 +116,7 @@ inetutils-inetd:
     - mode: 755
     - contents:
       - '#!/bin/bash'
-      - 'logger retarting HIN client for {{hin_login}}'
+      - 'logger restarting HIN client for {{hin_login}}'
       - 'sudo -Hu {{hin_login}} /home/{{hin_login}}/HIN\ Client/hinclientservice restart'
 
 {{home_dir}}/.config/autostart/hin_client:
