@@ -218,6 +218,7 @@ gitfs_remotes:
 ** https://github.com/saltstack-formulas/letsencrypt-formula
 ** https://www.kunxi.org/blog/2015/12/lets-encrypt-with-saltstack/
 * apt-cacher-ng with workaround for install java from oracle
+* mpc (MediPort Communicator der MediData.ch) für mediport plugin von MedShare installieren.
 
 ### TODO
 
@@ -235,7 +236,6 @@ gitfs_remotes:
 * make private (keys only) project with ElexisServerDemo.dyndns.org for above and hinclient. Deploy it on a Raspberry PI3
 * wol (WakeOnLan)
 * Use docker containers for HIN-clients
-* mediport plugin & MPCcommunicator
 * nginx https://www.digitalocean.com/community/tutorials/saltstack-infrastructure-creating-salt-states-for-nginx-web-servers and https://github.com/saltstack-formulas/nginx-formula
 * exim4/imap/courier mail
 * hylafax ???? (FAX will be phased out by swisscom on January, 1, 2017)

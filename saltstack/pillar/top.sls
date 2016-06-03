@@ -6,5 +6,6 @@ base:
     - network
     - users
   'inactive':
+    - mpc
     - hinclient
     - goodies

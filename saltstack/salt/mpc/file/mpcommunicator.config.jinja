@@ -1,0 +1,169 @@
+#==============================================================================
+# MINIMAL CONFIGURATION
+#==============================================================================
+
+# MediPort Communicator Sender EAN
+mpcommunicator.sender.ean={{mpc.sender_ean}}
+
+# MediPort Communicator Sender DN
+mediport.dn=uid=EAN{{mpc.sender_ean}},{{mpc.dn_attributes}}
+
+# MediPort Host Name or Host Address
+#    Produktiver Server: mpw1.medidata.ch
+#    Test Server       : mpw0.medidata.ch
+mpcommunicator.mediport.ip={{mpc.mpc_server}}
+
+###########################################################
+# Certificate
+###########################################################
+# Keystore
+keystore.name=config/EAN{{mpc.sender_ean}}_mpg.keystore
+keystore.passwordfile.name=config/_ks.mp
+
+###########################################################
+# PFADKONFIGURATION
+###########################################################
+{% set client_id = 0 %} {% for mandant in mpc.mandants %}
+  {% set client_id = client_id + 1 %}{% set dir_id = 0 %}
+CLIENT.{{client_id}}.EAN={{mandant.ean}}
+CLIENT.{{client_id}}.SEND_DIR={{mpc.install_path}}/data/send
+CLIENT.{{client_id}}.RECEIVE_DIR={{mpc.install_path}}/data/receive
+CLIENT.{{client_id}}.RECEIVETEST_DIR={{mpc.install_path}}/data/receive/test
+CLIENT.{{client_id}}.ERROR_DIR={{mpc.install_path}}/data/error
+CLIENT.{{client_id}}.DOCSTAT_DIR={{mpc.install_path}}/data/docstatus
+CLIENT.{{client_id}}.PARTNER_FILE={{mpc.install_path}}/data/partner/partnerinfo.txt
+  {% for type in mandant.invoice_types %}{% set dir_id = dir_id + 1 %}
+CLIENT.{{client_id}}.DIR.{{dir_id}}={{mpc.install_path}}/ausgang/{{type.type}}
+{% if type.type == 'tp' %}CLIENT.{{client_id}}.DIR.{{dir_id}}.NAME=01 MediPort TP
+CLIENT.{{client_id}}.DIR.{{dir_id}}.DOCATTR=Tiers_Payant
+CLIENT.{{client_id}}.DIR.{{dir_id}}.DOCPRINTED=true
+{% else %}CLIENT.{{client_id}}.DIR.{{dir_id}}.NAME=02 MediPort TG
+CLIENT.{{client_id}}.DIR.{{dir_id}}.DOCATTR=Tiers_Garant_Manuell
+CLIENT.{{client_id}}.DIR.{{dir_id}}.DOCPRINTED=false
+{% endif %}CLIENT.{{client_id}}.DIR.{{dir_id}}.DISTTYPE=0
+CLIENT.{{client_id}}.DIR.{{dir_id}}.PRINTLANGUAGE={{type.language}}
+CLIENT.{{client_id}}.DIR.{{dir_id}}.TRUSTCENTEREAN={{mpc.trust_center_ean}}
+CLIENT.{{client_id}}.DIR.{{dir_id}}.ISPAPERINVOICE=false
+  {% endfor %}
+{% endfor %}
+
+###########################################################
+# DOCS_STATE
+###########################################################
+
+# get all the docs which are done since (today - DOCS_STATE_INITIAL_DAYS) or
+# since the last time the process was started
+DOCS_STATE_INITIAL_DAYS=100
+DOCS_STATE_NBR_OD_ENTRIES=1000
+
+###########################################################
+# SENDCONTROL
+###########################################################
+
+# MediPort Communicator Sender Steuerdatei (SendControl010_xyz.xml)
+# REMARK: !!! Case sensitive!!! SendControl010_ != sendcontrol010_
+mpcommunicator.sender.controlfile=SendControl
+
+###########################################################
+# TASKS (SIMPLE)
+###########################################################
+# REMARK: Minimal values for the intervals are:
+#         - PartnerUpdate    : 60 [minutes]
+#         - Send             :  5 [seconds]
+#         - Receive          : 10 [minutes]
+#         - Getdocstate      : 24 [hours]
+#         - Archivedelete:
+#           - delete task    :  1 [hour]
+#           - store duration :  1 [day]
+#         - Writesendcontrol :  1 [minute]
+###########################################################
+
+# MediPort Communicator Partnerverzeichis update interval[m]
+mpcommunicator.partner.updateinterval=360
+
+# MediPort Communicator send poll interval[s]
+mpcommunicator.send.pollinterval=300
+
+# MediPort Communicator receive poll interval[m]
+mpcommunicator.receive.pollinterval=60
+
+# MediPort Communicator getdocstate poll interval[h]
+mpcommunicator.getdocstate.pollinterval=24
+
+# MediPort Communicator delete sent and archived xmls poll interval[h]
+mpcommunicator.archivedelete.pollinterval=48
+# MediPort Communicator send archive store duration of sent files before automatic deletion[days]
+mpcommunicator.archivedelete.maxtime=365
+
+# MediPort Communicator write sendcontrol-xmls using configurations in CLIENT.x.DIR.y poll interval[m]
+mpcommunicator.writesendcontrol.pollinterval=5
+
+###########################################################
+# MEDIPORT SERVER
+###########################################################
+
+# MediPort Port
+mpcommunicator.mediport.port=443
+
+###########################################################
+# Proxy Server
+# REMARK: Only "Basic" Proxy Authentification is supported
+###########################################################
+
+# Use Proxy Server (true/false)
+proxy.use=false
+
+# Proxy Server Host Name or Host Address (192.168.1.122/192.168.3.51)
+proxy.ip=1.1.1.1
+
+# Proxy Server Port(8443/8100)
+proxy.port=8443
+
+# Use Proxy Server User/Password authentication (true/false)
+proxy.auth.use=true
+
+# Proxy Server authentication username
+proxy.auth.username=name
+
+# Proxy Server authentication password
+proxy.auth.password=passwort
+
+###########################################################
+# RMI Server
+###########################################################
+# REMARK: If rmi.enable is set to true then all the
+#         tasks are set to false and you can only execute
+#         a task by calling its rmi interface.
+###########################################################
+rmi.serverip=localhost
+rmi.serverport=4445
+rmi.servicename=MPCommunicator-Server
+rmi.enable=false
+
+###########################################################
+# XML GENERATOR options
+###########################################################
+xml.generator.pretty_print=false
+
+# Enable (true) or disable(false) MP Communicator Tasks
+mpcommunicator.task.send.enable=true
+mpcommunicator.task.receive.enable=true
+mpcommunicator.task.partnerupdate.enable=true
+mpcommunicator.task.filestop.enable=true
+mpcommunicator.task.consolestop.enable=false
+mpcommunicator.task.getdocstate.enable=false
+mpcommunicator.task.archive.enable=true
+mpcommunicator.task.writesendcontrol.enable=true
+
+
+###########################################################
+# MediPort Server
+###########################################################
+
+# MediPort Server Servlet definitions
+mediport.servlet.getadrbookinfo=GetAdrBookInfo?Sender=
+mediport.servlet.getpartner=GetPartner?Sender=
+mediport.servlet.postdocument=PostDocument?
+mediport.servlet.getdoclist=GetDocumentList?Sender=
+mediport.servlet.getdocument=GetDocument?Sender=
+mediport.servlet.setstatus=SetStatus?Sender=
