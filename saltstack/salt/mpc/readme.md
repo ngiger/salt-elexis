@@ -36,6 +36,7 @@ Es geht jedoch einfacher, wenn man direkt in die Datei schreibt. Siehe beiliegen
 
 Folgende Schritte sind zu unternehmen:
 * salt (siehe ../../readme.md)  bootstrappen
+* MediPortCommunicator-Linux_64.zip runter laden und z.B. unter /opt/downloads/ speichern. (MediData gewährt bis jetzt leider keinen öffentlichen Zugang zu dieser Datei)
 * Im eigenen pillar_root die Datei saltstack/pillar/mpc.sls kopieren und anpassen
 * Im eigenen file_roots pro sender EAN eine Kope der Datei salt/files/EAN<ean>_mpg.keystore hinzufügen
 * ´´´´sudo salt-call state.apply mpc Test=true´´´´ zeigt auf, was gemacht würde

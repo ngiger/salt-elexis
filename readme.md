@@ -218,7 +218,7 @@ gitfs_remotes:
 ** https://github.com/saltstack-formulas/letsencrypt-formula
 ** https://www.kunxi.org/blog/2015/12/lets-encrypt-with-saltstack/
 * apt-cacher-ng with workaround for install java from oracle
-* mpc (MediPort Communicator der MediData.ch) für mediport plugin von MedShare installieren.
+* mpc (MediPort Communicator der MediData.ch) für mediport plugin von MedShare installieren. Details siehe saltstack/mpc/readme.md
 
 ### TODO
 
