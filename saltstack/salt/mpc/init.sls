@@ -1,5 +1,9 @@
 # The *.hin file must be create on Windows-PC found under C:\Users\xx\AppData\Roaming\HIN\HIN Client
 
+# The hin client needs multiarch support ! The wrapper script is a x86 exe
+# wrapper: ELF 32-bit LSB executable, Intel 80386, version 1 (SYSV), dynamically linked, interpreter /lib/ld-linux.so.2, for GNU/Linux 2.0.30, not stripped
+# E.g. dpkg --print-foreign-architectures should output i386
+
 {% if grains.osfinger == 'Debian-7' or grains.osfinger == 'Debian-8' %}
   {% set jave_jre_pkg = 'openjdk-7-jre' %}
 {% endif %}
@@ -7,13 +11,24 @@
 {% if pillar.get('mpc', False) %} # and grains.host == pillar.get('server', {})['name']
 {% set mpc = pillar.get('mpc') %}
 {% set response_file = mpc.install_path+ '/install_mpc.response' %}
+add_i386_arch:
+  cmd.run:
+   - name: "/usr/bin/dpkg --add-architecture i386 && /usr/bin/apt-get upgrade"
+   - unless: "/usr/bin/dpkg --print-foreign-architectures | /bin/grep i386"
 install_path:
   pkg.installed:
-    - refresh: False
+    - refresh: true
+    - require:
+      - cmd: add_i386_arch
     - pkgs:
       - {{jave_jre_pkg}}
       - dos2unix
-      - daemontools
+      - postgresql-client
+      - libstdc++6:i386
+      - libgcc1:i386
+      - zlib1g:i386
+      - libncurses5:i386
+
 mediport_user:
   user.present:
     - name: mediport
@@ -71,6 +86,7 @@ keystore_mpc:
     - defaults:
         mpc: {{mpc}}
 
+{% if grains.init == 'systemd' %}
 /etc/systemd/system/mpc.service:
   file.managed:
     - contents:
@@ -88,13 +104,35 @@ keystore_mpc:
       - WantedBy=multi-user.target
     - require:
       - cmd: install_mpc
-
 service_mpc:
   service.running: # running or disabled
     - name: mpc
     - require:
+      - cmd: install_mpc
       - file: /etc/systemd/system/mpc.service
       - file: {{mpc.install_path}}/config/mpcommunicator.config
+{% elif grains.init == 'sysvinit' %}
+# add to rc.local
+/etc/rc.local:
+  file.blockreplace:
+    - marker_start: "# START managed zone mpc -DO-NOT-EDIT-"
+    - marker_end: "# END managed zone zone --"
+    - content: "{{mpc.install_path}}/mpc.sh start"
+    - append_if_not_found: True
+/etc/rc.local_no_exit:
+  file.comment:
+    - name: /etc/rc.local
+    - regex: 'exit 0'
+    - backup: '.bak'
+service_mpc:
+  service.disabled: # running or disabled
+    - name: mpc
+    - require:
+      - cmd: install_mpc
+      - file: /etc/rc.local
+      - file: {{mpc.install_path}}/config/mpcommunicator.config
+{% endif %}
+
 {% set psql_prefix = 'psql --host=localhost -U ' + salt['pillar.get']('elexis:db_user')+ ' ' + salt['pillar.get']('elexis:db_main') + ' -c ' %}
 ensure_mpc_install_dir:
   cmd.run:

@@ -5,7 +5,7 @@ base:
     - rsnapshot_home
     - network
     - users
-  'inactive':
     - mpc
+  'inactive':
     - hinclient
     - goodies
