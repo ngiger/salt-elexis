@@ -39,8 +39,8 @@ Folgende Schritte sind zu unternehmen:
 * MediPortCommunicator-Linux_64.zip runter laden und z.B. unter /opt/downloads/ speichern. (MediData gewährt bis jetzt leider keinen öffentlichen Zugang zu dieser Datei)
 * Im eigenen pillar_root die Datei saltstack/pillar/mpc.sls kopieren und anpassen
 * Im eigenen file_roots pro sender EAN eine Kope der Datei salt/files/EAN<ean>_mpg.keystore hinzufügen
-* ´´´´sudo salt-call state.apply mpc Test=true´´´´ zeigt auf, was gemacht würde
-* ´´´´sudo salt-call state.apply mpc Test=false´´´´ um Änderung durchzuführen
+* `sudo salt-call state.apply mpc Test=true` zeigt auf, was gemacht würde
+* `sudo salt-call state.apply mpc Test=false` um Änderung durchzuführen
 
 ## Testen
 
@@ -51,7 +51,9 @@ Folgende Schritte sind zu unternehmen:
 
 # TODO
 
-* In eine docker container laufen lassen
+* `sudo setfacl --default  -m group:praxis:rwX /usr/local/mediport`
+* `sudo setfacl -R -m group:praxis:rwX /usr/local/mediport`
+* In einem docker container laufen lassen
 
 # Autoren
 
