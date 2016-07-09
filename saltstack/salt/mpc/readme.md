@@ -47,7 +47,14 @@ Folgende Schritte sind zu unternehmen:
 * In elexis eine Rechnung erstellen
 * In Konfiguration von Mediport vom Produktiver Server: 212.243.92.201 auf  212.243.92.199 wechseln
 * Rechnung verschicken
-* im Webaccess von Mediport schauen, ob Rechnung angekommen ist
+* im Webaccess "https://www.medidata.ch/mp/webaccess" von Mediport schauen, ob Rechnung angekommen ist
+
+## Troubleshooting
+
+* Look at the data/log/mpcommunicator.log. Here some errors and how you can avoid them
+** `S ERROR - E2907: Reading server response stream failed[iaik.security.ssl.SSLException: Peer sent alert: Alert Fatal: unknown ca]` Check whether you have the correct, up-to-date config/EAN<ean>_mpg.keystore
+** `SSL initialization failed. [F0204: Current certificate not found. null]`. Check whether data/partner/partnerinfo.txt is uptodate and contains the EAN of the mandant used for billing
+* In the dialog "Rechnung ausgeben" you choosed "Übermittlung an MediPort" and specified as Ausgabeverzeichnis `/usr/local/mediport/ausgang/tp`. You get the alert "Fehler bei der Ausgabe" with the content "Konnte MediPort-Transmit nicht starten Reason: Fehler in Rechnung Nr <id>"
 
 # TODO
 
@@ -59,4 +66,3 @@ Folgende Schritte sind zu unternehmen:
 
 Fabian Schmid
 Niklaus Giger
-

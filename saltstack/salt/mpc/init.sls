@@ -8,9 +8,14 @@
   {% set jave_jre_pkg = 'openjdk-7-jre' %}
 {% endif %}
 
-{% if pillar.get('mpc', False) %} # and grains.host == pillar.get('server', {})['name']
+{% if pillar.get('mpc', False) and grains.host == pillar.get('server', {})['name'] %}
 {% set mpc = pillar.get('mpc') %}
 {% set response_file = mpc.install_path+ '/install_mpc.response' %}
+{% if pillar.get('mpc.group', False) %}
+{% set mpc_group = pillar.get('mpc.group') %}
+{% else %}
+{% set mpc_group = 'mpc' %}
+{% endif %}
 add_i386_arch:
   cmd.run:
    - name: "/usr/bin/dpkg --add-architecture i386 && /usr/bin/apt-get upgrade"
@@ -75,6 +80,11 @@ keystore_mpc:
     - source: {{mpc.keystore}}
     - require:
       - cmd: install_mpc
+{{mpc.install_path}}/data/partner/partnerinfo.txt:
+  file.managed:
+    - source: salt://mpc/file/partnerinfo.txt
+    - require:
+      - cmd: install_mpc
 
 {{mpc.install_path}}/config/mpcommunicator.config:
   file.managed:
@@ -85,6 +95,25 @@ keystore_mpc:
       - file: keystore_mpc
     - defaults:
         mpc: {{mpc}}
+{{mpc.install_path}}/ausgang/tp:
+  file.directory:
+    - makedirs: true
+{{mpc.install_path}}/ausgang/tg:
+  file.directory:
+    - makedirs: true
+
+facl_{{mpc.install_path}}:
+  group.present:
+    - name: {{mpc_group}}
+  acl.present:
+    - name: {{mpc.install_path}}/config/mpcommunicator.config
+    - name: {{mpc.install_path}}/ausgang
+    - name: {{mpc.install_path}}/data
+    - name: {{mpc.install_path}}
+    - acl_type: group
+    - acl_name: {{mpc_group}}
+    - perms: rwX
+    - recurse: true
 
 {% if grains.init == 'systemd' %}
 /etc/systemd/system/mpc.service:
@@ -133,6 +162,7 @@ service_mpc:
       - file: {{mpc.install_path}}/config/mpcommunicator.config
 {% endif %}
 
+{% if mpc.get('change_elexis_config', False) %}
 {% set psql_prefix = 'psql --host=localhost -U ' + salt['pillar.get']('elexis:db_user')+ ' ' + salt['pillar.get']('elexis:db_main') + ' -c ' %}
 ensure_mpc_install_dir:
   cmd.run:
@@ -140,7 +170,8 @@ ensure_mpc_install_dir:
         {{psql_prefix}} \"update config set wert = '{{mpc.install_path}}' where param = 'mpc/install_dir';\"\n"
     - unless: "{{psql_prefix}} \"select wert from config where param like 'mpc/install_dir'\" | grep '{{mpc.install_path}}'"
     - env:
-      - PGPASSWORD: {{salt['pillar.get']('elexis:db_password')}}
-      - MYSQL_PWD: {{salt['pillar.get']('elexis:db_password')}}
+      - PGPASSWORD: {{salt['pillar.get']('elexis:db_password', 'elexis:db_password notdefined')}}
+      - MYSQL_PWD: {{salt['pillar.get']('elexis:db_password', 'elexis:db_password notdefined')}}
+{% endif %}
 {% endif %}
 
