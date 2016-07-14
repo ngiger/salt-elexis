@@ -1,4 +1,12 @@
 #!/bin/bash
+if [ -z "$1" ]; then
+  master="localhost"
+  echo "Using default IP ${master} for salt master"
+else
+  master="$1"
+  echo "Salt master is set to ${master}"
+fi
+
 release=`lsb_release --codename --short`
 export DEBIAN_FRONTEND=noninteractive
 
@@ -12,7 +20,7 @@ then
     wget -q -O- "http://debian.saltstack.com/debian-salt-team-joehealy.gpg.key" | sudo apt-key add -
   fi
   found=`dpkg -l salt-minion | egrep "${version2install}"`
-elif [ "$release" == "precise" ]
+elif [ "$release" == "precise" -o "$release" == "rosa" ]
   then
   if [ ! -f /etc/apt/sources.list.d/salt.list ]
   then
@@ -37,6 +45,6 @@ grep '^master' /etc/salt/minion
 if [ $? -ne 0 ]
 then
   # master IP must be in sync between Vagrantfile, scripts/bootstrap_client.sh and scripts/bootstrap_master.sh
-  echo "master: 192.168.1.90" | sudo tee --append /etc/salt/minion
+  printf "master: ${master}\nstartup_states: sls\nsls_list:\n - server.nfs" | sudo tee /etc/salt/minion
   sudo service salt-minion restart
 fi

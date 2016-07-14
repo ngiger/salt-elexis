@@ -1,12 +1,35 @@
 #!/bin/bash
+if [ -z "$1" ]; then
+  master="localhost"
+  echo "Using default IP ${master} for salt master"
+else
+  master="$1"
+  echo "Salt master is set to ${master}"
+fi
 release=`lsb_release --codename --short`
 export DEBIAN_FRONTEND=noninteractive
-if [ ! -f /etc/apt/sources.list.d/salt.list ]
+if [ "$release" == "jessie" -o   "$release" == "wheezy" ]
 then
-  echo "deb http://debian.saltstack.com/debian $release-saltstack main" | sudo tee /etc/apt/sources.list.d/salt.list
-  wget -q -O- "http://debian.saltstack.com/debian-salt-team-joehealy.gpg.key" | sudo apt-key add -
+  echo release is $release
+  version2install="2015.8.7*"
+  if [ ! -f /etc/apt/sources.list.d/salt.list ]
+  then
+    echo "deb http://debian.saltstack.com/debian $release-saltstack main" | sudo tee /etc/apt/sources.list.d/salt.list
+    wget -q -O- "http://debian.saltstack.com/debian-salt-team-joehealy.gpg.key" | sudo apt-key add -
+  fi
+  found=`dpkg -l salt-minion | egrep "${version2install}"`
+elif [ "$release" == "precise" -o "$release" == "rosa" ]
+  then
+  if [ ! -f /etc/apt/sources.list.d/salt.list ]
+  then
+    sudo add-apt-repository ppa:saltstack/salt
+  fi
+  found=`dpkg -l salt-minion`
+else
+  echo unknown release $release
+  exit 2
 fi
-found=`dpkg -l salt-master | egrep "${version2install}"`
+
 if [ -z "$found" ]
 then
   echo salt-master not yet installed
@@ -19,6 +42,6 @@ grep '^master' /etc/salt/minion
 if [ $? -ne 0 ]
 then
   # master IP must be in sync between Vagrantfile, scripts/bootstrap_client.sh and scripts/bootstrap_master.sh
-  echo "master: 192.168.1.90" | sudo tee --append /etc/salt/minion
+  printf "master:  ${master}" | sudo tee /etc/salt/minion
   sudo service salt-minion restart
 fi
