@@ -4,7 +4,7 @@
 # wrapper: ELF 32-bit LSB executable, Intel 80386, version 1 (SYSV), dynamically linked, interpreter /lib/ld-linux.so.2, for GNU/Linux 2.0.30, not stripped
 # E.g. dpkg --print-foreign-architectures should output i386
 
-{% if grains.osfinger == 'Debian-7' or grains.osfinger == 'Debian-8' %}
+{% if grains.oscodename == 'wheezy' or grains.oscodename == 'jessie' or grains.oscodename == 'rosa' %}
   {% set jave_jre_pkg = 'openjdk-7-jre' %}
 {% endif %}
 
@@ -67,11 +67,20 @@ response_file:
 install_mpc:
   cmd.run:
     - cwd: {{mpc.install_path}}
-    - name: "/bin/bash {{mpc.install_path}}/{{mpc.bin_name}} -i console < {{response_file}}; /usr/bin/dos2unix {{mpc.install_path}}/mpc.sh"
+    - name: "/bin/bash {{mpc.install_path}}/{{mpc.bin_name}} -i console < {{response_file}}"
     - creates: "{{mpc.install_path}}/mpc.sh"
     - require:
         - cmd: unzip_mpc
         - file: response_file
+no_cr_lf_mpc_sh:
+  cmd.run:
+    - cwd: {{mpc.install_path}}
+    - name: "dos2unix {{mpc.install_path}}/mpc.sh"
+    - onlyif: "/usr/bin/file {{mpc.install_path}}/mpc.sh | /bin/grep CRLF"
+
+/usr/local/bin/mpc.sh:
+  file.symlink:
+    - target: {{mpc.install_path}}/mpc.sh
 
 # /usr/local/mediport/config/EAN2099988870017_mpg.keystore
 keystore_mpc:
