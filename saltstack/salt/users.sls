@@ -27,6 +27,9 @@ user_{{user.name}}:
     {% if group.gid is defined %}
     - gid: {{group.gid}}
     {% endif %}
+    {% if group.system is defined %}
+    - system: {{group.system}}
+    {% endif %}
 {% endfor %}
 
 {% for user in pillar['users'] %}
