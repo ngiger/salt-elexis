@@ -1,3 +1,7 @@
+debconf-utils:
+  pkg.installed:
+    - refresh: false
+
 {% set java_version = salt['pillar.get']('java_version', '8') %}
 {% set open_jdk_jre = "openjdk-{{java_version}}-jre" %}
 
@@ -12,11 +16,13 @@ oracle_absent:
     - name: "oracle-java{{java_version}}-installer"
 
 {% else %}
-debconf-utils:
+
+{% if grains['os'] == 'Mint' %}
+openjdk-{{java_version}}-jre:
   pkg.installed:
     - refresh: false
-
-{% if grains['os_family'] == 'Debian' %}
+    - name: openjdk-{{java_version}}-jre
+{% elif grains['os_family'] == 'Debian' %}
 oracle-java{{ java_version }}-installer:
   {% if grains['os'] == 'Ubuntu' %}
   pkgrepo.managed:
