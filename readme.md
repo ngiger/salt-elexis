@@ -27,7 +27,7 @@ vagrant up ElexisServerDemo
 
 This will download a Vagrant box (aka virtual machine image of about 370 MB), which is essentially a x86-64bit Debian Server image.
 
-As last part of the setup the Vagrantfile specifies to run the `scripts/bootstrap_master.sh`. On a real server you had to download and run this script by hand. If you have problems, have a look at logs/server.up.log.
+As last part of the setup the Vagrantfile specifies to run the `scripts/bootstrap_master.sh master_ip`. On a real server you had to download and run this script by hand. If you have problems, have a look at logs/server.up.log.
 
 Now we are ready to log into the server by calling `vagrant ssh ElexisServerDemo`. You will be logged in as user vagrant with the password vagrant. We will verify and finish the initial setup for salt. A log file of the following commands can be found under logs/server.ssh.log.
 
@@ -98,7 +98,21 @@ Enter 007 as Benutzername and topsecret as Passwort. The Elexis application shou
 ### Using real machines
 
 * Client (Either Debian wheezy or Ubuntu precise)
-** get `install_client.sh`, eg. by calling `wget https://raw.githubusercontent.com/ngiger/salt-elexis/master/scripts/bootstrap_client.sh` and execute it to install salt-minion.
+** get `install_client.sh`, eg. by calling `wget https://raw.githubusercontent.com/ngiger/salt-elexis/master/scripts/bootstrap_client.sh` and execute it to install salt-minion. It accepts one parameter, the name or IP of the salt master.
+
+* on a mint
+
+Here I used the following two lines as proposed under https://docs.saltstack.com/en/latest/topics/tutorials/salt_bootstrap.html#install-using-wget
+
+  wget -O bootstrap_salt.sh https://bootstrap.saltstack.com
+  sudo sh bootstrap_salt.sh -P git v2015.5.3
+
+* on a debian wheezy machine
+
+  echo "deb http://debian.saltstack.com/debian wheezy-saltstack main" | sudo tee /etc/apt/sources.list.d/salt.list
+  wget -O - http://debian.saltstack.com/debian-salt-team-joehealy.gpg.key| sudo apt-key add -
+  sudo apt-get update
+  sudo apt-get install salt-minion # gets salt-minion version 2015.5.3
 
 Set the /etc/salt/minion to something like
 
