@@ -26,26 +26,26 @@ keystore.passwordfile.name=config/_ks.mp
 {% set client_id = 0 %} {% for mandant in mpc.mandants %}
   {% set client_id = client_id + 1 %}{% set dir_id = 0 %}
 CLIENT.{{client_id}}.EAN={{mandant.ean}}
-CLIENT.{{client_id}}.SEND_DIR={{mpc.install_path}}/data/send
-CLIENT.{{client_id}}.RECEIVE_DIR={{mpc.install_path}}/data/receive
-CLIENT.{{client_id}}.RECEIVETEST_DIR={{mpc.install_path}}/data/receive/test
-CLIENT.{{client_id}}.ERROR_DIR={{mpc.install_path}}/data/error
-CLIENT.{{client_id}}.DOCSTAT_DIR={{mpc.install_path}}/data/docstatus
-CLIENT.{{client_id}}.PARTNER_FILE={{mpc.install_path}}/data/partner/partnerinfo.txt
-  {% for type in mandant.invoice_types %}{% set dir_id = dir_id + 1 %}
+CLIENT.{{client_id}}.SEND_DIR=data/send
+CLIENT.{{client_id}}.SENDARCHIVE_DIR=data/send/archive
+CLIENT.{{client_id}}.RECEIVE_DIR=data/receive
+CLIENT.{{client_id}}.RECEIVETEST_DIR=data/receive/test
+CLIENT.{{client_id}}.ERROR_DIR=data/error
+CLIENT.{{client_id}}.DOCSTAT_DIR=data/docstatus
+CLIENT.{{client_id}}.PARTNER_FILE=data/partner/partnerinfo.txt
+
+{% for type in mandant.invoice_types %}{% set dir_id = dir_id + 1 %}
+{% if type.type == 'tp' %}#example sendcontrol-configurations for client {{client_id}}{% endif %}
 CLIENT.{{client_id}}.DIR.{{dir_id}}={{mpc.install_path}}/ausgang/{{type.type}}
-{% if type.type == 'tp' %}CLIENT.{{client_id}}.DIR.{{dir_id}}.NAME=01 MediPort TP
-CLIENT.{{client_id}}.DIR.{{dir_id}}.DOCATTR=Tiers_Payant
+{% if type.type == 'tp' %}CLIENT.{{client_id}}.DIR.{{dir_id}}.DOCATTR=Tiers_Payant
 CLIENT.{{client_id}}.DIR.{{dir_id}}.DOCPRINTED=true
-{% else %}CLIENT.{{client_id}}.DIR.{{dir_id}}.NAME=02 MediPort TG
-CLIENT.{{client_id}}.DIR.{{dir_id}}.DOCATTR=Tiers_Garant_Manuell
-CLIENT.{{client_id}}.DIR.{{dir_id}}.DOCPRINTED=false
-{% endif %}CLIENT.{{client_id}}.DIR.{{dir_id}}.DISTTYPE=0
+CLIENT.{{client_id}}.DIR.{{dir_id}}.DISTTYPE=0
 CLIENT.{{client_id}}.DIR.{{dir_id}}.PRINTLANGUAGE={{type.language}}
 CLIENT.{{client_id}}.DIR.{{dir_id}}.TRUSTCENTEREAN={{mpc.trust_center_ean}}
 CLIENT.{{client_id}}.DIR.{{dir_id}}.ISPAPERINVOICE=false
-  {% endfor %}
-{% endfor %}
+CLIENT.{{client_id}}.DIR.{{dir_id}}.SCHEMAID=26020
+{% else %}CLIENT.{{client_id}}.DIR.{{dir_id}}.DOCATTR=Tiers_Garant_Manuell{% endif %}
+{% endfor %}{% endfor %}
 
 ###########################################################
 # DOCS_STATE

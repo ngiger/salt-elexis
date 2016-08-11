@@ -79,7 +79,7 @@ no_cr_lf_mpc_sh:
   file.symlink:
     - target: {{mpc.install_path}}/mpc.sh
     - require:
-      - cmd:  {{mpc.install_path}}
+        - archive:  {{mpc.install_path}}
 
 # /usr/local/mediport/config/EAN2099988870017_mpg.keystore
 keystore_mpc:

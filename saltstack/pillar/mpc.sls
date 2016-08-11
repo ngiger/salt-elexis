@@ -17,7 +17,7 @@ mpc:
     - name: arzt
       ean: 7601231123456
       invoice_types:
-      - type: tg # Tiers_Garant_Manuell
-        language: D
       - type: tp # Tiers Payant
+        language: D
+      - type: tg # Tiers_Garant_Manuell
         language: D
