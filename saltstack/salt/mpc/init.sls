@@ -79,7 +79,7 @@ no_cr_lf_mpc_sh:
   file.symlink:
     - target: {{mpc.install_path}}/mpc.sh
     - require:
-        - install_mpc
+      - cmd:  {{mpc.install_path}}
 
 # /usr/local/mediport/config/EAN2099988870017_mpg.keystore
 keystore_mpc:
@@ -122,6 +122,8 @@ facl_{{mpc.install_path}}:
     - acl_name: {{mpc_group}}
     - perms: rwx
     - recurse: true
+    - require:
+        - archive:  {{mpc.install_path}}
 
 {% if grains.init == 'systemd' %}
 /etc/systemd/system/mpc.service:
