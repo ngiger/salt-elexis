@@ -2,8 +2,10 @@
 # ElexisPraxisDemo
 mpc:
   install_path: /home/pbt/data/shared/medidata
-  zip_path: /opt/downloads/MediPortCommunicator-Linux_64.zip
-  bin_name: MPCommunicator_V1.16.0.0.bin
+  # zip_path: /opt/downloads/MediPortCommunicator-Linux_64.zip
+  zip_path: http://download.elexis.info/MPC/19.0/Linux_64.zip
+  hash: sha256=b89d3c87b63addb628c741f39ff64487bc75415c3f03ad41a22fb3974d515e23
+  bin_name: 'MPCommunicator V1.19.0.0_x64.bin'
   #    Produktiver Server: mpw1.medidata.ch
   #    Test Server       : mpw0.medidata.ch
   mpc_server:   'mpw0.medidata.ch'

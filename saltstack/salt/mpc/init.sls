@@ -39,16 +39,13 @@ mediport_user:
     - name: mediport
     - system: true
 
-unzip_mpc:
-  file.directory:
-    - makedirs: true
+mediport_bin:
+  archive.extracted:
     - name: {{mpc.install_path}}
-  cmd.run:
-    - cwd: {{mpc.install_path}}
-    - name: "unzip {{mpc.zip_path}}"
-    - creates: "{{mpc.install_path}}/MPCommunicator_V1.16.0.0.bin"
-    - require:
-        - user: mediport
+    - source: {{mpc.zip_path}}
+    - source_hash: {{mpc.hash}}
+    - archive_format: zip
+    - if_missing: "{{mpc.install_path}}/{{mpc.bin_name}}"
 
 response_file:
   file.managed:
@@ -62,15 +59,15 @@ response_file:
       - '' # PRESS <ENTER> TO CONTINUE
       - 'Done'
     - require:
-        - cmd: unzip_mpc
+        - archive:  {{mpc.install_path}}
 
 install_mpc:
   cmd.run:
     - cwd: {{mpc.install_path}}
-    - name: "/bin/bash {{mpc.install_path}}/{{mpc.bin_name}} -i console < {{response_file}}"
+    - name: "/bin/bash '{{mpc.install_path}}/{{mpc.bin_name}}' -i console < {{response_file}}"
     - creates: "{{mpc.install_path}}/mpc.sh"
     - require:
-        - cmd: unzip_mpc
+        - archive:  {{mpc.install_path}}
         - file: response_file
 no_cr_lf_mpc_sh:
   cmd.run:
@@ -81,6 +78,8 @@ no_cr_lf_mpc_sh:
 /usr/local/bin/mpc.sh:
   file.symlink:
     - target: {{mpc.install_path}}/mpc.sh
+    - require:
+        - install_mpc
 
 # /usr/local/mediport/config/EAN2099988870017_mpg.keystore
 keystore_mpc:
@@ -88,19 +87,19 @@ keystore_mpc:
     - name: {{mpc.install_path}}/config/EAN{{mpc.sender_ean}}_mpg.keystore
     - source: {{mpc.keystore}}
     - require:
-      - cmd: install_mpc
+      - archive: {{mpc.install_path}}
 {{mpc.install_path}}/data/partner/partnerinfo.txt:
   file.managed:
     - source: salt://mpc/file/partnerinfo.txt
     - require:
-      - cmd: install_mpc
+      - archive: {{mpc.install_path}}
 
 {{mpc.install_path}}/config/mpcommunicator.config:
   file.managed:
     - source: salt://mpc/file/mpcommunicator.config.jinja
     - template: jinja
     - require:
-      - cmd: install_mpc
+      - archive: {{mpc.install_path}}
       - file: keystore_mpc
     - defaults:
         mpc: {{mpc}}
@@ -121,7 +120,7 @@ facl_{{mpc.install_path}}:
     - name: {{mpc.install_path}}
     - acl_type: group
     - acl_name: {{mpc_group}}
-    - perms: rwX
+    - perms: rwx
     - recurse: true
 
 {% if grains.init == 'systemd' %}
@@ -141,12 +140,12 @@ facl_{{mpc.install_path}}:
       - '[Install]'
       - WantedBy=multi-user.target
     - require:
-      - cmd: install_mpc
+      - archive: {{mpc.install_path}}
 service_mpc:
   service.running: # running or disabled
     - name: mpc
     - require:
-      - cmd: install_mpc
+      - archive: {{mpc.install_path}}
       - file: /etc/systemd/system/mpc.service
       - file: {{mpc.install_path}}/config/mpcommunicator.config
 {% elif grains.init == 'sysvinit' %}
@@ -166,7 +165,7 @@ service_mpc:
   service.disabled: # running or disabled
     - name: mpc
     - require:
-      - cmd: install_mpc
+      - archive: {{mpc.install_path}}
       - file: /etc/rc.local
       - file: {{mpc.install_path}}/config/mpcommunicator.config
 {% endif %}
