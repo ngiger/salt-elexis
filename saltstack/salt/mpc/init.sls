@@ -11,11 +11,7 @@
 {% if pillar.get('mpc', False) and grains.host == pillar.get('server', {})['name'] %}
 {% set mpc = pillar.get('mpc') %}
 {% set response_file = mpc.install_path+ '/install_mpc.response' %}
-{% if pillar.get('mpc.group', False) %}
-{% set mpc_group = pillar.get('mpc.group') %}
-{% else %}
-{% set mpc_group = 'mpc' %}
-{% endif %}
+{% set mpc_group = mpc.get('group', 'mpc') %}
 add_i386_arch:
   cmd.run:
    - name: "/usr/bin/dpkg --add-architecture i386 && /usr/bin/apt-get upgrade"
@@ -110,20 +106,19 @@ keystore_mpc:
   file.directory:
     - makedirs: true
 
-facl_{{mpc.install_path}}:
+{% for acl_file in [ 'config/mpcommunicator.config', '/data' ] %}
+facl_{{acl_file}}:
   group.present:
     - name: {{mpc_group}}
   acl.present:
-    - name: {{mpc.install_path}}/config/mpcommunicator.config
-    - name: {{mpc.install_path}}/ausgang
-    - name: {{mpc.install_path}}/data
-    - name: {{mpc.install_path}}
+    - name: "{{mpc.install_path}}/{{acl_file}}"
     - acl_type: group
     - acl_name: {{mpc_group}}
     - perms: rwx
     - recurse: true
     - require:
         - archive:  {{mpc.install_path}}
+{% endfor %}
 
 {% if grains.init == 'systemd' %}
 /etc/systemd/system/mpc.service:
