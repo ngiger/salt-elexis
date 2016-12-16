@@ -6,20 +6,24 @@ jessie-backports-pkgrepo:
     - file: /etc/apt/sources.list.d/jessie-backports.list
 {% endif %}
 
+saltstack-pkgrepo:
+  pkgrepo.managed:
+    - humanname: Salt Debian Repository
+    - name: "deb https://repo.saltstack.com/apt/{{grains.os_family.lower()}}/{{grains.osmajorrelease}}/{{grains.osarch}}/archive/2016.11.1 {{grains.lsb_distrib_codename}} main"
+    - file: /etc/apt/sources.list.d/saltstack.list
+
+# https://docs.saltstack.com/en/latest/faq.html#id16
 salt-minion:
-  pkg.installed:
-{% if grains.lsb_distrib_codename == 'jessie' and grains.lsb_distrib_id == 'Raspbian' %}
-    - version: 2015.5.3+ds-1~bpo8+1
-{% elif grains.lsb_distrib_codename == 'jessie' and grains.lsb_distrib_id == 'Debian' %}
-    - version: 2015.5.3+ds-1~bpo8+1
-{% elif grains.lsb_distrib_codename == 'stretch' and grains.lsb_distrib_id == 'Debian' %}
-    - version: 2015.8.8+ds-1
-{% endif %}
-    - refresh: false
-salt-minion-service:
-  service.running:
+  pkg.latest:
     - name: salt-minion
-    - watch:
+    - order: last
+#  service.running:
+#    - name: salt-minion
+#    - require:
+#      - pkg: salt-minion
+  cmd.run:
+    - name: echo service salt-minion restart | at now + 1 minute
+    - onchanges:
       - pkg: salt-minion
 
 common:

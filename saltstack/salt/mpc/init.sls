@@ -1,4 +1,4 @@
-# The *.hin file must be create on Windows-PC found under C:\Users\xx\AppData\Roaming\HIN\HIN Client
+# The *.hin file must be created on Windows-PC found under C:\Users\xx\AppData\Roaming\HIN\HIN Client
 
 # The hin client needs multiarch support ! The wrapper script is a x86 exe
 # wrapper: ELF 32-bit LSB executable, Intel 80386, version 1 (SYSV), dynamically linked, interpreter /lib/ld-linux.so.2, for GNU/Linux 2.0.30, not stripped
@@ -8,7 +8,7 @@
   {% set jave_jre_pkg = 'openjdk-7-jre' %}
 {% endif %}
 
-{% if pillar.get('mpc', False) and grains.host == pillar.get('server', {})['name'] %}
+{% if pillar.get('mpc', False) %} # and grains.host == pillar.get('server', {})['name'] %}
 {% set mpc = pillar.get('mpc') %}
 {% set response_file = mpc.install_path+ '/install_mpc.response' %}
 {% set mpc_group = mpc.get('group', 'mpc') %}
@@ -51,16 +51,17 @@ response_file:
       - '' # PRESS <ENTER> TO CONTINUE default is /root/
       - '{{mpc.install_path}}' # ENTER AN ABSOLUTE PATH, OR PRESS <ENTER> TO ACCEPT THE DEFAULT
       - 'Y' # IS THIS CORRECT? (
-      - '{{mpc.install_path}}' # User Config. and Default Data Folder (DEFAULT: /opt/mpcdata)
+      - '{{mpc.data_path}}' # User Config. and Default Data Folder (DEFAULT: /opt/mpcdata)
       - '' # PRESS <ENTER> TO CONTINUE
-      - 'Done'
+      - '' # PRESS <ENTER> TO EXIT THE INSTALLER:
+      - '' # just to be safe
     - require:
         - archive:  {{mpc.install_path}}
 
 install_mpc:
   cmd.run:
     - cwd: {{mpc.install_path}}
-    - name: "/bin/bash '{{mpc.install_path}}/{{mpc.bin_name}}' -i console < {{response_file}}"
+    - name: "/bin/bash '{{mpc.install_path}}/{{mpc.bin_name}}' -i console < {{response_file}} 2>&1 | /usr/bin/tee /tmp/mpc.log"
     - creates: "{{mpc.install_path}}/mpc.sh"
     - require:
         - archive:  {{mpc.install_path}}
@@ -80,17 +81,17 @@ no_cr_lf_mpc_sh:
 # /usr/local/mediport/config/EAN2099988870017_mpg.keystore
 keystore_mpc:
   file.managed:
-    - name: {{mpc.install_path}}/config/EAN{{mpc.sender_ean}}_mpg.keystore
+    - name: {{mpc.data_path}}/config/EAN{{mpc.sender_ean}}_mpg.keystore
     - source: {{mpc.keystore}}
     - require:
       - archive: {{mpc.install_path}}
-{{mpc.install_path}}/data/partner/partnerinfo.txt:
-  file.managed:
-    - source: salt://mpc/file/partnerinfo.txt
-    - require:
-      - archive: {{mpc.install_path}}
+#{{mpc.install_path}}/data/partner/partnerinfo.txt:
+#  file.managed:
+#    - source: salt://mpc/file/partnerinfo.txt
+#    - require:
+#      - archive: {{mpc.install_path}}
 
-{{mpc.install_path}}/config/mpcommunicator.config:
+{{mpc.data_path}}/config/mpcommunicator.config:
   file.managed:
     - source: salt://mpc/file/mpcommunicator.config.jinja
     - template: jinja
@@ -99,26 +100,39 @@ keystore_mpc:
       - file: keystore_mpc
     - defaults:
         mpc: {{mpc}}
-{{mpc.install_path}}/ausgang/tp:
+{{mpc.data_path}}/ausgang/tp:
   file.directory:
     - makedirs: true
-{{mpc.install_path}}/ausgang/tg:
+{{mpc.data_path}}/ausgang/tg:
   file.directory:
     - makedirs: true
 
-{% for acl_file in [ 'config/mpcommunicator.config', '/data' ] %}
-facl_{{acl_file}}:
+group_{{mpc_group}}:
   group.present:
     - name: {{mpc_group}}
+
+facl_mpcommunicator.config:
   acl.present:
-    - name: "{{mpc.install_path}}/{{acl_file}}"
+    - name: "{{mpc.data_path}}/config/mpcommunicator.config"
+    - acl_type: group
+    - acl_name: {{mpc_group}}
+    - perms: rwx
+    - require:
+        - archive:  {{mpc.install_path}}
+facl_mpcommunicator.data:
+  acl.present:
+    - name: {{mpc.data_path}}
     - acl_type: group
     - acl_name: {{mpc_group}}
     - perms: rwx
     - recurse: true
     - require:
         - archive:  {{mpc.install_path}}
-{% endfor %}
+
+prepare_test_suite:
+  cmd.run:
+    - name: "sudo sed -i 's/2099988874091/{{mpc.sender_ean}}/g' {{mpc.data_path}}/test/testdata/*/*/*.xml"
+    - onlyif: "/bin/grep 2099988874091 {{mpc.data_path}}/test/testdata/send_receive/sendCtrl/xmit_400.xml > /dev/null"
 
 {% if grains.init == 'systemd' %}
 /etc/systemd/system/mpc.service:
@@ -144,7 +158,7 @@ service_mpc:
     - require:
       - archive: {{mpc.install_path}}
       - file: /etc/systemd/system/mpc.service
-      - file: {{mpc.install_path}}/config/mpcommunicator.config
+      - file: {{mpc.data_path}}/config/mpcommunicator.config
 {% elif grains.init == 'sysvinit' %}
 # add to rc.local
 /etc/rc.local:
@@ -164,7 +178,7 @@ service_mpc:
     - require:
       - archive: {{mpc.install_path}}
       - file: /etc/rc.local
-      - file: {{mpc.install_path}}/config/mpcommunicator.config
+      - file: {{mpc.data_path}}/config/mpcommunicator.config
 {% endif %}
 
 {% if mpc.get('change_elexis_config', False) %}

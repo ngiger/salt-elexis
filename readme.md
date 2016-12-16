@@ -95,24 +95,43 @@ Enter 007 as Benutzername and topsecret as Passwort. The Elexis application shou
 
 *Warning* Elexis-Cockpit has not yet fully migrated to the new salt infrastructure. Therefore many commands don't work properly, yet.
 
-### Using real machines
+### Installing a bootstrap version of salt
+
+You must install salt with a version >= 2016.11.1 (Lithium).
 
 * Client (Either Debian wheezy or Ubuntu precise)
 ** get `install_client.sh`, eg. by calling `wget https://raw.githubusercontent.com/ngiger/salt-elexis/master/scripts/bootstrap_client.sh` and execute it to install salt-minion. It accepts one parameter, the name or IP of the salt master.
 
-* on a mint
+* on a mint machine
 
 Here I used the following two lines as proposed under https://docs.saltstack.com/en/latest/topics/tutorials/salt_bootstrap.html#install-using-wget
 
-  wget -O bootstrap_salt.sh https://bootstrap.saltstack.com
-  sudo sh bootstrap_salt.sh -P git v2015.5.3
+  wget https://raw.githubusercontent.com/saltstack/salt-bootstrap/develop/bootstrap-salt.sh
+  sudo bash bootstrap-salt.sh -q stable 2016.11.1
 
-* on a debian wheezy machine
+### Running standalone
 
-  echo "deb http://debian.saltstack.com/debian wheezy-saltstack main" | sudo tee /etc/apt/sources.list.d/salt.list
-  wget -O - http://debian.saltstack.com/debian-salt-team-joehealy.gpg.key| sudo apt-key add -
-  sudo apt-get update
-  sudo apt-get install salt-minion # gets salt-minion version 2015.5.3
+S.a. https://docs.saltstack.com/en/latest/topics/tutorials/quickstart.html#telling-salt-to-run-masterless
+
+Ensure that the file `/etc/salt/minion` contains the line `file_client: local`.
+
+Call `git clone https://github.com/ngiger/salt-elexis /path/checkout/elexis-salt`
+
+Create a `/etc/salt/master` e.g.
+
+````
+fileserver_backend:
+  - roots
+file_roots:
+  base:
+    - /path/checkout/salt-elexis/saltstack/salt
+pillar_roots:
+  base:
+    - /path/checkout/salt-elexis/saltstack/pillar/
+````
+
+
+### Using real machines
 
 Set the /etc/salt/minion to something like
 

@@ -5,7 +5,8 @@ debconf-utils:
 {% set java_version = salt['pillar.get']('java_version', '8') %}
 {% set open_jdk_jre = "openjdk-{{java_version}}-jre" %}
 
-{% if salt['pkg'].version(open_jdk_jre) %}
+{% if salt['pkg'].version(
+) %}
 install_openjdk:
   pkg.installed:
     - refresh: false
@@ -17,17 +18,12 @@ oracle_absent:
 
 {% else %}
 
-{% if grains['os'] == 'Mint' %}
-openjdk-{{java_version}}-jre:
-  pkg.installed:
-    - refresh: false
-    - name: openjdk-{{java_version}}-jre
-{% elif grains['os_family'] == 'Debian' %}
+{% if grains['os_family'] ~ 'Debian|Mint' %}
 oracle-java{{ java_version }}-installer:
   {% if grains['os'] == 'Ubuntu' %}
   pkgrepo.managed:
     - ppa: webupd8team/java
-  {% elif grains['os'] == 'Debian' %}
+  {% elif grains['os'] ~ 'Debian|Mint' %}
   pkgrepo.managed:
     - humanname: WebUp8Team Java Repository
     - name: "deb http://ppa.launchpad.net/webupd8team/java/ubuntu precise main"

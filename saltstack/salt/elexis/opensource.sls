@@ -39,6 +39,11 @@ elexis_needs:
 {% else %}
 {% set db_server = pillar.get('elexis', {}).get('db_server', 'db_server') %}
 {% endif %}
+{% if pillar.get('elexis:db_type', 'mysql') ~ 'mysql|mariadb' %}
+{%- set jdbc_type = 'mysql' -%}
+{% else %}
+{%- set jdbc_type = pillar.get('elexis:db_type', 'undef') -%}
+{% endif %}
 
 {{inst_path}}:
   archive.extracted:
@@ -67,6 +72,7 @@ elexis_needs:
         app: {{app}}
         db_server: {{db_server}}
         elexis: {{ pillar.get('elexis') }} # db_parameters
+        jdbc_type: {{jdbc_type}}
 /usr/share/applications/{{filename}}.desktop:
   file.managed:
     - source: salt://elexis/file/elexis.desktop.jinja

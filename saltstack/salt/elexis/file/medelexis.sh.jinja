@@ -8,8 +8,8 @@ export DB_TO_USE={{app.db_to_use}}
 export ELEXIS_VARIANT={{app.variant}}
 export ELEXIS_ZIP_FILE={{medelexis.linux_x86_64}}
 export ELEXIS_CONFIG="~/elexis/{{filename}}.cfg"
-export ELEXIS_DB_CONFIG_ARGS="-Dch.elexis.dbFlavor={{elexis.db_type}} \
--Dch.elexis.dbSpec=jdbc:{{elexis.db_type}}://{{db_server}}/{{app.db_to_use}} \
+export ELEXIS_DB_CONFIG_ARGS="-Dch.elexis.dbFlavor={{jdbc_type}} \
+-Dch.elexis.dbSpec=jdbc:{{jdbc_type}}://{{db_server}}/{{app.db_to_use}} \
 -Dch.elexis.dbUser={{elexis.db_user}} \
 -Dch.elexis.dbPw={{elexis.db_password}}"
 
@@ -30,10 +30,10 @@ then
   unset ELEXIS_DB_CONFIG_ARGS
 fi
 
-lsb_release -a | egrep -i 'Wheezy|precise'
+lsb_release -a | egrep -i 'Rosa|Wheezy|precise'
 
 if [ $? -ne 0 ]; then
-  msg="Elexis läuft nur unter wheezy oder precise. Aktuell gefunden: `lsb_release -scd`"
+  msg="Medelexis läuft nur unter Rosa, wheezy oder precise. Aktuell gefunden: `lsb_release -scd`"
   echo $msg
   notify-send $msg
   exit 2

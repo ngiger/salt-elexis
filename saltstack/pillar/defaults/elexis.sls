@@ -1,6 +1,10 @@
 medelexis:
   linux_x86_64:  '/opt/downloads/ch.medelexis.application.product.Medelexis-linux.gtk.x86_64.zip'
   license_xml:   '/opt/downloads/license.xml'
+medelexis_apps:
+  - human_name: Medelexis 3.1 (Pre-Release) auf Scharfer-Datenbank
+    variant: prerelease
+    db_to_use:  elexis
 
 elexis:
   backup_root:   /backup
