@@ -97,16 +97,9 @@ Enter 007 as Benutzername and topsecret as Passwort. The Elexis application shou
 
 ### Installing a bootstrap version of salt
 
-You must install salt with a version >= 2016.11.1 (Lithium).
+You must install salt (I used version 2016.11.1)
 
-* Client (Either Debian wheezy or Ubuntu precise)
-** get `install_client.sh`, eg. by calling `wget https://raw.githubusercontent.com/ngiger/salt-elexis/master/scripts/bootstrap_client.sh` and execute it to install salt-minion. It accepts one parameter, the name or IP of the salt master.
-
-* on a mint machine
-
-Here I used the following two lines as proposed under https://docs.saltstack.com/en/latest/topics/tutorials/salt_bootstrap.html#install-using-wget
-
-  wget https://raw.githubusercontent.com/saltstack/salt-bootstrap/develop/bootstrap-salt.sh
+  wget -O install_salt.sh https://bootstrap.saltstack.com
   sudo bash bootstrap-salt.sh -q stable 2016.11.1
 
 ### Running standalone

@@ -37,6 +37,7 @@ common:
     - lftp
     - curl
     - htop
+    - iotop
     - fish
     - git
     - vim-nox
