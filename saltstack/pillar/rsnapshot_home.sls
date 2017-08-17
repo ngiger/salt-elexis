@@ -6,7 +6,9 @@ rsnapshot_options: !aggregate
 
 rsnapshot_backups: !aggregate
   home_localhost:
+    # be aware that we will replace indestination %localhost% by the hostname !!
     destination: /opt/backup
+    # be aware that we will replace in dirs_to_backup in the value %localhost% by the hostname !!
     dirs_to_backup:
       /home:  localhost/
       /etc:  localhost/
