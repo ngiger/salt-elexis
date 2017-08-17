@@ -4,13 +4,13 @@ jessie-backports-pkgrepo:
     - humanname: Jessie Backports
     - name: deb http://ftp.ch.debian.org/debian jessie-backports main
     - file: /etc/apt/sources.list.d/jessie-backports.list
-{% endif %}
 
 saltstack-pkgrepo:
   pkgrepo.managed:
     - humanname: Salt Debian Repository
     - name: "deb https://repo.saltstack.com/apt/{{grains.os_family.lower()}}/{{grains.osmajorrelease}}/{{grains.osarch}}/archive/2016.11.1 {{grains.lsb_distrib_codename}} main"
     - file: /etc/apt/sources.list.d/saltstack.list
+{% endif %}
 
 # https://docs.saltstack.com/en/latest/faq.html#id16
 salt-minion:
