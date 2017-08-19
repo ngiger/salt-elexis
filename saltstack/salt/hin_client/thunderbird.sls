@@ -1,12 +1,11 @@
 # The *.hin file must be create on Windows-PC found under C:\Users\xx\AppData\Roaming\HIN\HIN Client
 
 {% if grains.osfullname == 'Debian' %}
-  {% set mail_pkg = "icedove-l10n-de" %}
-  {% set mail_dir_name = ".icedove" %}
+  {% set mail_pkg = "thunderbird-l10n-de" %}
 {% elif grains.osfullname == 'Ubuntu' %}
   {% set mail_pkg = "thunderbird-locale-de" %}
-  {% set mail_dir_name = ".thunderbird" %}
 {% endif %}
+{% set mail_dir_name = ".thunderbird" %}
 {% set hin_passphrase_replace = false %}
 {% for hin_login, username in salt['pillar.get']('users_for_hinclients', {}).iteritems() %}
   {% for a_user in username %}
@@ -18,6 +17,7 @@
         {% set home_dir = '/home/'+user_def.name %}
         {% endif %}
 
+{% if false %}
 {{home_dir}}/.config/autostart/hin_client-{{hin_login}}:
   file.managed:
     - user: {{a_user}}
@@ -36,6 +36,7 @@
       - Name=HIN_Client_ikgiger
       - Comment[de_CH]=HIN-client neu starten
       - Comment=HIN-client neu starten
+{% endif %}
 
 /etc/sudoers.d/{{a_user}}_hin_client_{{hin_login}}:
   file.managed:
@@ -44,6 +45,12 @@
       - '{{a_user}},{{hin_login}} ALL=(ALL:ALL) NOPASSWD:/home/{{hin_login}}/HIN\ Client/hinclientservice'
 
 {{home_dir}}/{{mail_dir_name}}/{{hin_login}}.hin:
+  file.directory:
+    - makedirs: true
+    - user:  {{a_user}}
+    - group:  {{a_user}}
+
+{{home_dir}}/{{mail_dir_name}}/{{a_user}}.hin:
   file.directory:
     - makedirs: true
     - user:  {{a_user}}

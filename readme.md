@@ -197,9 +197,8 @@ This was a little bit tricky. Solved by:
 
 ### Aufsetzen des HIN-Clients
 
-Vorgängig muss aus einem Windows oder Mac der Zugang zum HIN konfiguriert werden, da HIN leider Linux nur halbwegs unterstützt.
 
-Im Moment muss der HIN-Client noch von Hand gestartet werden. Dazu /usr/local/bin/restart_<HIN login>_hin_client aufrufen. Sollte man bei Gelegenheit als Service oder Desktop verpacken.
+Der Hin-Client ist dokumentiert unter [hin_clienct](saltstack/salt/hin_client/readme.md)
 
 ### letsencrypt
 

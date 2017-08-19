@@ -33,10 +33,14 @@ g_{{client.hin_login}}:
   archive.extracted:
     - name: /home/{{client.hin_login}}
     - archive_user: {{client.hin_login}}
-    - source: https://download.hin.ch/download/distribution/install/1.5.1-23/HINClient_unix_1_5_1-23.tar.gz
-    - source_hash: sha512=c5315ca068efbd03977f2b113e894b39463cc1fc91d199f81c51b8143b642377c21e3613fe1cbf7b07591cbe2d7f3b0fade80f946e3cabc6329a69b0cd91776c
+    # via https://download.hin.ch/index_de.html
+    # - source: https://download.hin.ch/download/distribution/install/1.5.1-23/HINClient_unix_1_5_1-23.tar.gz
+    - source: https://download.hin.ch/download/distribution/install/1.5.3-50/HINClient_unix_1_5_3-50.tar.gz
+    # - source_hash: sha512=c5315ca068efbd03977f2b113e894b39463cc1fc91d199f81c51b8143b642377c21e3613fe1cbf7b07591cbe2d7f3b0fade80f946e3cabc6329a69b0cd91776c
+    # proxy port auf 5016 keine proxy für localhost;
+    - source_hash: sha512=02729b1f9e7366beb35a71472f5eeb9e888ff6bba9d5521f514ca839c7fd20bd384f34dacd4395e70ee69ff002a80427fc08e4c0130ff4a6e43f735cb3b39e88
     - archive_format: tar
-    - tar_options: vz
+    - options: vz
     - if_missing: /home/{{client.hin_login}}/HIN Client/hinclient
     - require:
         - user:  {{client.hin_login}}

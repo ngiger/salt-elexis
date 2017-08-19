@@ -1,36 +1,23 @@
-# Defined which users may access which HIN identities
+# Defined which users may access which HIN identity
+# Only one can be defined
 users_for_hinclients:
   test1: # HIN login
-    labor:  # OS users using thunderbird/icedove to access above HIN login
+    labor:  # OS users using thunderbird to access above HIN login
     arzt:
     no_such_user: # will be ignored as long it does not appear in users items
 
 hin_clients:
-  test1:
-    hin_login: test1
+  musterpraxis: # Nur für SALT Relevant
+    hin_login: musterpraxis # Name der Verwendeten HIN-Datei
     # Choose an ID < 1000 or it will appear in the login choices
-    uid:       501
-    email:     test1r@hin.ch
-    fullname:  Test 1 Elexis-Demo
-    # Redir Ports, on these ports the services will be available
-    http_port:  9116
-    smtp_port:  9118
-    pop3_port:  9119
-    imap_port:  9120
-    hin_passphrase: DummyPassphrase
-    hin_passphrase_replace: true # if set to true users will be unable to change the passphrase for thein HIN account
+    uid:       503
+    email:     praxis.mustermannr@hin.ch
+    fullname:  Praxis Dr. Max Mustermann
+    # Redir Ports, on these ports the services will be available to all linux users
+    http_port:  50016
+    smtp_port:  50018
+    pop3_port:  50019
+    imap_port:  50020
+    hin_passphrase: max_hat_ein_geheimes_passwort
+    hin_passphrase_replace: true # Soll das Thunderbird-Profile überschrieb werden
     hin_identity_file:  salt://files/hin_client/test1.hin
-  test2:
-    hin_login: test2
-    # Choose an ID < 1000 or it will appear in the login choices
-    uid:       501
-    email:     niklaus.giger@hin.ch
-    fullname:  Niklaus Giger
-    # Redir Ports, on these ports the services will be available
-    http_port:  9216
-    smtp_port:  9218
-    pop3_port:  9219
-    imap_port:  9220
-    hin_passphrase: NoSecretAtAll
-    hin_identity_file:  salt://files/hin_client/test2.hin
-
