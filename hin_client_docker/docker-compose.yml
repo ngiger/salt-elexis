@@ -1,0 +1,31 @@
+# Copyright (c) 2017 by Niklaus Giger niklaus.giger@member.fsf.org
+#
+# All rights reserved. This program and the accompanying materials
+# are made available under the terms of the Eclipse Public License v1.0
+# which accompanies this distribution, and is available at
+# http:#www.eclipse.org/legal/epl-v10.html
+#
+# This is a setup for running peter schönbuchers privates wiki
+#
+version: '2.0'
+services:
+  hinclient:
+    build: .
+    networks:
+      private:
+      public:
+    environment:
+      PASSPHRASE: leuleu
+    ports:
+      - 5016:5016
+      - 5018:5018
+      - 5019:5019
+      - 5020:5020
+    volumes:
+      - /home/samba/prg/HIN/praxunio.hin:/home/user_hin/user.hin
+      - ${PWD}/logs:/home/user_hin/.HIN
+ 
+networks:
+  public:
+  private:
+   
