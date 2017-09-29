@@ -22,7 +22,7 @@
     - source: http://archive.ubuntu.com/ubuntu/dists/precise-updates/main/installer-amd64/current/images/trusty-netboot/netboot.tar.gz
     - source_hash: sha512=452973c5cb4160f35e976cbe8dd8dbdfc94335525022a16078bb0457f20961c57d2d859aed19679b77b0f1abbbfad0fb203f84edcc21d19f686cadd720b6ae24
     - archive_format: tar
-    - tar_options: vz
+    - options: vz
     - if_missing: /var/lib/tftpboot/ubuntu-installer/amd64/pxelinux.0
 
 # does not work correctly as not in the initrd

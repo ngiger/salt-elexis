@@ -1,4 +1,5 @@
 # These settings should be okay for the Vagrantfile
+# These settting are find if you want run the elexis test environment locally using vagrant boxes
 
 server:
   name:  ElexisServerDemo
