@@ -44,8 +44,8 @@ dnsmasq:
       - 127.0.0.1 localhost
     {% set if_name = salt['pillar.get']('network:dnsmasq_interface', 'eth0') %}
     {% set if_addr = salt['grains.get'](if_name, '172.99.99.99') %}
-      - {{if_addr[0]}}
-      - {{grains.fqdn}} {{grains.host}} {% for name in salt['pillar.get']('network:other_domains', []) %} {{grains.host}}.{{name}}{% endfor %}
+      - # {{if_addr[0]}}
+      - # {{grains.fqdn}} {{grains.host}} {% for name in salt['pillar.get']('network:other_domains', []) %} {{grains.host}}.{{name}}{% endfor %}
       - 127.0.1.1 {{grains.fqdn}} {{grains.host}} {% for name in salt['pillar.get']('network:other_domains', []) %} {{grains.host}}.{{name}}{% endfor %}
       - '# The following lines are desirable for IPv6 capable hosts'
       - ::1     localhost       ip6-localhost ip6-loopback

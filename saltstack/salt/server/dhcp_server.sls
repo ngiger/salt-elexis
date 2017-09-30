@@ -25,17 +25,11 @@ include:
   file.managed:
     - mode: 644
     - contents:
-# TODO: Must use a pillar variable from somewhere
-      - expand-hosts
-      # The following directives prevent dnsmasq from forwarding plain names (without any dots) or addresses in the non-routed address space to the parent nameservers.
-      - domain-needed
-      - bogus-priv
-      # Here we use a separate file where dnsmasq reads the IPs of the parent nameservers from. 
-      # - server={ {grains.ipv4[1]} }
-      - server=8.8.8.8
-      - server=8.8.4.4
-      - no-poll
-      - listen-address=127.0.0.1
+      # we do not specify any interface nor listen address to allow reading on all
+      - '#'
+      - '# default dhcp range'
+      # dhcp-range=192.168.1.3,192.168.1.99,255.255.255.0,1h
+      - dhcp-range={{ip_24_base}}.3,{{ip_24_base}}.254,255.255.255.0,1h
       - '#'
       - '# we use a tag to be able to set the correct gateway when accessing via the cable network'
       - dhcp-range=set:cable,{{ip_24_base}}.100,{{ip_24_base}}.149,{{dnsmasq_lease_time}}
@@ -47,6 +41,11 @@ include:
       - dhcp-option=tag:wlan,3,{{gateway}}
       - dhcp-option=tag:cable,3,{{gateway}}
       - '#'
+
+/etc/dnsmasq.d/hosts:
+  file.managed:
+    - mode: 644
+    - contents:
 {% for item in salt['pillar.get']('hw_addr', {}) %}
       - dhcp-host={{item.hw_addr}},{{item.name}},{{item.ip}},{{dnsmasq_lease_time}}
 {% endfor %}
